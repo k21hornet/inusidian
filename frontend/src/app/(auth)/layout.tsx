@@ -7,7 +7,7 @@ export default function AuthLayout({
 }>) {
   return (
     <Box
-      component="body"
+      component="main"
       style={{
         display: "flex",
         justifyContent: "center",

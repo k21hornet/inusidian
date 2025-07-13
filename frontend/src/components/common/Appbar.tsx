@@ -1,5 +1,6 @@
-import { Breadcrumbs, Link } from "@mui/material";
+import { Breadcrumbs } from "@mui/material";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import Link from "next/link";
 
 export default function Appbar() {
   return (
@@ -7,14 +8,14 @@ export default function Appbar() {
       separator={<NavigateNextIcon />}
       sx={{ mb: 1, fontSize: "small" }}
     >
-      <Link underline="hover" color="inherit" href="#">
-        ホーム
+      <Link
+        href="/dashboard"
+        style={{ textDecoration: "none", color: "inherit" }}
+      >
+        ダッシュボード
       </Link>
-      <Link underline="hover" color="inherit" href="#">
+      <Link href="/deck/1" style={{ textDecoration: "none", color: "inherit" }}>
         サンプルデッキ１
-      </Link>
-      <Link underline="hover" color="inherit" href="#">
-        復習 or 単語A
       </Link>
     </Breadcrumbs>
   );

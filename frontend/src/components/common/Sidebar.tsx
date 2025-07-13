@@ -2,7 +2,6 @@
 
 import {
   Box,
-  Button,
   List,
   ListItemButton,
   ListItemIcon,
@@ -15,8 +14,21 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import BeachAccessIcon from "@mui/icons-material/BeachAccess";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import StyleIcon from "@mui/icons-material/Style";
+import { useRouter } from "next/navigation";
 
 export default function Sidebar() {
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push("/dashboard");
+  };
+  const handleReviewClick = () => {
+    router.push("/deck/1?review");
+  };
+  const handleDeckClick = () => {
+    router.push("/deck/1");
+  };
+
   return (
     <Box
       sx={{
@@ -31,12 +43,17 @@ export default function Sidebar() {
       }}
     >
       <Box sx={{ p: 2 }}>
-        <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            mb: 2,
+            cursor: "pointer",
+          }}
+          onClick={handleClick}
+        >
           <BeachAccessIcon />
-          <Typography
-            variant="h5"
-            sx={{ fontWeight: "bold", cursor: "pointer" }}
-          >
+          <Typography variant="h5" sx={{ fontWeight: "bold" }}>
             INUSIDIAN
           </Typography>
         </Box>
@@ -50,7 +67,7 @@ export default function Sidebar() {
               </ListSubheader>
             }
           >
-            <ListItemButton>
+            <ListItemButton onClick={handleReviewClick}>
               <ListItemIcon sx={{ minWidth: 28 }}>
                 <AssignmentIcon />
               </ListItemIcon>
@@ -67,10 +84,7 @@ export default function Sidebar() {
               </ListSubheader>
             }
           >
-            <Button variant="contained" fullWidth>
-              デッキ作成
-            </Button>
-            <ListItemButton>
+            <ListItemButton onClick={handleDeckClick}>
               <ListItemIcon sx={{ minWidth: 28 }}>
                 <StyleIcon />
               </ListItemIcon>
@@ -78,7 +92,7 @@ export default function Sidebar() {
                 サンプルデッキ１
               </ListItemText>
             </ListItemButton>
-            <ListItemButton>
+            <ListItemButton onClick={handleDeckClick}>
               <ListItemIcon sx={{ minWidth: 28 }}>
                 <StyleIcon />
               </ListItemIcon>

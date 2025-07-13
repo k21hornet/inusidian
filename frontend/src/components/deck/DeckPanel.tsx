@@ -1,6 +1,19 @@
+"use client";
+
 import { Box, Button, Grid, Typography } from "@mui/material";
+import { useRouter } from "next/navigation";
 
 export default function DeckPanel() {
+  const router = useRouter();
+
+  const handleDetailClick = () => {
+    router.push(`/deck/1`);
+  };
+
+  const handleReviewClick = () => {
+    router.push(`/deck/1/review`);
+  };
+
   return (
     <Grid
       size={4}
@@ -32,14 +45,9 @@ export default function DeckPanel() {
         </Typography>
       </Box>
 
-      <Box sx={{ display: "flex", gap: 1 }}>
-        <Button variant="contained" fullWidth>
-          詳細
-        </Button>
-        <Button variant="contained" fullWidth>
-          復習
-        </Button>
-      </Box>
+      <Button variant="contained" fullWidth onClick={handleDetailClick}>
+        勉強する
+      </Button>
     </Grid>
   );
 }
