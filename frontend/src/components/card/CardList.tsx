@@ -1,4 +1,4 @@
-import { Card } from "@/type/Card";
+import { Deck } from "@/type/Deck";
 import {
   Paper,
   Table,
@@ -11,25 +11,27 @@ import {
 import React from "react";
 
 type Props = {
-  cards: Card[];
+  deck: Deck;
 };
 
-export default function CardList({ cards }: Props) {
+export default function CardList({ deck }: Props) {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>{cards[0].cardValues[0].fieldName}</TableCell>
-            <TableCell>{cards[0].cardValues[1].fieldName}</TableCell>
+            <TableCell>{deck.cardFields[0].fieldName}</TableCell>
+            <TableCell>ステータス</TableCell>
+            <TableCell>次回</TableCell>
             <TableCell>作成日</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {cards.map((card) => (
+          {deck.cards.map((card) => (
             <TableRow key={card.id}>
               <TableCell>{card.cardValues[0].content}</TableCell>
-              <TableCell>{card.cardValues[1].content}</TableCell>
+              <TableCell>覚えた</TableCell>
+              <TableCell>4日後</TableCell>
               <TableCell>{card.createdAt}</TableCell>
             </TableRow>
           ))}

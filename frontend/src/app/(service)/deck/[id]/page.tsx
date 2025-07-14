@@ -11,16 +11,18 @@ export default async function DeckPage({ params }: Params) {
   const { id } = await params;
   const deck = await getDeck(id);
 
+  if (!deck) return;
+
   return (
     <>
       <Box sx={{ mb: 2 }}>
         <Typography variant="h5" gutterBottom>
-          {deck?.deckName}
+          {deck.deckName}
         </Typography>
-        <Typography>{deck?.deckDescription}</Typography>
+        <Typography>{deck.deckDescription}</Typography>
       </Box>
 
-      <DeckTab cards={deck?.cards ?? []} />
+      <DeckTab deck={deck} />
     </>
   );
 }

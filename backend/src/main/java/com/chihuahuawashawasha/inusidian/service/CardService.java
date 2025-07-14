@@ -4,10 +4,12 @@ import com.chihuahuawashawasha.inusidian.model.dto.CardDTO;
 import com.chihuahuawashawasha.inusidian.model.entity.Card;
 import com.chihuahuawashawasha.inusidian.model.entity.CardField;
 import com.chihuahuawashawasha.inusidian.model.entity.CardValue;
+import com.chihuahuawashawasha.inusidian.model.entity.Deck;
 import com.chihuahuawashawasha.inusidian.model.input.CardInput;
 import com.chihuahuawashawasha.inusidian.model.input.CardValueInput;
 import com.chihuahuawashawasha.inusidian.repository.CardFieldRepository;
 import com.chihuahuawashawasha.inusidian.repository.CardRepository;
+import com.chihuahuawashawasha.inusidian.repository.DeckRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ import java.util.List;
 public class CardService {
     private final CardRepository cardRepository;
     private final CardFieldRepository cardFieldRepository;
+    private final DeckRepository deckRepository;
 
     public CardDTO findById(int id) {
         Card card = cardRepository.findById(id)
@@ -32,6 +35,10 @@ public class CardService {
     public CardDTO create(CardInput input) {
         // カードを作成
         Card card = new Card();
+
+        // 紐づくDeckを取得 TODO
+        Deck deck = deckRepository.findById(input.getDeckId()).orElseThrow();
+        card.setDeck(deck);
 
         // カード情報を属性ごとに作成
         List<CardValue> cardValues = new ArrayList<>();

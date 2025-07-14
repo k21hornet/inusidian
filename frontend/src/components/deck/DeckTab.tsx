@@ -5,13 +5,15 @@ import React, { useEffect, useState } from "react";
 import DeckTabPanel from "./DeckTabPanel";
 import { useSearchParams } from "next/navigation";
 import CardList from "../card/CardList";
-import { Card } from "@/type/Card";
+
+import { Deck } from "@/type/Deck";
+import CreateCardForm from "../card/CreateCardForm";
 
 type Props = {
-  cards: Card[];
+  deck: Deck;
 };
 
-export default function DeckTab({ cards }: Props) {
+export default function DeckTab({ deck }: Props) {
   const searchParams = useSearchParams();
   const [value, setValue] = useState(0);
 
@@ -39,16 +41,20 @@ export default function DeckTab({ cards }: Props) {
         >
           <Tab label="カード一覧" />
           <Tab label="復習" />
+          <Tab label="カード作成" />
           <Tab label="設定" />
         </Tabs>
       </Box>
       <DeckTabPanel value={value} index={0}>
-        <CardList cards={cards} />
+        <CardList deck={deck} />
       </DeckTabPanel>
       <DeckTabPanel value={value} index={1}>
         復習
       </DeckTabPanel>
       <DeckTabPanel value={value} index={2}>
+        <CreateCardForm deck={deck} />
+      </DeckTabPanel>
+      <DeckTabPanel value={value} index={3}>
         設定
       </DeckTabPanel>
     </Box>

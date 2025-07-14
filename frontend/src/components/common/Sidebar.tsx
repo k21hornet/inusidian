@@ -30,24 +30,23 @@ export default async function Sidebar() {
       }}
     >
       <Box sx={{ p: 2 }}>
-        <Link
+        <Box
+          component={Link}
           href={`/dashboard`}
-          style={{ color: "inherit", textDecoration: "none" }}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            mb: 2,
+            cursor: "pointer",
+            color: "inherit",
+            textDecoration: "none",
+          }}
         >
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              mb: 2,
-              cursor: "pointer",
-            }}
-          >
-            <BeachAccessIcon />
-            <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-              INUSIDIAN
-            </Typography>
-          </Box>
-        </Link>
+          <BeachAccessIcon />
+          <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+            INUSIDIAN
+          </Typography>
+        </Box>
 
         <Box>
           <List

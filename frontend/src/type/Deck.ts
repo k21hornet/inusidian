@@ -1,4 +1,5 @@
 import { Card } from "./Card";
+import { CardField } from "./CardField";
 
 export type Deck = {
   id: number;
@@ -6,4 +7,5 @@ export type Deck = {
   deckDescription: string;
   createdAt: string;
   cards: Card[];
+  cardFields: CardField[];
 };

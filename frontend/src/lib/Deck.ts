@@ -1,4 +1,4 @@
-import { getApi } from "@/lib/apiClient";
+import { getApi, postApi } from "@/lib/apiClient";
 import { Deck } from "@/type/Deck";
 
 export async function getAllDecks(): Promise<Deck[]> {
@@ -14,6 +14,15 @@ export async function getAllDecks(): Promise<Deck[]> {
 export async function getDeck(id: number): Promise<Deck | undefined> {
   try {
     const response = await getApi(`/decks/${id}`);
+    return response;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export async function postDeck(data) {
+  try {
+    const response = await postApi(`/decks/create`, data);
     return response;
   } catch (e) {
     console.log(e);
