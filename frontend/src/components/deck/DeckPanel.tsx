@@ -1,17 +1,18 @@
 "use client";
 
+import { Deck } from "@/type/Deck";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 
-export default function DeckPanel() {
+type Props = {
+  deck: Deck;
+};
+
+export default function DeckPanel({ deck }: Props) {
   const router = useRouter();
 
-  const handleDetailClick = () => {
-    router.push(`/deck/1`);
-  };
-
-  const handleReviewClick = () => {
-    router.push(`/deck/1/review`);
+  const handleClick = () => {
+    router.push(`/deck/${deck.id}`);
   };
 
   return (
@@ -31,7 +32,7 @@ export default function DeckPanel() {
     >
       <Box>
         <Typography gutterBottom sx={{ fontWeight: "bold" }}>
-          タイトル
+          {deck.deckName}
         </Typography>
         <Typography
           sx={{
@@ -41,11 +42,11 @@ export default function DeckPanel() {
             overflow: "hidden",
           }}
         >
-          デッキ説明文デッキ説明文デッキ説明文デッキデッキ説明文デッキ説明文デッキ説明文デッキ
+          {deck.deckDescription}
         </Typography>
       </Box>
 
-      <Button variant="contained" fullWidth onClick={handleDetailClick}>
+      <Button variant="contained" fullWidth onClick={handleClick}>
         勉強する
       </Button>
     </Grid>

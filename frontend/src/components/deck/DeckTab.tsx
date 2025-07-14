@@ -4,8 +4,14 @@ import { Box, Tab, Tabs } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import DeckTabPanel from "./DeckTabPanel";
 import { useSearchParams } from "next/navigation";
+import CardList from "../card/CardList";
+import { Card } from "@/type/Card";
 
-export default function DeckTab() {
+type Props = {
+  cards: Card[];
+};
+
+export default function DeckTab({ cards }: Props) {
   const searchParams = useSearchParams();
   const [value, setValue] = useState(0);
 
@@ -25,7 +31,7 @@ export default function DeckTab() {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+      <Box sx={{ mb: 2, borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           value={value}
           onChange={handleChange}
@@ -37,7 +43,7 @@ export default function DeckTab() {
         </Tabs>
       </Box>
       <DeckTabPanel value={value} index={0}>
-        カード一覧
+        <CardList cards={cards} />
       </DeckTabPanel>
       <DeckTabPanel value={value} index={1}>
         復習

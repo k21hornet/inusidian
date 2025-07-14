@@ -1,18 +1,26 @@
 import DeckTab from "@/components/deck/DeckTab";
+import { getDeck } from "@/lib/Deck";
 import { Box, Typography } from "@mui/material";
 import React from "react";
 
-export default function DeckPage() {
+type Params = {
+  params: Promise<{ id: number }>;
+};
+
+export default async function DeckPage({ params }: Params) {
+  const { id } = await params;
+  const deck = await getDeck(id);
+
   return (
     <>
       <Box sx={{ mb: 2 }}>
         <Typography variant="h5" gutterBottom>
-          デッキ名
+          {deck?.deckName}
         </Typography>
-        <Typography>デッキ説明文デッキ説明文デッキ説明文</Typography>
+        <Typography>{deck?.deckDescription}</Typography>
       </Box>
 
-      <DeckTab />
+      <DeckTab cards={deck?.cards ?? []} />
     </>
   );
 }

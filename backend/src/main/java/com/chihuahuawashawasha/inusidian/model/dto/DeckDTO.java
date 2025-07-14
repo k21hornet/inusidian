@@ -1,7 +1,5 @@
 package com.chihuahuawashawasha.inusidian.model.dto;
 
-import com.chihuahuawashawasha.inusidian.model.entity.Card;
-import com.chihuahuawashawasha.inusidian.model.entity.CardField;
 import com.chihuahuawashawasha.inusidian.model.entity.Deck;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,9 +29,9 @@ public class DeckDTO {
 
     private LocalDateTime deletedAt;
 
-    private List<Card> cards;
+    private List<CardDTO> cards;
 
-    private List<CardField> cardFields;
+    private List<CardFieldDTO> cardFields;
 
     public static DeckDTO fromEntity(Deck deck) {
         return new DeckDTO(
@@ -44,8 +42,14 @@ public class DeckDTO {
                 deck.getCreatedAt(),
                 deck.getUpdatedAt(),
                 deck.getDeletedAt(),
-                deck.getCards(),
+                deck.getCards()
+                        .stream()
+                        .map(CardDTO::fromEntity)
+                        .toList(),
                 deck.getCardFields()
+                        .stream()
+                        .map(CardFieldDTO::fromEntity)
+                        .toList()
         );
     }
 
