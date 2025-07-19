@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,6 +17,10 @@ public class CardDTO {
     private Integer id;
 
     private Integer deckId;
+
+    private Integer successCount;
+
+    private LocalDate nextReviewDate;
     
     private LocalDateTime createdAt;
     
@@ -29,6 +34,8 @@ public class CardDTO {
         return new CardDTO(
                 card.getId(),
                 card.getDeck().getId(),
+                card.getSuccessCount(),
+                card.getNextReviewDate(),
                 card.getCreatedAt(),
                 card.getUpdatedAt(),
                 card.getDeletedAt(),

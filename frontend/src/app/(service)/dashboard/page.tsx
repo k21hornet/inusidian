@@ -1,8 +1,12 @@
 import DeckPanel from "@/components/deck/DeckPanel";
+import { getAllDecks } from "@/lib/Deck";
 import { Box, Button, Grid, Typography } from "@mui/material";
+import Link from "next/link";
 import React from "react";
 
-export default function Dashboard() {
+export default async function Dashboard() {
+  const decks = await getAllDecks();
+
   return (
     <Box>
       <Box sx={{ mb: 2 }}>
@@ -45,13 +49,14 @@ export default function Dashboard() {
           }}
         >
           <Typography variant="h5">デッキ一覧</Typography>
-          <Button variant="contained">デッキ作成</Button>
+          <Button variant="contained" component={Link} href="/deck/create">
+            デッキ作成
+          </Button>
         </Box>
         <Grid container spacing={2}>
-          <DeckPanel />
-          <DeckPanel />
-          <DeckPanel />
-          <DeckPanel />
+          {decks.map((deck) => (
+            <DeckPanel key={deck.id} deck={deck} />
+          ))}
         </Grid>
       </Box>
     </Box>
