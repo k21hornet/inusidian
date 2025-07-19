@@ -14,7 +14,9 @@ export default function Congratulations() {
       }}
     >
       <Typography variant="h3">Congratulations!</Typography>
-      <p>今日の課題は全て達成しました！</p>
+      <Typography sx={{ color: "text.secondary" }}>
+        今日の課題は全て達成しました！
+      </Typography>
     </Box>
   );
 }

@@ -1,5 +1,5 @@
-import { deleteCard } from "@/lib/Card";
-import { Card } from "@/type/Card";
+import { deleteCard } from "@/features/Card";
+import { Card } from "@/type/index";
 import { Box, Button, Modal, TextField, Typography } from "@mui/material";
 import React from "react";
 
@@ -41,7 +41,10 @@ export default function CardModal({
             p: 4,
           }}
         >
-          <Box component={"form"}>
+          <Box
+            component={"form"}
+            sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+          >
             {card.cardValues.map((value, idx) => (
               <TextField
                 key={value.id}
@@ -53,7 +56,7 @@ export default function CardModal({
               />
             ))}
 
-            <Box>
+            <Box sx={{ display: "flex", gap: 2 }}>
               <Button variant="contained" type="submit">
                 保存
               </Button>

@@ -1,6 +1,6 @@
 "use client";
 
-import { Deck } from "@/type/Deck";
+import { Deck } from "@/type/index";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 

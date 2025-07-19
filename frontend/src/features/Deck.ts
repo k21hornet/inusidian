@@ -1,5 +1,6 @@
 import { deleteApi, getApi, postApi } from "@/lib/apiClient";
-import { Deck } from "@/type/Deck";
+import { Deck } from "@/type/index";
+import { PostDeckFormData } from "@/type/request";
 
 export async function getAllDecks(): Promise<Deck[]> {
   try {
@@ -20,7 +21,9 @@ export async function getDeck(id: number): Promise<Deck | undefined> {
   }
 }
 
-export async function postDeck(data) {
+export async function postDeck(
+  data: PostDeckFormData
+): Promise<Deck | undefined> {
   try {
     const response = await postApi(`/decks/create`, data);
     return response;
@@ -29,7 +32,7 @@ export async function postDeck(data) {
   }
 }
 
-export async function deleteDeck(id: number) {
+export async function deleteDeck(id: number): Promise<undefined> {
   try {
     const response = await deleteApi(`/decks/${id}`);
     return response;

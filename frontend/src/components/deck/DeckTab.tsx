@@ -5,9 +5,9 @@ import React, { useEffect, useState } from "react";
 import DeckTabPanel from "./DeckTabPanel";
 import { useRouter, useSearchParams } from "next/navigation";
 import CardList from "../card/CardList";
-import { deleteDeck, getDeck } from "@/lib/Deck";
+import { deleteDeck, getDeck } from "@/features/Deck";
 
-import { Deck } from "@/type/Deck";
+import { Deck } from "@/type/index";
 import CreateCardForm from "../card/CreateCardForm";
 import ReviewCards from "../review/ReviewCards";
 

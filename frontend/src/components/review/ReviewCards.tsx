@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Congratulations from "./Congratulations";
 import { Box, Button, Typography } from "@mui/material";
-import { Card } from "@/type/Card";
-import { getDueCards, reviewFailure, reviewSuccess } from "@/lib/Card";
+import { Card } from "@/type/index";
+import { getDueCards, reviewFailure, reviewSuccess } from "@/features/Card";
 
 export default function ReviewCards({ deckId }: { deckId: number }) {
   const [dueCards, setDueCards] = useState<Card[]>([]);
@@ -58,7 +58,9 @@ export default function ReviewCards({ deckId }: { deckId: number }) {
       }}
     >
       {dueCard.cardValues.map((value, idx) => (
-        <Typography key={idx}>{value.content}</Typography>
+        <Typography key={idx} sx={{ mb: 2, fontSize: 20, textAlign: "center" }}>
+          {value.content}
+        </Typography>
       ))}
 
       <Box sx={{ display: "flex", marginTop: 2 }}>
