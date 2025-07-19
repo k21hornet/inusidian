@@ -34,6 +34,8 @@ CREATE TABLE IF NOT EXISTS card_fields (
 CREATE TABLE IF NOT EXISTS cards (
     id INT PRIMARY KEY AUTO_INCREMENT,
     deck_id INT NOT NULL,
+    success_count INT NOT NULL,
+    next_review_date TIMESTAMP NOT NULL,
     created_at TIMESTAMP,
     updated_at TIMESTAMP,
     deleted_at TIMESTAMP,
@@ -51,3 +53,5 @@ CREATE TABLE IF NOT EXISTS card_values (
     FOREIGN KEY (field_id) REFERENCES card_fields(id) ON DELETE CASCADE,
     FOREIGN KEY (card_id) REFERENCES cards(id) ON DELETE CASCADE
 );
+
+-- drop table card_values, cards, card_fields, decks, users;

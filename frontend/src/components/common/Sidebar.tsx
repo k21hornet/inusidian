@@ -68,7 +68,7 @@ export default async function Sidebar() {
                     <StyleIcon />
                   </ListItemIcon>
                   <ListItemText sx={{ fontSize: "14px" }}>
-                    サンプルデッキ１
+                    {deck.deckName}
                   </ListItemText>
                 </ListItemButton>
               </Link>
@@ -93,7 +93,7 @@ export default async function Sidebar() {
                     <StyleIcon />
                   </ListItemIcon>
                   <ListItemText sx={{ fontSize: "14px" }}>
-                    サンプルデッキ１
+                    {deck.deckName}
                   </ListItemText>
                 </ListItemButton>
               </Link>

@@ -29,12 +29,24 @@ export default function CardList({ deck }: Props) {
 
   return (
     <>
-      <TableContainer component={Paper}>
+      <TableContainer
+        component={Paper}
+        sx={{
+          maxHeight: 580,
+          overflowY: "auto", // 縦方向のスクロールを有効化
+        }}
+      >
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
+          <TableHead
+            sx={{
+              position: "sticky",
+              top: 0,
+              zIndex: 1, // 他の要素より前面に表示
+            }}
+          >
             <TableRow>
               <TableCell>{deck.cardFields[0].fieldName}</TableCell>
-              <TableCell>ステータス</TableCell>
+              <TableCell>連続正解数</TableCell>
               <TableCell>次回</TableCell>
               <TableCell>作成日</TableCell>
               <TableCell></TableCell>
@@ -53,8 +65,8 @@ export default function CardList({ deck }: Props) {
                 onClick={() => handleOpen(card)}
               >
                 <TableCell>{card.cardValues[0].content}</TableCell>
-                <TableCell>覚えた</TableCell>
-                <TableCell>4日後</TableCell>
+                <TableCell>{card.successCount}回</TableCell>
+                <TableCell>{card.nextReviewDate}</TableCell>
                 <TableCell>{card.createdAt}</TableCell>
                 <TableCell>詳細</TableCell>
               </TableRow>
