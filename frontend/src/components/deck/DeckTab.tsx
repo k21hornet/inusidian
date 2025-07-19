@@ -1,11 +1,11 @@
 "use client";
 
-import { Box, Tab, Tabs } from "@mui/material";
+import { Box, Button, Tab, Tabs } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import DeckTabPanel from "./DeckTabPanel";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import CardList from "../card/CardList";
-import { getDeck } from "@/lib/Deck";
+import { deleteDeck, getDeck } from "@/lib/Deck";
 
 import { Deck } from "@/type/Deck";
 import CreateCardForm from "../card/CreateCardForm";
@@ -16,6 +16,7 @@ type Props = {
 };
 
 export default function DeckTab({ deck: initialDeck }: Props) {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const [value, setValue] = useState(0);
   const [deck, setDeck] = useState<Deck>(initialDeck);
@@ -42,6 +43,14 @@ export default function DeckTab({ deck: initialDeck }: Props) {
     setValue(newValue);
   };
 
+  // デッキ削除
+  const handleDelete = async (id: number) => {
+    const confirm = window.confirm("本当に削除しますか？");
+    if (!confirm) return;
+    await deleteDeck(id);
+    router.push("/dashboard");
+  };
+
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ mb: 2, borderBottom: 1, borderColor: "divider" }}>
@@ -66,7 +75,9 @@ export default function DeckTab({ deck: initialDeck }: Props) {
         <CreateCardForm deck={deck} onCardCreated={refreshDeck} />
       </DeckTabPanel>
       <DeckTabPanel value={value} index={3}>
-        設定
+        <Button variant="contained" onClick={() => handleDelete(deck.id)}>
+          デッキ削除
+        </Button>
       </DeckTabPanel>
     </Box>
   );

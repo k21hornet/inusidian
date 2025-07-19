@@ -45,4 +45,9 @@ public class CardController {
         cardService.failure(id);
         return ResponseEntity.ok().build();
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteCard(@PathVariable int id) {
+        cardService.deleteById(id);
+    }
 }

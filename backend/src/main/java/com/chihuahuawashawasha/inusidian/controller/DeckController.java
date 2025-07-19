@@ -33,4 +33,9 @@ public class DeckController {
 
         return deckService.create(input);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteDeck (@PathVariable int id) {
+        deckService.deleteById(id);
+    }
 }

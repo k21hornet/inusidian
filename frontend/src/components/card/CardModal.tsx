@@ -1,3 +1,4 @@
+import { deleteCard } from "@/lib/Card";
 import { Card } from "@/type/Card";
 import { Box, Button, Modal, TextField, Typography } from "@mui/material";
 import React from "react";
@@ -11,6 +12,13 @@ export default function CardModal({
   handleClose: () => void;
   card: Card | undefined;
 }) {
+  // カード削除
+  const handleDelete = async (id: number) => {
+    const confirm = window.confirm("本当に削除しますか？");
+    if (!confirm) return;
+    await deleteCard(id);
+  };
+
   if (card === undefined) return;
 
   return (
@@ -48,6 +56,12 @@ export default function CardModal({
             <Box>
               <Button variant="contained" type="submit">
                 保存
+              </Button>
+              <Button variant="contained" onClick={() => handleDelete(card.id)}>
+                削除
+              </Button>
+              <Button variant="contained" onClick={handleClose}>
+                戻る
               </Button>
             </Box>
           </Box>

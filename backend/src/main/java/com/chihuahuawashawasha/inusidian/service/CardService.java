@@ -111,4 +111,8 @@ public class CardService {
     private LocalDate calcNextReviewDate(int count) {
         return LocalDate.now().plusDays(count * 2L + 1);
     }
+
+    public void deleteById(int id) {
+        cardRepository.deleteById(id);
+    }
 }

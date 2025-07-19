@@ -1,4 +1,4 @@
-import { getApi, postApi } from "./apiClient";
+import { deleteApi, getApi, postApi } from "./apiClient";
 
 export async function postCard(data) {
   try {
@@ -31,6 +31,15 @@ export async function reviewSuccess(id: number) {
 export async function reviewFailure(id: number) {
   try {
     const response = await postApi(`/cards/review/${id}/failure`, null);
+    return response;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export async function deleteCard(id: number) {
+  try {
+    const response = await deleteApi(`/cards/${id}`);
     return response;
   } catch (e) {
     console.log(e);

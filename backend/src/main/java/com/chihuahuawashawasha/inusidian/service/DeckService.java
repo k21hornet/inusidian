@@ -61,4 +61,8 @@ public class DeckService {
         deck = deckRepository.save(deck);
         return DeckDTO.fromEntity(deck);
     }
+
+    public void deleteById(int id) {
+        deckRepository.deleteById(id);
+    }
 }

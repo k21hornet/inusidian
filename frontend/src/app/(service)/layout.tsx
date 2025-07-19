@@ -18,7 +18,7 @@ export default function ServiceLayout({
     >
       <Sidebar />
       <Box component="main" sx={{ flex: 1, px: 4, py: 2 }}>
-        <Appbar />
+        {/* <Appbar /> */}
         {children}
       </Box>
     </Box>
