@@ -3,6 +3,7 @@ package com.chihuahuawashawasha.inusidian.model.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,11 +19,15 @@ public class Card {
     @ManyToOne
     @JoinColumn(name = "deck_id", nullable = false)
     private Deck deck;
+
+    private Integer successCount;
+
+    private LocalDate nextReviewDate;
     
     private LocalDateTime createdAt;
     
     private LocalDateTime updatedAt;
-    
+
     private LocalDateTime deletedAt;
 
     @OneToMany(mappedBy = "card", cascade = CascadeType.ALL, orphanRemoval = true)

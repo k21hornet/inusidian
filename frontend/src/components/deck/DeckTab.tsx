@@ -5,17 +5,28 @@ import React, { useEffect, useState } from "react";
 import DeckTabPanel from "./DeckTabPanel";
 import { useSearchParams } from "next/navigation";
 import CardList from "../card/CardList";
+import { getDeck } from "@/lib/Deck";
 
 import { Deck } from "@/type/Deck";
 import CreateCardForm from "../card/CreateCardForm";
+import ReviewCards from "../review/ReviewCards";
 
 type Props = {
   deck: Deck;
 };
 
-export default function DeckTab({ deck }: Props) {
+export default function DeckTab({ deck: initialDeck }: Props) {
   const searchParams = useSearchParams();
   const [value, setValue] = useState(0);
+  const [deck, setDeck] = useState<Deck>(initialDeck);
+
+  // デッキ情報を再取得する関数
+  const refreshDeck = async () => {
+    const updatedDeck = await getDeck(deck.id);
+    if (updatedDeck) {
+      setDeck(updatedDeck);
+    }
+  };
 
   useEffect(() => {
     // URLのクエリパラメータに'review'が含まれていれば復習タブ（index: 1）を選択
@@ -49,10 +60,10 @@ export default function DeckTab({ deck }: Props) {
         <CardList deck={deck} />
       </DeckTabPanel>
       <DeckTabPanel value={value} index={1}>
-        復習
+        <ReviewCards deckId={deck.id} />
       </DeckTabPanel>
       <DeckTabPanel value={value} index={2}>
-        <CreateCardForm deck={deck} />
+        <CreateCardForm deck={deck} onCardCreated={refreshDeck} />
       </DeckTabPanel>
       <DeckTabPanel value={value} index={3}>
         設定

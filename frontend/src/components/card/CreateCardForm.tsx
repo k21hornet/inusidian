@@ -7,9 +7,10 @@ import { FormEvent, useState } from "react";
 
 type Props = {
   deck: Deck;
+  onCardCreated?: () => void; // カード作成後のコールバック
 };
 
-export default function CreateCardForm({ deck }: Props) {
+export default function CreateCardForm({ deck, onCardCreated }: Props) {
   // 各カード属性ごとにfieldIdとcontentを持つ
   const [formData, setFormData] = useState({
     deckId: deck.id,
@@ -33,13 +34,19 @@ export default function CreateCardForm({ deck }: Props) {
 
     const data = await postCard(formData);
     if (data) {
+      // フォームをリセット
       setFormData({
         deckId: deck.id,
         values: deck.cardFields.map((field) => ({
-          fieldId: field.id, // 各フィールドのIDをセット
+          fieldId: field.id,
           content: "",
         })),
       });
+
+      // カード作成後のコールバックを実行
+      if (onCardCreated) {
+        onCardCreated();
+      }
     }
   };
 
