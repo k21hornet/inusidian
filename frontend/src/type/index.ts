@@ -33,5 +33,6 @@ export type CardValue = {
   id: number;
   card: Card;
   fieldName: string;
+  fieldType: string;
   content: string;
 };
