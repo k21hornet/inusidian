@@ -1,7 +1,8 @@
 "use client";
 
-import { postCard } from "@/lib/Card";
-import { Deck } from "@/type/Deck";
+import { postCard } from "@/features/Card";
+import { Deck } from "@/type/index";
+import { PostCardFormData } from "@/type/request";
 import { Box, Button, TextField } from "@mui/material";
 import { FormEvent, useState } from "react";
 
@@ -12,7 +13,7 @@ type Props = {
 
 export default function CreateCardForm({ deck, onCardCreated }: Props) {
   // 各カード属性ごとにfieldIdとcontentを持つ
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<PostCardFormData>({
     deckId: deck.id,
     values: deck.cardFields.map((field) => ({
       fieldId: field.id, // 各フィールドのIDをセット
@@ -51,7 +52,11 @@ export default function CreateCardForm({ deck, onCardCreated }: Props) {
   };
 
   return (
-    <Box component={"form"} onSubmit={handleSubmit}>
+    <Box
+      component={"form"}
+      onSubmit={handleSubmit}
+      sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+    >
       {deck.cardFields.map((field, idx) => (
         <TextField
           key={field.id}
@@ -60,7 +65,6 @@ export default function CreateCardForm({ deck, onCardCreated }: Props) {
           fullWidth
           value={formData.values[idx].content}
           onChange={(e) => handleFieldChange(idx, e.target.value)}
-          required
         />
       ))}
 

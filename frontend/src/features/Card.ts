@@ -1,6 +1,10 @@
-import { deleteApi, getApi, postApi } from "./apiClient";
+import { PostCardFormData } from "@/type/request";
+import { Card } from "@/type/index";
+import { deleteApi, getApi, postApi } from "../lib/apiClient";
 
-export async function postCard(data) {
+export async function postCard(
+  data: PostCardFormData
+): Promise<Card | undefined> {
   try {
     const response = await postApi(`/cards/create`, data);
     return response;
@@ -9,7 +13,7 @@ export async function postCard(data) {
   }
 }
 
-export async function getDueCards(deckId: number) {
+export async function getDueCards(deckId: number): Promise<Card[]> {
   try {
     const response = await getApi(`/cards/review/${deckId}`);
     return response;
@@ -19,7 +23,7 @@ export async function getDueCards(deckId: number) {
   }
 }
 
-export async function reviewSuccess(id: number) {
+export async function reviewSuccess(id: number): Promise<undefined> {
   try {
     const response = await postApi(`/cards/review/${id}/success`, null);
     return response;
@@ -28,7 +32,7 @@ export async function reviewSuccess(id: number) {
   }
 }
 
-export async function reviewFailure(id: number) {
+export async function reviewFailure(id: number): Promise<undefined> {
   try {
     const response = await postApi(`/cards/review/${id}/failure`, null);
     return response;
@@ -37,7 +41,7 @@ export async function reviewFailure(id: number) {
   }
 }
 
-export async function deleteCard(id: number) {
+export async function deleteCard(id: number): Promise<undefined> {
   try {
     const response = await deleteApi(`/cards/${id}`);
     return response;

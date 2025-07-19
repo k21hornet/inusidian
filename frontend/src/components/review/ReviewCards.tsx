@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from "react";
 import Congratulations from "./Congratulations";
-import { Box, Button, Typography } from "@mui/material";
-import { Card } from "@/type/Card";
-import { getDueCards, reviewFailure, reviewSuccess } from "@/lib/Card";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Button,
+  Typography,
+} from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { Card } from "@/type/index";
+import { getDueCards, reviewFailure, reviewSuccess } from "@/features/Card";
 
 export default function ReviewCards({ deckId }: { deckId: number }) {
   const [dueCards, setDueCards] = useState<Card[]>([]);
   const [dueCard, setDueCard] = useState<Card | null>();
+  const [accordionExpanded, setAccordionExpanded] = useState(false); // アコーディオンの開閉状態
 
   // ランダムで一問出題
   const setNextReviewCard = () => {
@@ -35,6 +44,7 @@ export default function ReviewCards({ deckId }: { deckId: number }) {
     if (!dueCard) return;
     await reviewSuccess(id);
     setDueCards(dueCards.filter((rc) => rc.id !== id)); //正解した問題を除外
+    setAccordionExpanded(false);
   };
 
   // 問題不正解時
@@ -42,6 +52,7 @@ export default function ReviewCards({ deckId }: { deckId: number }) {
     if (!dueCard) return;
     await reviewFailure(dueCard.id);
     setNextReviewCard();
+    setAccordionExpanded(false);
   };
 
   if (!dueCard) return <Congratulations />;
@@ -57,39 +68,93 @@ export default function ReviewCards({ deckId }: { deckId: number }) {
         height: "100%",
       }}
     >
-      {dueCard.cardValues.map((value, idx) => (
-        <Typography key={idx}>{value.content}</Typography>
-      ))}
+      {/* カード表面 */}
+      {dueCard.cardValues
+        .filter((value) => value.fieldType !== "back") // 表のカードのみ取得
+        .map((value, idx) => (
+          <Typography
+            key={idx}
+            sx={{ mb: 2, fontSize: 20, textAlign: "center" }}
+          >
+            {value.content}
+          </Typography>
+        ))}
 
-      <Box sx={{ display: "flex", marginTop: 2 }}>
-        <Box
+      {/* カード裏面 */}
+      <Accordion
+        expanded={accordionExpanded}
+        onChange={(_, isExpanded) => setAccordionExpanded(isExpanded)}
+        slotProps={{ transition: { timeout: 0 } }} // アコーディオン開閉時文字が出ないようにする
+        sx={{
+          width: "100%",
+          backgroundColor: "transparent",
+          border: "none",
+          borderTop: "1px solid #e0e0e0",
+          boxShadow: "none",
+        }}
+      >
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1-content"
+          id="panel1-header"
+        >
+          <Typography component="span" sx={{ color: "text.secondary" }}>
+            カード裏面を表示
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails
           sx={{
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            margin: 1,
           }}
         >
-          <p>0 day</p>
-          <Button onClick={failure} variant="contained">
-            Again
-          </Button>
-        </Box>
+          {dueCard.cardValues
+            .filter((value) => value.fieldType === "back") // 裏のカードのみ取得
+            .map((value, idx) => (
+              <Typography
+                key={idx}
+                sx={{ mb: 2, fontSize: 20, textAlign: "center" }}
+              >
+                {value.content}
+              </Typography>
+            ))}
+          {/* ボタン */}
+          <Box sx={{ display: "flex", marginTop: 2 }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                margin: 1,
+              }}
+            >
+              <Typography component="span" sx={{ color: "text.secondary" }}>
+                0 day
+              </Typography>
+              <Button onClick={failure} variant="contained">
+                Again
+              </Button>
+            </Box>
 
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            margin: 1,
-          }}
-        >
-          <p>{dueCard.successCount * 2 + 1} day</p>
-          <Button onClick={() => success(dueCard.id)} variant="contained">
-            Easy
-          </Button>
-        </Box>
-      </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                margin: 1,
+              }}
+            >
+              <Typography component="span" sx={{ color: "text.secondary" }}>
+                {dueCard.successCount * 2 + 1} day
+              </Typography>
+              <Button onClick={() => success(dueCard.id)} variant="contained">
+                Easy
+              </Button>
+            </Box>
+          </Box>
+        </AccordionDetails>
+      </Accordion>
     </Box>
   );
 }

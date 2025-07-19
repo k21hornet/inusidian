@@ -1,6 +1,6 @@
 "use client";
 
-import { Deck } from "@/type/Deck";
+import { Deck } from "@/type/index";
 import {
   Paper,
   Table,
@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import CardModal from "./CardModal";
-import { Card } from "@/type/Card";
+import { Card } from "@/type/index";
 
 type Props = {
   deck: Deck;
