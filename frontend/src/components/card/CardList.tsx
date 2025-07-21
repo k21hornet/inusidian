@@ -39,9 +39,11 @@ export default function CardList({ deck }: Props) {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead
             sx={{
+              bgcolor: "white",
               position: "sticky",
               top: 0,
               zIndex: 1, // 他の要素より前面に表示
+              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
             }}
           >
             <TableRow>
@@ -53,24 +55,27 @@ export default function CardList({ deck }: Props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {deck.cards.map((card) => (
-              <TableRow
-                key={card.id}
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": {
-                    bgcolor: "#eee",
-                  },
-                }}
-                onClick={() => handleOpen(card)}
-              >
-                <TableCell>{card.cardValues[0].content}</TableCell>
-                <TableCell>{card.successCount}回</TableCell>
-                <TableCell>{card.nextReviewDate}</TableCell>
-                <TableCell>{card.createdAt}</TableCell>
-                <TableCell>詳細</TableCell>
-              </TableRow>
-            ))}
+            {deck.cards
+              .slice() // 配列をコピー
+              .reverse() // 最新のカードを上に表示する
+              .map((card) => (
+                <TableRow
+                  key={card.id}
+                  sx={{
+                    cursor: "pointer",
+                    "&:hover": {
+                      bgcolor: "#eee",
+                    },
+                  }}
+                  onClick={() => handleOpen(card)}
+                >
+                  <TableCell>{card.cardValues[0].content}</TableCell>
+                  <TableCell>{card.successCount}回</TableCell>
+                  <TableCell>{card.nextReviewDate}</TableCell>
+                  <TableCell>{card.createdAt}</TableCell>
+                  <TableCell>詳細</TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>

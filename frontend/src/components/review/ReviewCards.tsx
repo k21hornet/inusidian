@@ -12,7 +12,13 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Card } from "@/type/index";
 import { getDueCards, reviewFailure, reviewSuccess } from "@/features/Card";
 
-export default function ReviewCards({ deckId }: { deckId: number }) {
+export default function ReviewCards({
+  deckId,
+  onReviewCompleted,
+}: {
+  deckId: number;
+  onReviewCompleted: () => void;
+}) {
   const [dueCards, setDueCards] = useState<Card[]>([]);
   const [dueCard, setDueCard] = useState<Card | null>();
   const [accordionExpanded, setAccordionExpanded] = useState(false); // アコーディオンの開閉状態
@@ -45,6 +51,7 @@ export default function ReviewCards({ deckId }: { deckId: number }) {
     await reviewSuccess(id);
     setDueCards(dueCards.filter((rc) => rc.id !== id)); //正解した問題を除外
     setAccordionExpanded(false);
+    onReviewCompleted(); // 復習完了後のコールバック
   };
 
   // 問題不正解時

@@ -3,6 +3,7 @@ import { getDeck } from "@/features/Deck";
 import { Box, Typography } from "@mui/material";
 import StyleIcon from "@mui/icons-material/Style";
 import React from "react";
+import InfoOutlineIcon from "@mui/icons-material/InfoOutline";
 
 type Params = {
   params: Promise<{ id: number }>;
@@ -17,15 +18,37 @@ export default async function DeckPage({ params }: Params) {
   return (
     <>
       <Box sx={{ mb: 2 }}>
-        <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-          <StyleIcon sx={{ fontSize: "24px", mr: 1 }} />
-          <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-            {deck.deckName}
-          </Typography>
-        </Box>
-        <Typography sx={{ color: "text.secondary" }}>
-          {deck.deckDescription}
+        <Typography variant="h5" sx={{ fontWeight: "bold", mb: 2 }}>
+          {deck.deckName}
         </Typography>
+
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            color: "text.secondary",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <StyleIcon sx={{ fontSize: "16px", mr: 1 }} />
+            <Typography>{deck.deckDescription}</Typography>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <InfoOutlineIcon sx={{ fontSize: "16px" }} />
+            <Typography>{deck.cards.length}枚のカードを作成済み</Typography>
+          </Box>
+        </Box>
       </Box>
 
       <DeckTab deck={deck} />

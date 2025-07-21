@@ -69,7 +69,7 @@ export default function DeckTab({ deck: initialDeck }: Props) {
         <CardList deck={deck} />
       </DeckTabPanel>
       <DeckTabPanel value={value} index={1}>
-        <ReviewCards deckId={deck.id} />
+        <ReviewCards deckId={deck.id} onReviewCompleted={refreshDeck} />
       </DeckTabPanel>
       <DeckTabPanel value={value} index={2}>
         <CreateCardForm deck={deck} onCardCreated={refreshDeck} />
