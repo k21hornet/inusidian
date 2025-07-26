@@ -12,17 +12,14 @@ public class CardValueDTO {
 
     private Integer id;
 
-    private String fieldName;
-
-    private String fieldType;
+    private CardFieldDTO field;
 
     private String content;
 
     public static CardValueDTO fromEntity(CardValue cv) {
         return new CardValueDTO(
                 cv.getId(),
-                cv.getField().getFieldName(),
-                cv.getField().getFieldType(),
+                CardFieldDTO.fromEntity(cv.getField()),
                 cv.getContent()
         );
     }

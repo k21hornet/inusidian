@@ -22,6 +22,7 @@ export type CardField = {
 
 export type Card = {
   id: number;
+  deckId?: number;
   deck: Deck;
   cardValues: CardValue[];
   successCount: number;
@@ -32,7 +33,6 @@ export type Card = {
 export type CardValue = {
   id: number;
   card: Card;
-  fieldName: string;
-  fieldType: string;
+  field: CardField;
   content: string;
 };

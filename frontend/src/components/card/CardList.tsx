@@ -14,11 +14,13 @@ import React, { useState } from "react";
 import CardModal from "./CardModal";
 import { Card } from "@/type/index";
 
-type Props = {
+export default function CardList({
+  deck,
+  onCardUpdated,
+}: {
   deck: Deck;
-};
-
-export default function CardList({ deck }: Props) {
+  onCardUpdated: () => void;
+}) {
   const [cardDetail, setCardDetail] = useState<Card>();
   const [open, setOpen] = useState(false);
   const handleOpen = (card: Card) => {
@@ -80,7 +82,12 @@ export default function CardList({ deck }: Props) {
         </Table>
       </TableContainer>
 
-      <CardModal open={open} handleClose={handleClose} card={cardDetail} />
+      <CardModal
+        open={open}
+        handleClose={handleClose}
+        card={cardDetail}
+        onCardUpdated={onCardUpdated}
+      />
     </>
   );
 }

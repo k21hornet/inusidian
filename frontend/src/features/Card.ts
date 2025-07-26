@@ -1,12 +1,23 @@
 import { PostCardFormData } from "@/type/request";
 import { Card } from "@/type/index";
-import { deleteApi, getApi, postApi } from "../lib/apiClient";
+import { deleteApi, getApi, postApi, putApi } from "../lib/apiClient";
 
 export async function postCard(
   data: PostCardFormData
 ): Promise<Card | undefined> {
   try {
     const response = await postApi(`/cards/create`, data);
+    return response;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export async function updateCard(
+  data: PostCardFormData
+): Promise<Card | undefined> {
+  try {
+    const response = await putApi(`/cards/update`, data);
     return response;
   } catch (e) {
     console.log(e);
