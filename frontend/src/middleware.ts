@@ -10,11 +10,6 @@ export async function middleware(request: NextRequest) {
     return response;
   }
 
-  // ルートは認証不要
-  if (request.nextUrl.pathname === "/") {
-    return NextResponse.next();
-  }
-
   // セッションチェック
   const session = await auth0.getSession(request);
   if (!session) {

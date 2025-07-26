@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import BeachAccessIcon from "@mui/icons-material/BeachAccess";
 import StyleIcon from "@mui/icons-material/Style";
-import { getAllDecks } from "@/features/Deck";
+import { getAllDecks } from "@/app/actions/deck-actions";
 import Link from "next/link";
 import SidebarUser from "./SidebarUser";
 

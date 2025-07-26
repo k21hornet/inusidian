@@ -1,5 +1,5 @@
 import DeckPanel from "@/components/deck/DeckPanel";
-import { getAllDecks } from "@/features/Deck";
+import { getAllDecks } from "@/app/actions/deck-actions";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import Link from "next/link";
 import React from "react";
