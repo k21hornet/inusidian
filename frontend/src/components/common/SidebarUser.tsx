@@ -1,10 +1,18 @@
+"use client";
+
 import { Box, Typography } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { useRouter } from "next/navigation";
 
 export default function SidebarUser() {
+  const router = useRouter();
+
   return (
     <Box
+      onClick={() => {
+        router.push("/auth/logout");
+      }}
       sx={{
         display: "flex",
         justifyContent: "space-between",
