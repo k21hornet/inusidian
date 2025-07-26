@@ -29,6 +29,13 @@ public class CardController {
         return cardService.create(input);
     }
 
+    @PutMapping("/update")
+    public CardDTO update(@RequestBody @Validated CardInput input, BindingResult result) {
+        if (result.hasErrors()) throw new RuntimeException();
+
+        return cardService.update(input);
+    }
+
     @GetMapping("/review/{deckId}")
     public List<CardDTO> getDueCards(@PathVariable int deckId) {
         return cardService.findDueCards(deckId);

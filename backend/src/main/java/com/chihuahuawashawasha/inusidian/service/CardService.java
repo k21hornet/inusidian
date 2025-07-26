@@ -38,6 +38,39 @@ public class CardService {
         card.setDeck(deck);
 
         // カード情報を属性ごとに作成
+        List<CardValue> cardValues = getCardValue(card, input);
+        card.setCardValues(cardValues);
+
+        // 単語カード学習記録を作成
+        card.setSuccessCount(0);
+        card.setNextReviewDate(LocalDate.now());
+
+        card = cardRepository.save(card);
+        return CardDTO.fromEntity(card);
+    }
+
+    public CardDTO update(CardInput input) {
+        Card card = findCardById(input.getCardId());
+
+        // カード情報を属性ごとに作成
+        List<CardValue> cardValues = getCardValue(card, input);
+
+        // NG例（新しいリストをセットする）
+        // card.setCardValues(newCardValues);
+        // OK例（既存リストをクリアしてから追加）
+        card.getCardValues().clear();
+        card.getCardValues().addAll(cardValues);
+
+        card = cardRepository.save(card);
+        return CardDTO.fromEntity(card);
+    }
+
+    /**
+     * カード情報を属性ごとに作成する関数
+     * @param input
+     * @return
+     */
+    private List<CardValue> getCardValue(Card card, CardInput input) {
         List<CardValue> cardValues = new ArrayList<>();
         for (CardValueInput cvi : input.getValues()) {
             // カード属性を取得
@@ -50,14 +83,7 @@ public class CardService {
             cardValue.setContent(cvi.getContent());
             cardValues.add(cardValue);
         }
-        card.setCardValues(cardValues);
-
-        // 単語カード学習記録を作成
-        card.setSuccessCount(0);
-        card.setNextReviewDate(LocalDate.now());
-
-        card = cardRepository.save(card);
-        return CardDTO.fromEntity(card);
+        return cardValues;
     }
 
     /**

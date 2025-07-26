@@ -1,17 +1,55 @@
-import { deleteCard } from "@/features/Card";
+import { deleteCard, updateCard } from "@/features/Card";
 import { Card } from "@/type/index";
+import { PostCardFormData } from "@/type/request";
 import { Box, Button, Modal, TextField, Typography } from "@mui/material";
-import React from "react";
+import React, { FormEvent, useState } from "react";
 
 export default function CardModal({
   open,
   handleClose,
   card,
+  onCardUpdated,
 }: {
   open: boolean;
   handleClose: () => void;
   card: Card | undefined;
+  onCardUpdated: () => void;
 }) {
+  if (!card) return;
+
+  const [formData, setFormData] = useState<PostCardFormData>({
+    cardId: card.id,
+    deckId: card.deckId,
+    values: card.cardValues.map((value) => ({
+      fieldId: value.field.id,
+      content: value.content,
+    })),
+  });
+
+  const handleFieldChange = (index: number, value: string) => {
+    const newValues = [...formData.values]; // 現在の値をコピー
+    newValues[index] = { ...newValues[index], content: value }; // 該当フィールドのみ更新
+    setFormData((prev) => ({
+      ...prev,
+      values: newValues,
+    }));
+  };
+
+  // カード編集
+  const handleSubmit = async (e: FormEvent<Element>) => {
+    e.preventDefault();
+
+    const data = await updateCard(formData);
+    if (data) {
+      // カード編集後のコールバックを実行
+      if (onCardUpdated) {
+        onCardUpdated();
+      }
+
+      handleClose();
+    }
+  };
+
   // カード削除
   const handleDelete = async (id: number) => {
     const confirm = window.confirm("本当に削除しますか？");
@@ -43,16 +81,17 @@ export default function CardModal({
         >
           <Box
             component={"form"}
+            onSubmit={handleSubmit}
             sx={{ display: "flex", flexDirection: "column", gap: 2 }}
           >
             {card.cardValues.map((value, idx) => (
               <TextField
                 key={value.id}
                 type="text"
-                label={value.fieldName}
+                label={value.field.fieldName}
                 fullWidth
-                value={value.content}
-                required
+                value={formData.values[idx].content}
+                onChange={(e) => handleFieldChange(idx, e.target.value)}
               />
             ))}
 

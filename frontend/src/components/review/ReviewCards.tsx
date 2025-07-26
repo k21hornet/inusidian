@@ -77,7 +77,7 @@ export default function ReviewCards({
     >
       {/* カード表面 */}
       {dueCard.cardValues
-        .filter((value) => value.fieldType !== "back") // 表のカードのみ取得
+        .filter((value) => value.field.fieldType !== "back") // 表のカードのみ取得
         .map((value, idx) => (
           <Typography
             key={idx}
@@ -117,7 +117,7 @@ export default function ReviewCards({
           }}
         >
           {dueCard.cardValues
-            .filter((value) => value.fieldType === "back") // 裏のカードのみ取得
+            .filter((value) => value.field.fieldType === "back") // 裏のカードのみ取得
             .map((value, idx) => (
               <Typography
                 key={idx}

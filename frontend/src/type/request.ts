@@ -8,7 +8,8 @@ export type PostDeckFormData = {
 };
 
 export type PostCardFormData = {
-  deckId: number;
+  cardId?: number;
+  deckId?: number;
   values: {
     fieldId: number;
     content: string;
