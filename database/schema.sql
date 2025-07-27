@@ -1,8 +1,6 @@
 CREATE TABLE IF NOT EXISTS users (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(30) NOT NULL,
+    id varchar(255) PRIMARY KEY,
     email VARCHAR(100) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
     authority VARCHAR(20),
     created_at TIMESTAMP,
     updated_at TIMESTAMP,
@@ -11,7 +9,7 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE IF NOT EXISTS decks (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT NOT NULL,
+    user_id varchar(255) NOT NULL,
     deck_name VARCHAR(50) NOT NULL,
     deck_description VARCHAR(100) NOT NULL,
     created_at TIMESTAMP,

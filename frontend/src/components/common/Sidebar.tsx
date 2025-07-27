@@ -9,12 +9,14 @@ import {
 } from "@mui/material";
 import BeachAccessIcon from "@mui/icons-material/BeachAccess";
 import StyleIcon from "@mui/icons-material/Style";
-import { getAllDecks } from "@/features/Deck";
+import { getAllDecks } from "@/app/actions/deck-actions";
 import Link from "next/link";
 import SidebarUser from "./SidebarUser";
+import { getLoginEmail } from "@/app/actions/user-actions";
 
 export default async function Sidebar() {
   const decks = await getAllDecks();
+  const loginEmail = await getLoginEmail();
 
   return (
     <Box
@@ -102,7 +104,7 @@ export default async function Sidebar() {
         </Box>
       </Box>
 
-      <SidebarUser />
+      <SidebarUser loginEmail={loginEmail} />
     </Box>
   );
 }

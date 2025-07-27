@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: inusidian
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://localhost:3306/inusidian
+    username: root
+    password: pass
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+auth0:
+  issuer: ${issuer}
+  audience: ${audience}

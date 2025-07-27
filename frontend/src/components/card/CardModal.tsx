@@ -1,7 +1,7 @@
-import { deleteCard, updateCard } from "@/features/Card";
+import { deleteCard, updateCard } from "@/app/actions/card-actions";
 import { Card } from "@/type/index";
 import { PostCardFormData } from "@/type/request";
-import { Box, Button, Modal, TextField, Typography } from "@mui/material";
+import { Box, Button, Modal, TextField } from "@mui/material";
 import React, { FormEvent, useState } from "react";
 
 export default function CardModal({

@@ -24,22 +24,24 @@ public class DeckService {
     private final DeckRepository deckRepository;
     private final UserRepository userRepository;
 
-    public List<DeckSummaryDTO> findAll() {
-        return deckRepository.findAll()
+    public List<DeckSummaryDTO> findAll(String authId) {
+        return deckRepository.findAllByUserId(authId)
                 .stream()
                 .map(DeckSummaryDTO::fromEntity)
                 .toList();
     }
 
-    public DeckDTO findById(int id) {
+    public DeckDTO findById(String auth0Id, int id) {
         Deck deck = deckRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Deck Not Found"));
+        if (!auth0Id.equals(deck.getUser().getId())) {
+            throw new RuntimeException("UserIdが一致しません");
+        }
         return DeckDTO.fromEntity(deck);
     }
 
-    public DeckDTO create(DeckInput input) {
-        // TODO
-        User user = userRepository.findById(1).orElseThrow();
+    public DeckDTO create(String auth0Id, DeckInput input) {
+        User user = userRepository.findById(auth0Id).orElseThrow();
 
         // deckの基本情報を作成
         Deck deck = new Deck();
