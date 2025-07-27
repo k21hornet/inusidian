@@ -1,12 +1,14 @@
-import Appbar from "@/components/common/Appbar";
 import Sidebar from "@/components/common/Sidebar";
 import { Box } from "@mui/material";
+import { syncUser } from "../actions/user-actions";
 
-export default function ServiceLayout({
+export default async function ServiceLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  await syncUser(); // 新規ユーザーがログインした時にユーザー情報を同期
+
   return (
     <Box
       sx={{

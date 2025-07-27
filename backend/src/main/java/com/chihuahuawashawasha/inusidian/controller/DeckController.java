@@ -5,6 +5,8 @@ import com.chihuahuawashawasha.inusidian.model.dto.DeckSummaryDTO;
 import com.chihuahuawashawasha.inusidian.model.input.DeckInput;
 import com.chihuahuawashawasha.inusidian.service.DeckService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -18,20 +20,26 @@ public class DeckController {
     private final DeckService deckService;
 
     @GetMapping
-    public List<DeckSummaryDTO> decks() {
-        return deckService.findAll();
+    public List<DeckSummaryDTO> decks(@AuthenticationPrincipal Jwt jwt) {
+        String auth0Id = jwt.getSubject();
+        return deckService.findAll(auth0Id);
     }
 
     @GetMapping("/{id}")
-    public DeckDTO deck(@PathVariable int id) {
-        return deckService.findById(id);
+    public DeckDTO deck(@AuthenticationPrincipal Jwt jwt, @PathVariable int id) {
+        String auth0Id = jwt.getSubject();
+        return deckService.findById(auth0Id, id);
     }
 
     @PostMapping("/create")
-    public DeckDTO create(@RequestBody @Validated DeckInput input, BindingResult result){
+    public DeckDTO create(
+            @AuthenticationPrincipal Jwt jwt,
+            @RequestBody @Validated DeckInput input,
+            BindingResult result
+    ){
         if (result.hasErrors()) throw new RuntimeException();
-
-        return deckService.create(input);
+        String auth0Id = jwt.getSubject();
+        return deckService.create(auth0Id,input);
     }
 
     @DeleteMapping("/{id}")

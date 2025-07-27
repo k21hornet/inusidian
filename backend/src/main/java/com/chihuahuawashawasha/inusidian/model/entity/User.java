@@ -12,14 +12,9 @@ import java.util.List;
 public class User {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    
-    private String username;
+    private String id;
     
     private String email;
-    
-    private String password;
     
     private String authority;
     
