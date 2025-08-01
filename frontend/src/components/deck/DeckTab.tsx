@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import DeckTabPanel from "./DeckTabPanel";
 import { useRouter, useSearchParams } from "next/navigation";
 import CardList from "../card/CardList";
-import { deleteDeck, getDeck } from "@/features/Deck";
+import { deleteDeck, getDeck } from "@/app/actions/deck-actions";
 
 import { Deck } from "@/type/index";
 import CreateCardForm from "../card/CreateCardForm";

@@ -10,7 +10,11 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Card } from "@/type/index";
-import { getDueCards, reviewFailure, reviewSuccess } from "@/features/Card";
+import {
+  getReviewCards,
+  reviewFailure,
+  reviewSuccess,
+} from "@/app/actions/review-actions";
 
 export default function ReviewCards({
   deckId,
@@ -31,7 +35,7 @@ export default function ReviewCards({
 
   useEffect(() => {
     const fetchReviewCards = async () => {
-      const data = await getDueCards(deckId);
+      const data = await getReviewCards(deckId);
       setDueCards(data);
     };
     fetchReviewCards();

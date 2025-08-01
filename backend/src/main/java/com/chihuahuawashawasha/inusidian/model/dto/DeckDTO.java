@@ -17,7 +17,7 @@ import java.util.List;
 public class DeckDTO {
     private Integer id;
 
-    private Integer userId;
+    private String userId;
 
     private String deckName;
 

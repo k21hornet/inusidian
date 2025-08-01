@@ -1,6 +1,6 @@
 "use client";
 
-import { postDeck } from "@/features/Deck";
+import { postDeck } from "@/app/actions/deck-actions";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React, { ChangeEvent, FormEvent, useState } from "react";

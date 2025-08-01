@@ -1,5 +1,5 @@
 import DeckTab from "@/components/deck/DeckTab";
-import { getDeck } from "@/features/Deck";
+import { getDeck } from "@/app/actions/deck-actions";
 import { Box, Typography } from "@mui/material";
 import StyleIcon from "@mui/icons-material/Style";
 import React from "react";
