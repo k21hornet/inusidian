@@ -10,13 +10,7 @@ export default function CreateDeckForm() {
   const [formData, setFormData] = useState({
     deckName: "",
     deckDescription: "",
-    cardFields: [
-      { fieldName: "", fieldType: "primary" },
-      { fieldName: "", fieldType: "front" },
-      { fieldName: "", fieldType: "front" },
-      { fieldName: "", fieldType: "back" },
-      { fieldName: "", fieldType: "back" },
-    ],
+    cardFields: [{ fieldName: "", fieldType: "primary" }],
   });
 
   // 通常のフィールドの変更処理
@@ -32,6 +26,24 @@ export default function CreateDeckForm() {
   const handleFieldChange = (index: number, value: string) => {
     const newFields = [...formData.cardFields]; // 現在の値をコピー
     newFields[index] = { ...newFields[index], fieldName: value }; // 該当フィールドのみ更新
+    setFormData((prev) => ({
+      ...prev,
+      cardFields: newFields,
+    }));
+  };
+
+  // cardFieldsを追加
+  const handleAddField = (fieldType: "front" | "back") => {
+    setFormData((prev) => ({
+      ...prev,
+      cardFields: [...prev.cardFields, { fieldName: "", fieldType }],
+    }));
+  };
+
+  // cardFieldsを削除
+  const handleDeleteField = (index: number) => {
+    const newFields = [...formData.cardFields];
+    newFields.splice(index, 1);
     setFormData((prev) => ({
       ...prev,
       cardFields: newFields,
@@ -74,6 +86,10 @@ export default function CreateDeckForm() {
         <Typography variant="h6" gutterBottom>
           カードのフィールドを設定（表）
         </Typography>
+
+        <Button variant="contained" onClick={() => handleAddField("front")}>
+          フィールドを追加（表）
+        </Button>
       </Box>
 
       <TextField
@@ -83,40 +99,60 @@ export default function CreateDeckForm() {
         onChange={(e) => handleFieldChange(0, e.target.value)}
         required
       />
-      <TextField
-        label="例：発音記号"
-        type="text"
-        value={formData.cardFields[1].fieldName}
-        onChange={(e) => handleFieldChange(1, e.target.value)}
-        required
-      />
-      <TextField
-        label="例：例文"
-        type="text"
-        value={formData.cardFields[2].fieldName}
-        onChange={(e) => handleFieldChange(2, e.target.value)}
-        required
-      />
+
+      {formData.cardFields.map((field, index) => (
+        <Box key={index}>
+          {field.fieldType === "front" && (
+            <Box>
+              <TextField
+                label="例：単語"
+                type="text"
+                value={field.fieldName}
+                onChange={(e) => handleFieldChange(index, e.target.value)}
+                required
+              />
+              <Button
+                variant="contained"
+                onClick={() => handleDeleteField(index)}
+              >
+                削除
+              </Button>
+            </Box>
+          )}
+        </Box>
+      ))}
 
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Typography variant="h6" gutterBottom>
           カードのフィールドを設定（裏）
         </Typography>
+
+        <Button variant="contained" onClick={() => handleAddField("back")}>
+          フィールドを追加（裏）
+        </Button>
       </Box>
-      <TextField
-        label="例：意味"
-        type="text"
-        value={formData.cardFields[3].fieldName}
-        onChange={(e) => handleFieldChange(3, e.target.value)}
-        required
-      />
-      <TextField
-        label="例：翻訳"
-        type="text"
-        value={formData.cardFields[4].fieldName}
-        onChange={(e) => handleFieldChange(4, e.target.value)}
-        required
-      />
+
+      {formData.cardFields.map((field, index) => (
+        <Box key={index}>
+          {field.fieldType === "back" && (
+            <Box>
+              <TextField
+                label="例：意味"
+                type="text"
+                value={field.fieldName}
+                onChange={(e) => handleFieldChange(index, e.target.value)}
+                required
+              />
+              <Button
+                variant="contained"
+                onClick={() => handleDeleteField(index)}
+              >
+                削除
+              </Button>
+            </Box>
+          )}
+        </Box>
+      ))}
 
       <Box>
         <Button variant="contained" type="submit">

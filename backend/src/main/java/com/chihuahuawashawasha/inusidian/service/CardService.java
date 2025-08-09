@@ -33,7 +33,7 @@ public class CardService {
         // カードを作成
         Card card = new Card();
 
-        // 紐づくDeckを取得 TODO
+        // 紐づくDeckを取得
         Deck deck = deckRepository.findById(input.getDeckId()).orElseThrow();
         card.setDeck(deck);
 
@@ -55,9 +55,7 @@ public class CardService {
         // カード情報を属性ごとに作成
         List<CardValue> cardValues = getCardValue(card, input);
 
-        // NG例（新しいリストをセットする）
-        // card.setCardValues(newCardValues);
-        // OK例（既存リストをクリアしてから追加）
+        // 既存リストをクリアしてから追加
         card.getCardValues().clear();
         card.getCardValues().addAll(cardValues);
 
