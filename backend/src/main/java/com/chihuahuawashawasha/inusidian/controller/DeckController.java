@@ -42,6 +42,15 @@ public class DeckController {
         return deckService.create(auth0Id,input);
     }
 
+    @PutMapping("/update")
+    public DeckDTO update(
+            @RequestBody @Validated DeckInput input,
+            BindingResult result
+    ){
+        if (result.hasErrors()) throw new RuntimeException();
+        return deckService.update(input);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteDeck (@PathVariable int id) {
         deckService.deleteById(id);

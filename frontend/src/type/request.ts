@@ -1,4 +1,5 @@
 export type PostDeckFormData = {
+  deckId?: number;
   deckName: string;
   deckDescription: string;
   cardFields: {

@@ -10,6 +10,7 @@ import { deleteDeck, getDeck } from "@/app/actions/deck-actions";
 import { Deck } from "@/type/index";
 import CreateCardForm from "../card/CreateCardForm";
 import ReviewCards from "../review/ReviewCards";
+import EditDeckForm from "./EditDeckForm";
 
 type Props = {
   deck: Deck;
@@ -75,6 +76,7 @@ export default function DeckTab({ deck: initialDeck }: Props) {
         <CreateCardForm deck={deck} onCardCreated={refreshDeck} />
       </DeckTabPanel>
       <DeckTabPanel value={value} index={3}>
+        <EditDeckForm deck={deck} onDeckUpdated={refreshDeck} />
         <Button variant="contained" onClick={() => handleDelete(deck.id)}>
           デッキ削除
         </Button>

@@ -8,6 +8,8 @@ import java.util.List;
 
 @Data
 public class DeckInput {
+    private Integer deckId;
+
     @NotBlank
     @Size(max = 50)
     private String deckName;
