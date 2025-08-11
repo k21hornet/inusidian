@@ -6,6 +6,8 @@ import lombok.Data;
 
 @Data
 public class CardFieldInput{
+    private Integer fieldId;
+
     @NotBlank
     @Size(max = 50)
     private String fieldName;
