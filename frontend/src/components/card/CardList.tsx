@@ -2,7 +2,9 @@
 
 import { Deck } from "@/type/index";
 import {
+  Alert,
   Paper,
+  Snackbar,
   Table,
   TableBody,
   TableCell,
@@ -27,7 +29,13 @@ export default function CardList({
     setOpen(true);
     setCardDetail(card);
   };
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    setCardDetail(undefined);
+  };
+
+  const [openUpdateSnackbar, setOpenUpdateSnackbar] = useState(false);
+  const [openDeleteSnackbar, setOpenDeleteSnackbar] = useState(false);
 
   return (
     <>
@@ -87,7 +95,31 @@ export default function CardList({
         handleClose={handleClose}
         card={cardDetail}
         onCardUpdated={onCardUpdated}
+        setOpenUpdateSnackbar={setOpenUpdateSnackbar}
+        setOpenDeleteSnackbar={setOpenDeleteSnackbar}
       />
+
+      <Snackbar
+        open={openUpdateSnackbar}
+        autoHideDuration={1000}
+        onClose={() => setOpenUpdateSnackbar(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert severity="success" variant="filled">
+          カードを更新しました
+        </Alert>
+      </Snackbar>
+
+      <Snackbar
+        open={openDeleteSnackbar}
+        autoHideDuration={1000}
+        onClose={() => setOpenDeleteSnackbar(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert severity="success" variant="filled">
+          カードを削除しました
+        </Alert>
+      </Snackbar>
     </>
   );
 }

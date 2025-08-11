@@ -9,11 +9,15 @@ export default function CardModal({
   handleClose,
   card,
   onCardUpdated,
+  setOpenUpdateSnackbar,
+  setOpenDeleteSnackbar,
 }: {
   open: boolean;
   handleClose: () => void;
   card: Card | undefined;
   onCardUpdated: () => void;
+  setOpenUpdateSnackbar: (open: boolean) => void;
+  setOpenDeleteSnackbar: (open: boolean) => void;
 }) {
   if (!card) return;
 
@@ -47,6 +51,7 @@ export default function CardModal({
       }
 
       handleClose();
+      setOpenUpdateSnackbar(true);
     }
   };
 
@@ -55,6 +60,12 @@ export default function CardModal({
     const confirm = window.confirm("本当に削除しますか？");
     if (!confirm) return;
     await deleteCard(id);
+    handleClose();
+    setOpenDeleteSnackbar(true);
+    // カード削除後のコールバックを実行
+    if (onCardUpdated) {
+      onCardUpdated();
+    }
   };
 
   if (card === undefined) return;
