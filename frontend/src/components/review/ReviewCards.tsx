@@ -4,8 +4,10 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Alert,
   Box,
   Button,
+  Snackbar,
   Typography,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -26,6 +28,7 @@ export default function ReviewCards({
   const [dueCards, setDueCards] = useState<Card[]>([]);
   const [dueCard, setDueCard] = useState<Card | null>();
   const [accordionExpanded, setAccordionExpanded] = useState(false); // アコーディオンの開閉状態
+  const [open, setOpen] = useState(false); // Snackbarの開閉状態
 
   // ランダムで一問出題
   const setNextReviewCard = () => {
@@ -64,6 +67,7 @@ export default function ReviewCards({
     await reviewFailure(dueCard.id);
     setNextReviewCard();
     setAccordionExpanded(false);
+    setOpen(true);
   };
 
   if (!dueCard) return <Congratulations />;
@@ -166,6 +170,17 @@ export default function ReviewCards({
           </Box>
         </AccordionDetails>
       </Accordion>
+
+      <Snackbar
+        open={open}
+        onClose={() => setOpen(false)}
+        autoHideDuration={1000}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert severity="error" variant="filled">
+          ドンマイ！
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }

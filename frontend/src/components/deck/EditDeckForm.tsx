@@ -2,7 +2,14 @@
 
 import { putDeck } from "@/app/actions/deck-actions";
 import { Deck } from "@/type";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  Snackbar,
+  TextField,
+  Typography,
+} from "@mui/material";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 
 type Props = {
@@ -11,6 +18,7 @@ type Props = {
 };
 
 export default function EditDeckForm({ deck, onDeckUpdated }: Props) {
+  const [open, setOpen] = useState(false); // Snackbarの開閉状態
   const [formData, setFormData] = useState({
     deckId: deck.id,
     deckName: deck.deckName,
@@ -48,51 +56,65 @@ export default function EditDeckForm({ deck, onDeckUpdated }: Props) {
     if (data) {
       // コールバック実行
       onDeckUpdated();
+      setOpen(true);
     }
   };
 
   return (
-    <Box>
-      <Typography variant="h6" gutterBottom>
-        デッキ基本情報
-      </Typography>
-      <TextField
-        label="デッキ名"
-        type="text"
-        name="deckName"
-        value={formData.deckName}
-        onChange={handleChange}
-        required
-      />
-      <TextField
-        label="デッキ説明文"
-        fullWidth
-        type="text"
-        name="deckDescription"
-        value={formData.deckDescription}
-        onChange={handleChange}
-        required
-      />
+    <>
+      <Box>
+        <Typography variant="h6" gutterBottom>
+          デッキ基本情報
+        </Typography>
+        <TextField
+          label="デッキ名"
+          type="text"
+          name="deckName"
+          value={formData.deckName}
+          onChange={handleChange}
+          required
+        />
+        <TextField
+          label="デッキ説明文"
+          fullWidth
+          type="text"
+          name="deckDescription"
+          value={formData.deckDescription}
+          onChange={handleChange}
+          required
+        />
 
-      <Typography variant="h6" gutterBottom>
-        カードのフィールドを設定
-      </Typography>
+        <Typography variant="h6" gutterBottom>
+          カードのフィールドを設定
+        </Typography>
 
-      {formData.cardFields.map((field, index) => (
-        <Box key={index}>
-          <TextField
-            label={field.fieldType === "primary" || "front" ? "表" : "裏"}
-            type="text"
-            value={field.fieldName}
-            onChange={(e) => handleFieldChange(index, e.target.value)}
-            required
-          />
-        </Box>
-      ))}
+        {formData.cardFields.map((field, index) => (
+          <Box key={index}>
+            <TextField
+              label={field.fieldType === "primary" || "front" ? "表" : "裏"}
+              type="text"
+              value={field.fieldName}
+              onChange={(e) => handleFieldChange(index, e.target.value)}
+              required
+            />
+          </Box>
+        ))}
 
-      <Button variant="contained" onClick={handleSubmit}>
-        更新
-      </Button>
-    </Box>
+        <Button variant="contained" onClick={handleSubmit}>
+          更新
+        </Button>
+      </Box>
+
+      <Snackbar
+        open={open}
+        autoHideDuration={1000}
+        onClose={() => setOpen(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert severity="success" variant="filled">
+          デッキを更新しました
+        </Alert>
+      </Snackbar>
+    </>
   );
 }
