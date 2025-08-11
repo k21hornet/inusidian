@@ -15,6 +15,7 @@ import {
 import React, { useState } from "react";
 import CardModal from "./CardModal";
 import { Card } from "@/type/index";
+import { convertDate } from "@/util/convertDate";
 
 export default function CardList({
   deck,
@@ -79,11 +80,13 @@ export default function CardList({
                   }}
                   onClick={() => handleOpen(card)}
                 >
-                  <TableCell>{card.cardValues[0].content}</TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>
+                    {card.cardValues[0].content}
+                  </TableCell>
                   <TableCell>{card.successCount}回</TableCell>
-                  <TableCell>{card.nextReviewDate}</TableCell>
-                  <TableCell>{card.createdAt}</TableCell>
-                  <TableCell>詳細</TableCell>
+                  <TableCell>{convertDate(card.nextReviewDate)}</TableCell>
+                  <TableCell>{convertDate(card.createdAt)}</TableCell>
+                  <TableCell sx={{ color: "primary.main" }}>詳細</TableCell>
                 </TableRow>
               ))}
           </TableBody>

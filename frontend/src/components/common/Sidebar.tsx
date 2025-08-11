@@ -55,31 +55,6 @@ export default async function Sidebar() {
             component="nav"
             subheader={
               <ListSubheader component="div" sx={{ bgcolor: "#f5f6fa" }}>
-                今日のタスク({decks?.length})
-              </ListSubheader>
-            }
-          >
-            {decks?.map((deck) => (
-              <Link
-                key={deck.id}
-                href={`/deck/${deck.id}?review`}
-                style={{ color: "inherit", textDecoration: "none" }}
-              >
-                <ListItemButton>
-                  <ListItemIcon sx={{ minWidth: 28 }}>
-                    <StyleIcon />
-                  </ListItemIcon>
-                  <ListItemText sx={{ fontSize: "14px" }}>
-                    {deck.deckName}
-                  </ListItemText>
-                </ListItemButton>
-              </Link>
-            ))}
-          </List>
-          <List
-            component="nav"
-            subheader={
-              <ListSubheader component="div" sx={{ bgcolor: "#f5f6fa" }}>
                 デッキ一覧({decks?.length})
               </ListSubheader>
             }
