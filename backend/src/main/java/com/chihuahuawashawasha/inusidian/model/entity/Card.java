@@ -35,6 +35,9 @@ public class Card {
     @OneToMany(mappedBy = "card", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CardValue> cardValues;
 
+    @OneToMany(mappedBy = "card", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CardLog> cardLogs;
+
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();

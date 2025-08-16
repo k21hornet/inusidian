@@ -5,6 +5,7 @@ import com.chihuahuawashawasha.inusidian.model.entity.*;
 import com.chihuahuawashawasha.inusidian.model.input.CardInput;
 import com.chihuahuawashawasha.inusidian.model.input.CardValueInput;
 import com.chihuahuawashawasha.inusidian.repository.CardFieldRepository;
+import com.chihuahuawashawasha.inusidian.repository.CardLogRepository;
 import com.chihuahuawashawasha.inusidian.repository.CardRepository;
 import com.chihuahuawashawasha.inusidian.repository.DeckRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -23,6 +24,7 @@ public class CardService {
     private final CardRepository cardRepository;
     private final CardFieldRepository cardFieldRepository;
     private final DeckRepository deckRepository;
+    private final CardLogRepository cardLogRepository;
 
     public CardDTO findById(int id) {
         Card card = findCardById(id);
@@ -114,6 +116,12 @@ public class CardService {
         card.setNextReviewDate(LocalDate.now().plusDays(nextReviewInterval));
 
         cardRepository.save(card);
+
+        CardLog log = new CardLog();
+        log.setCard(card);
+        log.setElapsedTime(elapsedTime);
+        log.setNextReviewInterval(nextReviewInterval);
+        cardLogRepository.save(log);
     }
 
     /**
@@ -123,9 +131,16 @@ public class CardService {
     public void failure(int id) {
         Card card = findCardById(id);
         card.setSuccessCount(0);
+        card.setReviewInterval(0);
         card.setNextReviewDate(LocalDate.now());
 
         cardRepository.save(card);
+
+        CardLog log = new CardLog();
+        log.setCard(card);
+        log.setElapsedTime(-999);
+        log.setNextReviewInterval(0);
+        cardLogRepository.save(log);
     }
 
     private Card findCardById(int id) {
