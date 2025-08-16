@@ -43,6 +43,7 @@ public class CardService {
 
         // 単語カード学習記録を作成
         card.setSuccessCount(0);
+        card.setReviewInterval(0);
         card.setNextReviewDate(LocalDate.now());
 
         card = cardRepository.save(card);
@@ -100,12 +101,17 @@ public class CardService {
      * 問題に正解した時の処理
      * 次の出題日を決め、成功カウントを増やす
      * @param id 復習記録ID
+     * @param elapsedTime 回答時間
      */
-    public void success(int id) {
+    public void success(int id, int elapsedTime) {
         Card card = findCardById(id);
         int count = card.getSuccessCount();
-        card.setNextReviewDate(calcNextReviewDate(count));
         card.setSuccessCount(++count);
+        // 復習間隔を設定
+        int nextReviewInterval = calcNextReviewInterval(count, card.getReviewInterval(), elapsedTime);
+        card.setReviewInterval(nextReviewInterval);
+        // 次回復習日を設定
+        card.setNextReviewDate(LocalDate.now().plusDays(nextReviewInterval));
 
         cardRepository.save(card);
     }
@@ -116,8 +122,8 @@ public class CardService {
      */
     public void failure(int id) {
         Card card = findCardById(id);
-        card.setNextReviewDate(LocalDate.now());
         card.setSuccessCount(0);
+        card.setNextReviewDate(LocalDate.now());
 
         cardRepository.save(card);
     }
@@ -128,12 +134,28 @@ public class CardService {
     }
 
     /**
-     * 成功回数に応じて次の出題日を設定
+     * 復習間隔を計算
+     * 復習間隔 = (2 x 成功カウント - 1 + 現復習間隔) x 難易度
      * @param count 成功カウント
-     * @return 次の出題日
+     * @param reviewInterval 現在の復習間隔
+     * @param elapsedTime 回答時間
+     * @return 復習間隔
      */
-    private LocalDate calcNextReviewDate(int count) {
-        return LocalDate.now().plusDays(count * 2L + 1);
+    private int calcNextReviewInterval(int count, int reviewInterval, int elapsedTime) {
+        double difficulty = calcDifficulty(elapsedTime);
+        return (int) Math.round((2 * count -1 + reviewInterval) * difficulty);
+    }
+
+    /**
+     * 回答時間によって難易度を計算
+     * @param elapsedTime 回答時間
+     * @return 難易度
+     */
+    private double calcDifficulty(int elapsedTime) {
+        if (elapsedTime < 4) return 1.0;
+        if (elapsedTime < 8) return 0.9;
+        if (elapsedTime < 12) return 0.8;
+        return 0.7;
     }
 
     public void deleteById(int id) {

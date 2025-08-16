@@ -22,6 +22,8 @@ public class Card {
 
     private Integer successCount;
 
+    private Integer reviewInterval;
+
     private LocalDate nextReviewDate;
     
     private LocalDateTime createdAt;

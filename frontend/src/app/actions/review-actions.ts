@@ -15,12 +15,15 @@ export async function getReviewCards(deckId: number): Promise<Card[]> {
 }
 
 // レビュー成功
-export async function reviewSuccess(cardId: number): Promise<undefined> {
+export async function reviewSuccess(
+  cardId: number,
+  elapsedTime: number
+): Promise<undefined> {
   try {
     const accessToken = await getAccessToken();
     return await postApi(
       `/cards/review/${cardId}/success`,
-      undefined,
+      { elapsedTime },
       accessToken
     );
   } catch {

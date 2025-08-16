@@ -33,6 +33,7 @@ CREATE TABLE IF NOT EXISTS cards (
     id INT PRIMARY KEY AUTO_INCREMENT,
     deck_id INT NOT NULL,
     success_count INT NOT NULL,
+    review_interval INT NOT NULL,
     next_review_date TIMESTAMP NOT NULL,
     created_at TIMESTAMP,
     updated_at TIMESTAMP,
