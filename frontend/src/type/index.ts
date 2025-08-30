@@ -26,6 +26,7 @@ export type Card = {
   deck: Deck;
   cardValues: CardValue[];
   successCount: number;
+  reviewInterval: number;
   nextReviewDate: string;
   createdAt: string;
 };

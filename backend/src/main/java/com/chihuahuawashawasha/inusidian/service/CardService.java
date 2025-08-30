@@ -167,9 +167,9 @@ public class CardService {
      * @return 難易度
      */
     private double calcDifficulty(int elapsedTime) {
-        if (elapsedTime < 4) return 1.0;
-        if (elapsedTime < 8) return 0.9;
-        if (elapsedTime < 12) return 0.8;
+        if (elapsedTime < 5) return 1.0;
+        if (elapsedTime < 10) return 0.9;
+        if (elapsedTime < 15) return 0.8;
         return 0.7;
     }
 
