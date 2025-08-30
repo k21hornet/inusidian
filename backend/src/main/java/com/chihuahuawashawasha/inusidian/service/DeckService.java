@@ -1,6 +1,7 @@
 package com.chihuahuawashawasha.inusidian.service;
 
 import com.chihuahuawashawasha.inusidian.model.dto.DeckDTO;
+import com.chihuahuawashawasha.inusidian.model.dto.DeckIoDTO;
 import com.chihuahuawashawasha.inusidian.model.dto.DeckSummaryDTO;
 import com.chihuahuawashawasha.inusidian.model.entity.CardField;
 import com.chihuahuawashawasha.inusidian.model.entity.Deck;
@@ -92,6 +93,65 @@ public class DeckService {
     private Deck findDeckById(int id) {
         return deckRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Deck Not Found"));
+    }
+
+    //
+    public DeckIoDTO exportDeck(String auth0Id, int deckId) {
+        Deck deck = findDeckById(deckId);
+        if (!auth0Id.equals(deck.getUser().getId())) {
+            throw new RuntimeException("UserIdが一致しません");
+        }
+
+        // デッキ情報
+        DeckIoDTO.DeckInfo deckInfo = DeckIoDTO.DeckInfo.builder()
+                .deckName(deck.getDeckName())
+                .deckDescription(deck.getDeckDescription())
+                .createdAt(deck.getCreatedAt())
+                .updatedAt(deck.getUpdatedAt())
+                .cardFields(deck.getCardFields().stream()
+                        .map(field -> DeckIoDTO.CardFieldInfo.builder()
+                                .fieldName(field.getFieldName())
+                                .fieldType(field.getFieldType())
+                                .build())
+                        .toList())
+                .build();
+
+        // カード情報
+        List<DeckIoDTO.CardData> cards = deck.getCards().stream()
+                .map(card -> {
+                    // フィールドに紐付く値
+                    List<DeckIoDTO.CardFieldValue> fieldValues = card.getCardValues().stream()
+                            .map(cardValue -> DeckIoDTO.CardFieldValue.builder()
+                                    .fieldName(cardValue.getField().getFieldName())
+                                    .content(cardValue.getContent())
+                                    .build())
+                            .toList();
+
+                    // 学習記録
+                    List<DeckIoDTO.CardLogData> cardLogs = card.getCardLogs().stream()
+                            .map(log -> DeckIoDTO.CardLogData.builder()
+                                    .elapsedTime(log.getElapsedTime())
+                                    .nextReviewInterval(log.getNextReviewInterval())
+                                    .createdAt(log.getCreatedAt())
+                                    .build())
+                            .toList();
+
+                    return DeckIoDTO.CardData.builder()
+                            .successCount(card.getSuccessCount())
+                            .reviewInterval(card.getReviewInterval())
+                            .nextReviewDate(card.getNextReviewDate())
+                            .cardCreatedAt(card.getCreatedAt())
+                            .cardUpdatedAt(card.getUpdatedAt())
+                            .fieldValues(fieldValues)
+                            .cardLogs(cardLogs)
+                            .build();
+                })
+                .toList();
+
+        return DeckIoDTO.builder()
+                .deckInfo(deckInfo)
+                .cards(cards)
+                .build();
     }
 
 }

@@ -59,3 +59,13 @@ export async function deleteDeck(id: number): Promise<undefined> {
     return undefined;
   }
 }
+
+// デッキをエクスポート
+export async function exportDeck(id: number) {
+  try {
+    const accessToken = await getAccessToken();
+    return await getApi(`/decks/${id}/export`, accessToken);
+  } catch {
+    return undefined;
+  }
+}
