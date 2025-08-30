@@ -2,6 +2,7 @@ package com.chihuahuawashawasha.inusidian.controller;
 
 import com.chihuahuawashawasha.inusidian.model.dto.CardDTO;
 import com.chihuahuawashawasha.inusidian.model.input.CardInput;
+import com.chihuahuawashawasha.inusidian.model.input.CardSuccessInput;
 import com.chihuahuawashawasha.inusidian.service.CardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -42,8 +43,13 @@ public class CardController {
     }
 
     @PostMapping("/review/{id}/success")
-    public ResponseEntity<?> reviewSuccess(@PathVariable int id) {
-        cardService.success(id);
+    public ResponseEntity<?> reviewSuccess(
+            @PathVariable int id,
+            @RequestBody @Validated CardSuccessInput input,
+            BindingResult result) {
+        if (result.hasErrors()) throw new RuntimeException();
+
+        cardService.success(id, input.getElapsedTime());
         return ResponseEntity.ok().build();
     }
 

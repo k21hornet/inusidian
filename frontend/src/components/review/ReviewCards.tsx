@@ -29,11 +29,13 @@ export default function ReviewCards({
   const [dueCard, setDueCard] = useState<Card | null>();
   const [accordionExpanded, setAccordionExpanded] = useState(false); // アコーディオンの開閉状態
   const [open, setOpen] = useState(false); // Snackbarの開閉状態
+  const [startTime, setStartTime] = useState<Date | null>(null);
 
   // ランダムで一問出題
   const setNextReviewCard = () => {
     const randomNum = Math.floor(Math.random() * dueCards.length);
     setDueCard(dueCards[randomNum]);
+    setStartTime(new Date()); // 出題時タイマーをセット
   };
 
   useEffect(() => {
@@ -54,8 +56,10 @@ export default function ReviewCards({
 
   // 問題正解時
   const success = async (id: number) => {
-    if (!dueCard) return;
-    await reviewSuccess(id);
+    if (!dueCard || !startTime) return;
+    const endTime = new Date();
+    const elapsedTime = (endTime.getTime() - startTime.getTime()) / 1000;
+    await reviewSuccess(id, Math.round(elapsedTime));
     setDueCards(dueCards.filter((rc) => rc.id !== id)); //正解した問題を除外
     setAccordionExpanded(false);
     onReviewCompleted(); // 復習完了後のコールバック
