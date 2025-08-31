@@ -43,7 +43,6 @@ export async function putDeck(
 ): Promise<Deck | undefined> {
   try {
     const accessToken = await getAccessToken();
-    console.log(data);
     return await putApi(`/decks/update`, data, accessToken);
   } catch {
     return undefined;
@@ -55,6 +54,26 @@ export async function deleteDeck(id: number): Promise<undefined> {
   try {
     const accessToken = await getAccessToken();
     return await deleteApi(`/decks/${id}`, accessToken);
+  } catch {
+    return undefined;
+  }
+}
+
+// デッキをエクスポート
+export async function exportDeck(id: number) {
+  try {
+    const accessToken = await getAccessToken();
+    return await getApi(`/decks/${id}/export`, accessToken);
+  } catch {
+    return undefined;
+  }
+}
+
+// デッキをインポート
+export async function importDeck(data: any) {
+  try {
+    const accessToken = await getAccessToken();
+    return await postApi(`/decks/import`, data, accessToken);
   } catch {
     return undefined;
   }
