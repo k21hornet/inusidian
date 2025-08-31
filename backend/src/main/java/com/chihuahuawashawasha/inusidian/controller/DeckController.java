@@ -64,4 +64,12 @@ public class DeckController {
         String auth0Id = jwt.getSubject();
         return  deckService.exportDeck(auth0Id, id);
     }
+
+    @PostMapping("/import")
+    public DeckDTO importDeck(
+            @AuthenticationPrincipal Jwt jwt,
+            @RequestBody DeckIoDTO importData) {
+        String auth0Id = jwt.getSubject();
+        return deckService.importDeck(auth0Id, importData);
+    }
 }
