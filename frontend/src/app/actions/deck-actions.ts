@@ -2,14 +2,12 @@
 
 import { Deck } from "@/type";
 import { PostDeckFormData } from "@/type/request";
-import { getAccessToken } from "@/util/auth";
 import { deleteApi, getApi, postApi, putApi } from "@/util/fetcher";
 
 // ユーザーのデッキ一覧を取得
 export async function getAllDecks(): Promise<Deck[]> {
   try {
-    const accessToken = await getAccessToken();
-    return await getApi(`/decks`, accessToken);
+    return await getApi(`/decks`);
   } catch {
     return [];
   }
@@ -18,8 +16,7 @@ export async function getAllDecks(): Promise<Deck[]> {
 // デッキを取得
 export async function getDeck(id: number): Promise<Deck | undefined> {
   try {
-    const accessToken = await getAccessToken();
-    return await getApi(`/decks/${id}`, accessToken);
+    return await getApi(`/decks/${id}`);
   } catch {
     return undefined;
   }
@@ -30,8 +27,7 @@ export async function postDeck(
   data: PostDeckFormData
 ): Promise<Deck | undefined> {
   try {
-    const accessToken = await getAccessToken();
-    return await postApi(`/decks/create`, data, accessToken);
+    return await postApi(`/decks/create`, data);
   } catch {
     return undefined;
   }
@@ -42,8 +38,7 @@ export async function putDeck(
   data: PostDeckFormData
 ): Promise<Deck | undefined> {
   try {
-    const accessToken = await getAccessToken();
-    return await putApi(`/decks/update`, data, accessToken);
+    return await putApi(`/decks/update`, data);
   } catch {
     return undefined;
   }
@@ -52,8 +47,7 @@ export async function putDeck(
 // デッキを削除
 export async function deleteDeck(id: number): Promise<undefined> {
   try {
-    const accessToken = await getAccessToken();
-    return await deleteApi(`/decks/${id}`, accessToken);
+    return await deleteApi(`/decks/${id}`);
   } catch {
     return undefined;
   }
@@ -62,8 +56,7 @@ export async function deleteDeck(id: number): Promise<undefined> {
 // デッキをエクスポート
 export async function exportDeck(id: number) {
   try {
-    const accessToken = await getAccessToken();
-    return await getApi(`/decks/${id}/export`, accessToken);
+    return await getApi(`/decks/${id}/export`);
   } catch {
     return undefined;
   }
@@ -72,8 +65,7 @@ export async function exportDeck(id: number) {
 // デッキをインポート
 export async function importDeck(data: any) {
   try {
-    const accessToken = await getAccessToken();
-    return await postApi(`/decks/import`, data, accessToken);
+    return await postApi(`/decks/import`, data);
   } catch {
     return undefined;
   }

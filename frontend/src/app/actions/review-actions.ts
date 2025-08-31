@@ -1,14 +1,12 @@
 "use server";
 
 import { Card } from "@/type";
-import { getAccessToken } from "@/util/auth";
 import { getApi, postApi } from "@/util/fetcher";
 
 // レビュー対象カード一覧を取得
 export async function getReviewCards(deckId: number): Promise<Card[]> {
   try {
-    const accessToken = await getAccessToken();
-    return await getApi(`/cards/review/${deckId}`, accessToken);
+    return await getApi(`/cards/review/${deckId}`);
   } catch {
     return [];
   }
@@ -20,12 +18,7 @@ export async function reviewSuccess(
   elapsedTime: number
 ): Promise<undefined> {
   try {
-    const accessToken = await getAccessToken();
-    return await postApi(
-      `/cards/review/${cardId}/success`,
-      { elapsedTime },
-      accessToken
-    );
+    return await postApi(`/cards/review/${cardId}/success`, { elapsedTime });
   } catch {
     return undefined;
   }
@@ -34,12 +27,7 @@ export async function reviewSuccess(
 // レビュー失敗
 export async function reviewFailure(cardId: number): Promise<undefined> {
   try {
-    const accessToken = await getAccessToken();
-    return await postApi(
-      `/cards/review/${cardId}/failure`,
-      undefined,
-      accessToken
-    );
+    return await postApi(`/cards/review/${cardId}/failure`, undefined);
   } catch {
     return undefined;
   }
