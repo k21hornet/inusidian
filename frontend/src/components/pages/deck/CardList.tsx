@@ -13,9 +13,9 @@ import {
   TableRow,
 } from "@mui/material";
 import React, { useState } from "react";
-import CardModal from "./CardModal";
 import { Card } from "@/type/index";
 import { convertDate } from "@/util/convertDate";
+import CardModal from "./CardModal";
 
 export default function CardList({
   deck,

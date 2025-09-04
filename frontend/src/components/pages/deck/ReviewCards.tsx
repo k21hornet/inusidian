@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Congratulations from "./Congratulations";
 import {
   Accordion,
   AccordionDetails,
@@ -16,7 +15,8 @@ import {
   getReviewCards,
   reviewFailure,
   reviewSuccess,
-} from "@/app/actions/review-actions";
+} from "@/app/actions/review";
+import Congratulations from "./Congratulations";
 
 export default function ReviewCards({
   deckId,

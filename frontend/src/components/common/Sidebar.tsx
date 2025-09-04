@@ -9,10 +9,10 @@ import {
 } from "@mui/material";
 import BeachAccessIcon from "@mui/icons-material/BeachAccess";
 import StyleIcon from "@mui/icons-material/Style";
-import { getAllDecks } from "@/app/actions/deck-actions";
+import { getAllDecks } from "@/app/actions/deck";
 import Link from "next/link";
 import SidebarUser from "./SidebarUser";
-import { getLoginEmail } from "@/app/actions/user-actions";
+import { getLoginEmail } from "@/app/actions/user";
 
 export default async function Sidebar() {
   const decks = await getAllDecks();

@@ -1,7 +1,7 @@
 "use server";
 
 import { Deck } from "@/type";
-import { PostDeckFormData } from "@/type/request";
+import { IODeckData, PostDeckFormData } from "@/type/request";
 import { deleteApi, getApi, postApi, putApi } from "@/util/fetcher";
 
 // ユーザーのデッキ一覧を取得
@@ -63,7 +63,7 @@ export async function exportDeck(id: number) {
 }
 
 // デッキをインポート
-export async function importDeck(data: any) {
+export async function importDeck(data: IODeckData) {
   try {
     return await postApi(`/decks/import`, data);
   } catch {
