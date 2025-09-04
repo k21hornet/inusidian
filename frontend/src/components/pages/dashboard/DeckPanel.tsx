@@ -1,14 +1,10 @@
 "use client";
 
-import { Deck } from "@/type/index";
-import { Box, Button, Grid, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
+import { Box, Button, Grid, Typography } from "@mui/material";
+import { DeckPanelProps } from "./typs";
 
-type Props = {
-  deck: Deck;
-};
-
-export default function DeckPanel({ deck }: Props) {
+export default function DeckPanel({ deck }: DeckPanelProps) {
   const router = useRouter();
 
   const handleClick = () => {

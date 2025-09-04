@@ -5,7 +5,7 @@ export const getAccessToken = async (): Promise<string> => {
   try {
     const accessToken = await auth0.getAccessToken();
     return accessToken.token;
-  } catch (error) {
+  } catch {
     return redirect("/auth/login");
   }
 };
