@@ -1,6 +1,6 @@
 "use client";
 
-import { exportDeck, putDeck } from "@/app/actions/deck-actions";
+import { exportDeck, putDeck } from "@/app/actions/deck";
 import { Deck } from "@/type";
 import {
   Alert,

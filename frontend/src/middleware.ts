@@ -10,9 +10,9 @@ export async function middleware(request: NextRequest) {
     return response;
   }
 
-  // セッションチェック
+  // セッションチェック（ルートページは認証なしでアクセス可能）
   const session = await auth0.getSession(request);
-  if (!session) {
+  if (!session && request.nextUrl.pathname !== "/") {
     return NextResponse.redirect(
       new URL(
         `/auth/login?returnTo=${request.nextUrl.pathname}`,
@@ -20,6 +20,12 @@ export async function middleware(request: NextRequest) {
       )
     );
   }
+
+  // ログイン済みユーザーがルートページにアクセスした場合は/dashboardにリダイレクト
+  if (request.nextUrl.pathname === "/" && session) {
+    return NextResponse.redirect(new URL("/dashboard", request.nextUrl.origin));
+  }
+
   return response;
 }
 
