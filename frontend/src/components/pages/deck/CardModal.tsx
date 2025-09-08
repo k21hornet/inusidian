@@ -2,7 +2,7 @@ import { deleteCard, updateCard } from "@/app/actions/card";
 import { Card } from "@/type/index";
 import { PostCardFormData } from "@/type/request";
 import { Box, Button, Modal, TextField } from "@mui/material";
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 
 export default function CardModal({
   open,
@@ -20,14 +20,24 @@ export default function CardModal({
   setOpenDeleteSnackbar: (open: boolean) => void;
 }) {
   const [formData, setFormData] = useState<PostCardFormData>({
-    cardId: card?.id || 0,
-    deckId: card?.deckId || 0,
-    values:
-      card?.cardValues.map((value) => ({
-        fieldId: value.field.id,
-        content: value.content,
-      })) || [],
+    cardId: 0,
+    deckId: 0,
+    values: [],
   });
+
+  // cardプロパティが変更されたときにformDataを更新
+  useEffect(() => {
+    if (card) {
+      setFormData({
+        cardId: card.id,
+        deckId: card.deckId,
+        values: card.cardValues.map((value) => ({
+          fieldId: value.field.id,
+          content: value.content,
+        })),
+      });
+    }
+  }, [card]);
 
   const handleFieldChange = (index: number, value: string) => {
     const newValues = [...formData.values]; // 現在の値をコピー
@@ -100,7 +110,7 @@ export default function CardModal({
                 type="text"
                 label={value.field.fieldName}
                 fullWidth
-                value={formData.values[idx].content}
+                value={formData.values[idx]?.content}
                 onChange={(e) => handleFieldChange(idx, e.target.value)}
               />
             ))}
