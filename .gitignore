@@ -1,2 +1,5 @@
+.env
 .DS_Store
 /database/data
+/database/data-dev
+setup-prd.sh
