@@ -13,9 +13,9 @@ import {
   TableRow,
 } from "@mui/material";
 import React, { useState } from "react";
-import CardModal from "./CardModal";
 import { Card } from "@/type/index";
 import { convertDate } from "@/util/convertDate";
+import CardModal from "./CardModal";
 
 export default function CardList({
   deck,
@@ -60,6 +60,7 @@ export default function CardList({
             <TableRow>
               <TableCell>{deck.cardFields[0].fieldName}</TableCell>
               <TableCell>連続正解数</TableCell>
+              <TableCell>復習間隔</TableCell>
               <TableCell>次回</TableCell>
               <TableCell>作成日</TableCell>
               <TableCell></TableCell>
@@ -84,6 +85,7 @@ export default function CardList({
                     {card.cardValues[0].content}
                   </TableCell>
                   <TableCell>{card.successCount}回</TableCell>
+                  <TableCell>{card.reviewInterval}日</TableCell>
                   <TableCell>{convertDate(card.nextReviewDate)}</TableCell>
                   <TableCell>{convertDate(card.createdAt)}</TableCell>
                   <TableCell sx={{ color: "primary.main" }}>詳細</TableCell>

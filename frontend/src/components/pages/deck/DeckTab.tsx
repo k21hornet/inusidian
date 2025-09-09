@@ -4,12 +4,12 @@ import { Box, Button, Tab, Tabs } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import DeckTabPanel from "./DeckTabPanel";
 import { useRouter, useSearchParams } from "next/navigation";
-import CardList from "../card/CardList";
-import { deleteDeck, getDeck } from "@/app/actions/deck-actions";
+import CardList from "./CardList";
+import { deleteDeck, getDeck } from "@/app/actions/deck";
 
 import { Deck } from "@/type/index";
-import CreateCardForm from "../card/CreateCardForm";
-import ReviewCards from "../review/ReviewCards";
+import CreateCardForm from "./CreateCardForm";
+import ReviewCards from "./ReviewCards";
 import EditDeckForm from "./EditDeckForm";
 
 type Props = {

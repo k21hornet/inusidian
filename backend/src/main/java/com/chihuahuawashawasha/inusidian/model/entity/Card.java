@@ -22,6 +22,8 @@ public class Card {
 
     private Integer successCount;
 
+    private Integer reviewInterval;
+
     private LocalDate nextReviewDate;
     
     private LocalDateTime createdAt;
@@ -32,6 +34,9 @@ public class Card {
 
     @OneToMany(mappedBy = "card", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CardValue> cardValues;
+
+    @OneToMany(mappedBy = "card", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CardLog> cardLogs;
 
     @PrePersist
     protected void onCreate() {

@@ -1,6 +1,6 @@
 import Sidebar from "@/components/common/Sidebar";
 import { Box } from "@mui/material";
-import { syncUser } from "../actions/user-actions";
+import { syncUser } from "../actions/user";
 
 export default async function ServiceLayout({
   children,

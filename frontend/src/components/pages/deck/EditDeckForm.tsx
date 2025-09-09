@@ -1,6 +1,6 @@
 "use client";
 
-import { putDeck } from "@/app/actions/deck-actions";
+import { exportDeck, putDeck } from "@/app/actions/deck";
 import { Deck } from "@/type";
 import {
   Alert,
@@ -60,8 +60,32 @@ export default function EditDeckForm({ deck, onDeckUpdated }: Props) {
     }
   };
 
+  // デッキをエクスポート
+  const handleExport = async () => {
+    const data = await exportDeck(deck.id);
+
+    // JSONファイルとしてダウンロード
+    const blob = new Blob([JSON.stringify(data, null, 2)], {
+      type: "application/json",
+    });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${deck.deckName}-${
+      new Date().toISOString().split("T")[0]
+    }.json`;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+  };
+
   return (
     <>
+      <Button variant="contained" onClick={handleExport}>
+        デッキをエクスポート
+      </Button>
+
       <Box>
         <Typography variant="h6" gutterBottom>
           デッキ基本情報

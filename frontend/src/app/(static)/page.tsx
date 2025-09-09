@@ -1,15 +1,13 @@
-import Appbar from "@/components/common/Appbar";
-import Sidebar from "@/components/common/Sidebar";
 import { Box, Typography } from "@mui/material";
+import Link from "next/link";
 
 export default function Home() {
   return (
     <Box sx={{ display: "flex" }}>
-      <Sidebar />
-      <Box>
-        <Appbar />
-        <Typography variant="h3">Hello World</Typography>
-      </Box>
+      <Typography variant="h3">
+        <Link href="/auth/login">INUSIDIAN</Link>
+      </Typography>
+      <Typography variant="h3">へようこそ</Typography>
     </Box>
   );
 }

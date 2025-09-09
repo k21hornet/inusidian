@@ -20,6 +20,8 @@ public class CardDTO {
 
     private Integer successCount;
 
+    private Integer reviewInterval;
+
     private LocalDate nextReviewDate;
     
     private LocalDateTime createdAt;
@@ -35,6 +37,7 @@ public class CardDTO {
                 card.getId(),
                 card.getDeck().getId(),
                 card.getSuccessCount(),
+                card.getReviewInterval(),
                 card.getNextReviewDate(),
                 card.getCreatedAt(),
                 card.getUpdatedAt(),
