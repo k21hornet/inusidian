@@ -13,6 +13,7 @@ export default async function ServiceLayout({
     <Box
       sx={{
         display: "flex",
+        flexDirection: { xs: "column", md: "row" },
         m: 0,
         p: 0,
         backgroundColor: "#fafafa",

@@ -13,7 +13,7 @@ export default function DeckPanel({ deck }: DeckPanelProps) {
 
   return (
     <Grid
-      size={4}
+      size={{ xs: 12, sm: 6, md: 4 }}
       sx={{
         display: "flex",
         flexDirection: "column",
