@@ -14,7 +14,7 @@ export default function DeckPage({ deck }: DeckPageProps) {
 
         <Box
           sx={{
-            display: "flex",
+            display: { sx: "block", md: "flex" },
             justifyContent: "space-between",
             alignItems: "center",
             color: "text.secondary",

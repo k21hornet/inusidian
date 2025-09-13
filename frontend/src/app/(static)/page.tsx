@@ -3,11 +3,13 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <Box sx={{ display: "flex" }}>
-      <Typography variant="h3">
+    <Box sx={{ display: "flex", justifyContent: "center", pt: 6 }}>
+      <Typography sx={{ fontSize: { xs: "2rem", sm: "2.5rem", md: "3rem" } }}>
         <Link href="/auth/login">INUSIDIAN</Link>
       </Typography>
-      <Typography variant="h3">へようこそ</Typography>
+      <Typography sx={{ fontSize: { xs: "2rem", sm: "2.5rem", md: "3rem" } }}>
+        へようこそ
+      </Typography>
     </Box>
   );
 }
