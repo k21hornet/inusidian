@@ -167,6 +167,8 @@ public class DeckService {
         deck.setUser(user);
         deck.setDeckName(importData.getDeckInfo().getDeckName());
         deck.setDeckDescription(importData.getDeckInfo().getDeckDescription());
+        deck.setCreatedAt(importData.getDeckInfo().getCreatedAt());
+        deck.setUpdatedAt(importData.getDeckInfo().getUpdatedAt());
 
         // カードフィールドを作成
         List<CardField> cardFields = new ArrayList<>();
@@ -187,6 +189,8 @@ public class DeckService {
             card.setSuccessCount(cardData.getSuccessCount() != null ? cardData.getSuccessCount() : 0);
             card.setReviewInterval(cardData.getReviewInterval() != null ? cardData.getReviewInterval() : 0);
             card.setNextReviewDate(cardData.getNextReviewDate() != null ? cardData.getNextReviewDate() : LocalDate.now());
+            card.setCreatedAt(cardData.getCardCreatedAt());
+            card.setUpdatedAt(cardData.getCardUpdatedAt());
 
             // カード値を作成
             List<CardValue> cardValues = new ArrayList<>();
