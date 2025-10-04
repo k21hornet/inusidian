@@ -5,7 +5,6 @@ import {
   AccordionSummary,
   Alert,
   Box,
-  Button,
   Snackbar,
   Typography,
 } from "@mui/material";
@@ -17,6 +16,7 @@ import {
   reviewSuccess,
 } from "@/app/actions/review";
 import Congratulations from "./Congratulations";
+import { PrimaryButton } from "@/components/ui/button";
 
 export default function ReviewCards({
   deckId,
@@ -151,9 +151,7 @@ export default function ReviewCards({
               <Typography component="span" sx={{ color: "text.secondary" }}>
                 0 day
               </Typography>
-              <Button onClick={failure} variant="contained">
-                Again
-              </Button>
+              <PrimaryButton onClick={failure}>Again</PrimaryButton>
             </Box>
 
             <Box
@@ -167,9 +165,9 @@ export default function ReviewCards({
               <Typography component="span" sx={{ color: "text.secondary" }}>
                 {dueCard.successCount * 2 + 1} day
               </Typography>
-              <Button onClick={() => success(dueCard.id)} variant="contained">
+              <PrimaryButton onClick={() => success(dueCard.id)}>
                 Easy
-              </Button>
+              </PrimaryButton>
             </Box>
           </Box>
         </AccordionDetails>

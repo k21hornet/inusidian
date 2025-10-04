@@ -1,7 +1,8 @@
 "use client";
 
 import { postDeck } from "@/app/actions/deck";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { PrimaryButton } from "@/components/ui/button";
+import { Box, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 
@@ -87,9 +88,9 @@ export default function CreateDeckForm() {
           カードのフィールドを設定（表）
         </Typography>
 
-        <Button variant="contained" onClick={() => handleAddField("front")}>
+        <PrimaryButton onClick={() => handleAddField("front")}>
           フィールドを追加（表）
-        </Button>
+        </PrimaryButton>
       </Box>
 
       <TextField
@@ -111,12 +112,9 @@ export default function CreateDeckForm() {
                 onChange={(e) => handleFieldChange(index, e.target.value)}
                 required
               />
-              <Button
-                variant="contained"
-                onClick={() => handleDeleteField(index)}
-              >
+              <PrimaryButton onClick={() => handleDeleteField(index)}>
                 削除
-              </Button>
+              </PrimaryButton>
             </Box>
           )}
         </Box>
@@ -127,9 +125,9 @@ export default function CreateDeckForm() {
           カードのフィールドを設定（裏）
         </Typography>
 
-        <Button variant="contained" onClick={() => handleAddField("back")}>
+        <PrimaryButton onClick={() => handleAddField("back")}>
           フィールドを追加（裏）
-        </Button>
+        </PrimaryButton>
       </Box>
 
       {formData.cardFields.map((field, index) => (
@@ -143,21 +141,16 @@ export default function CreateDeckForm() {
                 onChange={(e) => handleFieldChange(index, e.target.value)}
                 required
               />
-              <Button
-                variant="contained"
-                onClick={() => handleDeleteField(index)}
-              >
+              <PrimaryButton onClick={() => handleDeleteField(index)}>
                 削除
-              </Button>
+              </PrimaryButton>
             </Box>
           )}
         </Box>
       ))}
 
       <Box>
-        <Button variant="contained" type="submit">
-          デッキを作成
-        </Button>
+        <PrimaryButton type="submit">デッキを作成</PrimaryButton>
       </Box>
     </Box>
   );

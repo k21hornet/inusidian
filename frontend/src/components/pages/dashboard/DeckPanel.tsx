@@ -1,16 +1,9 @@
-"use client";
-
-import { useRouter } from "next/navigation";
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { DeckPanelProps } from "./typs";
+import { PrimaryButton } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function DeckPanel({ deck }: DeckPanelProps) {
-  const router = useRouter();
-
-  const handleClick = () => {
-    router.push(`/deck/${deck.id}`);
-  };
-
   return (
     <Grid
       size={{ xs: 12, sm: 6, md: 4 }}
@@ -42,9 +35,9 @@ export default function DeckPanel({ deck }: DeckPanelProps) {
         </Typography>
       </Box>
 
-      <Button variant="contained" fullWidth onClick={handleClick}>
+      <PrimaryButton component={Link} href={`/deck/${deck.id}`}>
         勉強する
-      </Button>
+      </PrimaryButton>
     </Grid>
   );
 }
