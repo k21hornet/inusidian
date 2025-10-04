@@ -1,6 +1,6 @@
 import { Box, Grid, Typography } from "@mui/material";
 import { DeckPanelProps } from "./typs";
-import { PrimaryButton } from "@/components/ui/button";
+import { PrimaryButton } from "@/components/ui/button/primary-button";
 import Link from "next/link";
 
 export default function DeckPanel({ deck }: DeckPanelProps) {

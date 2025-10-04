@@ -1,17 +1,19 @@
 import { Button } from "@mui/material";
 
-export const PrimaryButton = ({
+export const SecondaryButton = ({
   children,
   component,
   href,
   onClick,
   type,
+  variant,
 }: {
   children: React.ReactNode;
-  component?: React.ComponentType<any>;
+  component?: React.ElementType;
   href?: string;
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
+  variant?: "contained" | "outlined";
 }) => {
   return (
     <Button
@@ -21,8 +23,12 @@ export const PrimaryButton = ({
       type={type ?? "button"}
       sx={{
         padding: "6px 20px",
-        background: "linear-gradient(180deg, #40c4ff 0%, #2962ff 100%)",
-        color: "#fff",
+        background:
+          variant === "contained"
+            ? "linear-gradient(180deg, #455a64 0%, #263238 100%)"
+            : "transparent",
+        color: variant === "contained" ? "#fff" : "#263238",
+        border: variant === "outlined" ? "1px solid #263238" : "none",
         borderRadius: "8px",
       }}
     >

@@ -1,26 +1,31 @@
 import Link from "next/link";
-import DeckPanel from "./DeckPanel";
-import { Box, Grid, Typography } from "@mui/material";
-import { PrimaryButton } from "@/components/ui/button";
+import { Box, Typography } from "@mui/material";
+import { PrimaryButton } from "@/components/ui/button/primary-button";
 import { DashboardPageProps } from "./typs";
 import styles from "./index.module.scss";
+import { DeckTable } from "./DeckTable";
 
 export default function DashboardPage({ decks }: DashboardPageProps) {
   return (
-    <>
-      <Box className={styles["dashboard-page"]}>
-        <Box className={styles["dashboard-page__header"]}>
-          <Typography variant="h5">デッキ一覧</Typography>
+    <Box className={styles["dashboard-page"]}>
+      <Box className={styles["dashboard-report"]}>
+        <Box className={styles["dashboard-report__weekly"]}>
+          Comming soon...
+        </Box>
+        <Box className={styles["dashboard-report__total"]}>Comming soon...</Box>
+      </Box>
+
+      <Box className={styles["deck-list"]}>
+        <Box className={styles["deck-list__header"]}>
+          <Typography className={styles["deck-list__title"]}>
+            デッキ一覧
+          </Typography>
           <PrimaryButton component={Link} href="/deck/create">
             デッキ作成
           </PrimaryButton>
         </Box>
-        <Grid container spacing={2}>
-          {decks.map((deck) => (
-            <DeckPanel key={deck.id} deck={deck} />
-          ))}
-        </Grid>
+        <DeckTable decks={decks} />
       </Box>
-    </>
+    </Box>
   );
 }

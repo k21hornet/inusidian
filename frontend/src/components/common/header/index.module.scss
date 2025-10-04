@@ -1,9 +1,24 @@
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   height: 64px;
-  padding: 0 16px;
+  background: transparent;
+  backdrop-filter: blur(10px);
+
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1280px - 64px;
+    padding: 0 32px;
+  }
 
   &__left {
     flex: 1;

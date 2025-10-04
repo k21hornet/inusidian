@@ -1,7 +1,7 @@
 "use client";
 
 import { postCard } from "@/app/actions/card";
-import { PrimaryButton } from "@/components/ui/button";
+import { PrimaryButton } from "@/components/ui/button/primary-button";
 import { Deck } from "@/type/index";
 import { PostCardFormData } from "@/type/request";
 import { Alert, Box, Snackbar, TextField } from "@mui/material";

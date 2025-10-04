@@ -11,7 +11,7 @@ import { Deck } from "@/type/index";
 import CreateCardForm from "./CreateCardForm";
 import ReviewCards from "./ReviewCards";
 import EditDeckForm from "./EditDeckForm";
-import { PrimaryButton } from "@/components/ui/button";
+import { PrimaryButton } from "@/components/ui/button/primary-button";
 
 type Props = {
   deck: Deck;
