@@ -14,7 +14,6 @@ export default async function ServiceLayout({
       sx={{
         maxWidth: "1280px",
         mx: "auto",
-        backgroundColor: "#f8f9fa",
       }}
     >
       <Header />
