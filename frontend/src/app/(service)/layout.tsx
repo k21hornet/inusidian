@@ -1,6 +1,6 @@
-import Sidebar from "@/components/common/Sidebar";
 import { Box } from "@mui/material";
 import { syncUser } from "../actions/user";
+import { Header } from "@/components/common/header";
 
 export default async function ServiceLayout({
   children,
@@ -12,16 +12,12 @@ export default async function ServiceLayout({
   return (
     <Box
       sx={{
-        display: "flex",
-        flexDirection: { xs: "column", md: "row" },
-        m: 0,
-        p: 0,
-        backgroundColor: "#fafafa",
+        maxWidth: "1280px",
+        mx: "auto",
       }}
     >
-      <Sidebar />
-      <Box component="main" sx={{ flex: 1, px: 4, py: 2 }}>
-        {/* <Appbar /> */}
+      <Header />
+      <Box component="main" sx={{ mt: "64px", px: 4, pt: 2 }}>
         {children}
       </Box>
     </Box>

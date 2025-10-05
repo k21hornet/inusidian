@@ -1,9 +1,10 @@
 "use client";
 
 import { postCard } from "@/app/actions/card";
+import { PrimaryButton } from "@/components/ui/button/primary-button";
 import { Deck } from "@/type/index";
 import { PostCardFormData } from "@/type/request";
-import { Alert, Box, Button, Snackbar, TextField } from "@mui/material";
+import { Alert, Box, Snackbar, TextField } from "@mui/material";
 import { FormEvent, useState } from "react";
 
 type Props = {
@@ -73,9 +74,7 @@ export default function CreateCardForm({ deck, onCardCreated }: Props) {
         ))}
 
         <Box>
-          <Button variant="contained" type="submit">
-            カードを作成
-          </Button>
+          <PrimaryButton type="submit">カードを作成</PrimaryButton>
         </Box>
       </Box>
 

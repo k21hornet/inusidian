@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Button, Tab, Tabs } from "@mui/material";
+import { Box, Tab, Tabs } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import DeckTabPanel from "./DeckTabPanel";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -11,6 +11,7 @@ import { Deck } from "@/type/index";
 import CreateCardForm from "./CreateCardForm";
 import ReviewCards from "./ReviewCards";
 import EditDeckForm from "./EditDeckForm";
+import { PrimaryButton } from "@/components/ui/button/primary-button";
 
 type Props = {
   deck: Deck;
@@ -77,9 +78,9 @@ export default function DeckTab({ deck: initialDeck }: Props) {
       </DeckTabPanel>
       <DeckTabPanel value={value} index={3}>
         <EditDeckForm deck={deck} onDeckUpdated={refreshDeck} />
-        <Button variant="contained" onClick={() => handleDelete(deck.id)}>
+        <PrimaryButton onClick={() => handleDelete(deck.id)}>
           デッキ削除
-        </Button>
+        </PrimaryButton>
       </DeckTabPanel>
     </Box>
   );

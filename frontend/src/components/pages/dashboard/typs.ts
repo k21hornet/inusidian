@@ -4,6 +4,6 @@ export type DashboardPageProps = {
   decks: Deck[];
 };
 
-export type DeckPanelProps = {
-  deck: Deck;
+export type DeckTableProps = {
+  decks: Deck[];
 };

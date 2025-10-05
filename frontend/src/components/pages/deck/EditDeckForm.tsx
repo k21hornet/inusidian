@@ -1,15 +1,9 @@
 "use client";
 
 import { exportDeck, putDeck } from "@/app/actions/deck";
+import { PrimaryButton } from "@/components/ui/button/primary-button";
 import { Deck } from "@/type";
-import {
-  Alert,
-  Box,
-  Button,
-  Snackbar,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Alert, Box, Snackbar, TextField, Typography } from "@mui/material";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 
 type Props = {
@@ -82,11 +76,9 @@ export default function EditDeckForm({ deck, onDeckUpdated }: Props) {
 
   return (
     <>
-      <Button variant="contained" onClick={handleExport}>
-        デッキをエクスポート
-      </Button>
+      <PrimaryButton onClick={handleExport}>デッキをエクスポート</PrimaryButton>
 
-      <Box>
+      <Box component={"form"} onSubmit={handleSubmit}>
         <Typography variant="h6" gutterBottom>
           デッキ基本情報
         </Typography>
@@ -124,9 +116,7 @@ export default function EditDeckForm({ deck, onDeckUpdated }: Props) {
           </Box>
         ))}
 
-        <Button variant="contained" onClick={handleSubmit}>
-          更新
-        </Button>
+        <PrimaryButton type="submit">更新</PrimaryButton>
       </Box>
 
       <Snackbar
