@@ -59,6 +59,12 @@
     font-size: 16px !important;
     font-weight: bold !important;
   }
+
+  &__empty {
+    padding: 16px;
+    text-align: center;
+    color: #888;
+  }
 }
 
 .deck-table {

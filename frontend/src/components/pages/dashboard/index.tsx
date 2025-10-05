@@ -8,7 +8,10 @@ import { DeckTable } from "./DeckTable";
 export default function DashboardPage({ decks }: DashboardPageProps) {
   return (
     <Box className={styles["dashboard-page"]}>
-      <Box className={styles["dashboard-report"]}>
+      <Box
+        className={styles["dashboard-report"]}
+        sx={{ display: { xs: "none", sm: "flex" } }}
+      >
         <Box className={styles["dashboard-report__weekly"]}>
           Comming soon...
         </Box>
@@ -24,7 +27,13 @@ export default function DashboardPage({ decks }: DashboardPageProps) {
             デッキ作成
           </PrimaryButton>
         </Box>
-        <DeckTable decks={decks} />
+        {decks.length > 0 ? (
+          <DeckTable decks={decks} />
+        ) : (
+          <Box className={styles["deck-list__empty"]}>
+            デッキを作成しましょう！
+          </Box>
+        )}
       </Box>
     </Box>
   );
