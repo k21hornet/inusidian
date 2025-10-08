@@ -8,16 +8,6 @@ import { DeckTable } from "./DeckTable";
 export default function DashboardPage({ decks }: DashboardPageProps) {
   return (
     <Box className={styles["dashboard-page"]}>
-      <Box
-        className={styles["dashboard-report"]}
-        sx={{ display: { xs: "none", sm: "flex" } }}
-      >
-        <Box className={styles["dashboard-report__weekly"]}>
-          Comming soon...
-        </Box>
-        <Box className={styles["dashboard-report__total"]}>Comming soon...</Box>
-      </Box>
-
       <Box className={styles["deck-list"]}>
         <Box className={styles["deck-list__header"]}>
           <Typography className={styles["deck-list__title"]}>
@@ -34,6 +24,34 @@ export default function DashboardPage({ decks }: DashboardPageProps) {
             デッキを作成しましょう！
           </Box>
         )}
+      </Box>
+
+      <Box
+        className={styles["dashboard-report"]}
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", sm: "row" },
+          marginBottom: "24px",
+        }}
+      >
+        <Box className={styles["dashboard-report__box"]}>
+          <img src="/sample1.png" alt="report" />
+          <Typography className={styles["dashboard-report__overlay"]}>
+            Comming soon...
+          </Typography>
+        </Box>
+        <Box className={styles["dashboard-report__box"]}>
+          <img src="/sample2.png" alt="report" />
+          <Typography className={styles["dashboard-report__overlay"]}>
+            Comming soon...
+          </Typography>
+        </Box>
+        <Box className={styles["dashboard-report__box"]}>
+          <img src="/sample3.png" alt="report" />
+          <Typography className={styles["dashboard-report__overlay"]}>
+            Comming soon...
+          </Typography>
+        </Box>
       </Box>
     </Box>
   );

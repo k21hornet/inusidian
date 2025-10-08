@@ -1,9 +1,10 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import styles from "./index.module.scss";
-import Link from "next/link";
+
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { UserIcon } from "./UserIcon";
 import { SPMenu } from "./SPMenu";
+import Link from "next/link";
 
 export const Header = () => {
   return (
@@ -15,33 +16,49 @@ export const Header = () => {
       >
         <Box className={styles["header__content"]}>
           <Box className={styles["header__left"]}>
-            <Link href="/dashboard" className={styles["header__gradientText"]}>
-              INUSIDIAN
-            </Link>
+            <Typography>
+              <Link
+                href="/dashboard"
+                className={styles["header__gradientText"]}
+              >
+                INUSIDIAN
+              </Link>
+            </Typography>
           </Box>
 
           <Box component="nav" className={styles["header__nav"]}>
             <Box className={styles["header__nav-item"]}>
-              <Link className={styles["header__nav-link"]} href="/dashboard">
-                Home
-              </Link>
+              <Typography>
+                <Link className={styles["header__nav-link"]} href="/dashboard">
+                  Home
+                </Link>
+              </Typography>
             </Box>
             <Box className={styles["header__nav-item"]}>
-              <Link className={styles["header__nav-link"]} href="/decks">
-                Decks
-              </Link>
+              <Typography>
+                <Link className={styles["header__nav-link"]} href="/decks">
+                  Decks
+                </Link>
+              </Typography>
               <ExpandMoreIcon />
             </Box>
             <Box className={styles["header__nav-item"]}>
-              <Link className={styles["header__nav-link"]} href="/review-list">
-                Review
-              </Link>
+              <Typography>
+                <Link
+                  className={styles["header__nav-link"]}
+                  href="/review-list"
+                >
+                  Review
+                </Link>
+              </Typography>
               <ExpandMoreIcon />
             </Box>
             <Box className={styles["header__nav-item"]}>
-              <Link className={styles["header__nav-link"]} href="/about">
-                About
-              </Link>
+              <Typography>
+                <Link className={styles["header__nav-link"]} href="/about">
+                  About
+                </Link>
+              </Typography>
             </Box>
           </Box>
 
