@@ -47,7 +47,7 @@ export default function CardList({
           overflowY: "auto", // 縦方向のスクロールを有効化
         }}
       >
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table aria-label="simple table">
           <TableHead
             sx={{
               bgcolor: "white",
@@ -59,10 +59,16 @@ export default function CardList({
           >
             <TableRow>
               <TableCell>{deck.cardFields[0].fieldName}</TableCell>
-              <TableCell>連続正解数</TableCell>
+              <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
+                連続正解数
+              </TableCell>
               <TableCell>復習間隔</TableCell>
-              <TableCell>次回</TableCell>
-              <TableCell>作成日</TableCell>
+              <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
+                次回
+              </TableCell>
+              <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
+                作成日
+              </TableCell>
               <TableCell></TableCell>
             </TableRow>
           </TableHead>
@@ -84,10 +90,16 @@ export default function CardList({
                   <TableCell sx={{ fontWeight: "bold" }}>
                     {card.cardValues[0].content}
                   </TableCell>
-                  <TableCell>{card.successCount}回</TableCell>
+                  <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
+                    {card.successCount}回
+                  </TableCell>
                   <TableCell>{card.reviewInterval}日</TableCell>
-                  <TableCell>{convertDate(card.nextReviewDate)}</TableCell>
-                  <TableCell>{convertDate(card.createdAt)}</TableCell>
+                  <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
+                    {convertDate(card.nextReviewDate)}
+                  </TableCell>
+                  <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
+                    {convertDate(card.createdAt)}
+                  </TableCell>
                   <TableCell sx={{ color: "primary.main" }}>詳細</TableCell>
                 </TableRow>
               ))}

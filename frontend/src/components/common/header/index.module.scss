@@ -25,6 +25,7 @@
   }
 
   &__gradientText {
+    text-decoration: none;
     font-size: 28px;
     font-weight: bold;
     background: linear-gradient(180deg, #40c4ff 0%, #2962ff 100%);
