@@ -1,45 +1,58 @@
 import { Box, Typography } from "@mui/material";
-import styles from "./index.module.scss";
 import Link from "next/link";
-import { SecondaryButton } from "@/components/ui/button/secondary-button";
+import {
+  lpButtonsSx,
+  lpButtonSx,
+  lpDescriptionSx,
+  lpSx,
+  lpTitleHighlightSx,
+  lpTitleSpSx,
+  lpTitleSx,
+} from "./styles";
+import { Button } from "@/components/ui/button";
 
 export const LandingPage = () => {
   return (
-    <Box className={styles["landing-page"]}>
-      <Box className={styles["landing-page__header"]}>
-        <Typography className={styles["landing-page__title"]}>
-          Unleash your learning potential <br /> with{" "}
-          <span className={styles["landing-page__title-highlight"]}>
-            INUSIDIAN
-          </span>
-        </Typography>
-      </Box>
+    <Box sx={lpSx}>
+      <Typography sx={lpTitleSx}>
+        Unleash your learning potential <br /> with{" "}
+        <Box component="span" sx={lpTitleHighlightSx}>
+          INUSIDIAN
+        </Box>
+      </Typography>
 
-      <Box className={styles["landing-page__description"]}>
-        <Typography>
-          INUSIDIANは擬似的な間隔反復システム（SRS）を採用した単語カードアプリです。
-          <br />
-          忘却曲線の原理を活用してユーザーが効率的に語彙を学習できるよう支援します。
-        </Typography>
-      </Box>
+      <Typography sx={lpTitleSpSx}>
+        Unleash your <br /> learning potential with <br />
+        <Box component="span" sx={lpTitleHighlightSx}>
+          INUSIDIAN
+        </Box>
+      </Typography>
 
-      <Box className={styles["landing-page__buttons"]}>
-        <SecondaryButton
-          className={styles["landing-page__button"]}
+      <Typography sx={lpDescriptionSx}>
+        INUSIDIANは擬似的な間隔反復システム（SRS）を採用した単語カードアプリです。
+        <br />
+        忘却曲線の原理を活用して効率的に語彙を学習できるよう支援します。
+      </Typography>
+
+      <Box sx={lpButtonsSx}>
+        <Button
+          sx={lpButtonSx}
           variant="contained"
           component={Link}
           href="/auth/login?screen_hint=signup"
+          buttonDesign="secondary"
         >
           新規登録
-        </SecondaryButton>
-        <SecondaryButton
-          className={styles["landing-page__button"]}
+        </Button>
+        <Button
+          sx={lpButtonSx}
           variant="outlined"
           component={Link}
           href="/auth/login"
+          buttonDesign="secondary"
         >
           ログイン
-        </SecondaryButton>
+        </Button>
       </Box>
     </Box>
   );
