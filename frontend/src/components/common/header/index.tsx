@@ -1,85 +1,94 @@
 import { Box, Typography } from "@mui/material";
-import styles from "./index.module.scss";
-
+import Link from "next/link";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { UserIcon } from "./UserIcon";
 import { SPMenu } from "./SPMenu";
-import Link from "next/link";
+import {
+  headerSx,
+  headerContentSx,
+  headerLeftSx,
+  gradientTextSx,
+  navSx,
+  navItemSx,
+  navLinkSx,
+  rightSx,
+  headerSpSx,
+  headerSpWrapperSx,
+} from "./styles";
 
 export const Header = () => {
   return (
     <>
-      <Box
-        component="header"
-        className={styles["header"]}
-        sx={{ display: { xs: "none", sm: "flex" } }}
-      >
-        <Box className={styles["header__content"]}>
-          <Box className={styles["header__left"]}>
+      {/* Desktop */}
+      <Box component="header" sx={headerSx}>
+        <Box sx={headerContentSx}>
+          <Box sx={headerLeftSx}>
             <Typography>
-              <Link
-                href="/dashboard"
-                className={styles["header__gradientText"]}
-              >
-                INUSIDIAN
+              <Link href="/dashboard" style={{ textDecoration: "none" }}>
+                <Box component="span" sx={gradientTextSx}>
+                  INUSIDIAN
+                </Box>
               </Link>
             </Typography>
           </Box>
 
-          <Box component="nav" className={styles["header__nav"]}>
-            <Box className={styles["header__nav-item"]}>
+          <Box component="nav" sx={navSx}>
+            <Box sx={navItemSx}>
               <Typography>
-                <Link className={styles["header__nav-link"]} href="/dashboard">
+                <Link href="/dashboard" style={navLinkSx}>
                   Home
                 </Link>
               </Typography>
             </Box>
-            <Box className={styles["header__nav-item"]}>
+
+            <Box sx={navItemSx}>
               <Typography>
-                <Link className={styles["header__nav-link"]} href="/decks">
+                <Link href="/decks" style={navLinkSx}>
                   Decks
                 </Link>
               </Typography>
               <ExpandMoreIcon />
             </Box>
-            <Box className={styles["header__nav-item"]}>
+
+            <Box sx={navItemSx}>
               <Typography>
-                <Link
-                  className={styles["header__nav-link"]}
-                  href="/review-list"
-                >
+                <Link href="/review-list" style={navLinkSx}>
                   Review
                 </Link>
               </Typography>
               <ExpandMoreIcon />
             </Box>
-            <Box className={styles["header__nav-item"]}>
+
+            <Box sx={navItemSx}>
               <Typography>
-                <Link className={styles["header__nav-link"]} href="/about">
+                <Link href="/about" style={navLinkSx}>
                   About
                 </Link>
               </Typography>
             </Box>
           </Box>
 
-          <UserIcon />
+          <Box sx={rightSx}>
+            <UserIcon />
+          </Box>
         </Box>
       </Box>
 
-      <Box
-        component="header"
-        className={styles["header"]}
-        sx={{ display: { xs: "flex", sm: "none" } }}
-      >
-        <Box className={styles["header__content"]}>
-          <Box className={styles["header__sp"]}>
+      {/* Mobile */}
+      <Box component="header" sx={headerSpWrapperSx}>
+        <Box sx={headerContentSx}>
+          <Box sx={headerSpSx}>
             <SPMenu />
-            <Link href="/dashboard" className={styles["header__gradientText"]}>
-              INUSIDIAN
+            <Link href="/dashboard" style={{ textDecoration: "none" }}>
+              <Box component="span" sx={gradientTextSx}>
+                INUSIDIAN
+              </Box>
             </Link>
           </Box>
 
-          <UserIcon />
+          <Box sx={rightSx}>
+            <UserIcon />
+          </Box>
         </Box>
       </Box>
     </>

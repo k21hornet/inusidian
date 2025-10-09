@@ -3,8 +3,8 @@
 import MenuIcon from "@mui/icons-material/Menu";
 import { Box, Divider, Drawer } from "@mui/material";
 import { useState } from "react";
-import styles from "./index.module.scss";
 import Link from "next/link";
+import { spMenuLinkSx, spMenuSx } from "./styles";
 
 export const SPMenu = () => {
   const [open, setOpen] = useState(false);
@@ -17,20 +17,20 @@ export const SPMenu = () => {
     <>
       <MenuIcon onClick={toggleDrawer(true)} />
       <Drawer open={open} onClose={toggleDrawer(false)}>
-        <Box className={styles["sp-menu"]}>
-          <Link className={styles["sp-menu__link"]} href="/dashboard">
+        <Box sx={spMenuSx}>
+          <Link style={spMenuLinkSx} href="/dashboard">
             Home
           </Link>
           <Divider />
-          <Link className={styles["sp-menu__link"]} href="/decks">
+          <Link style={spMenuLinkSx} href="/decks">
             Decks
           </Link>
           <Divider />
-          <Link className={styles["sp-menu__link"]} href="/review-list">
+          <Link style={spMenuLinkSx} href="/review-list">
             Review
           </Link>
           <Divider />
-          <Link className={styles["sp-menu__link"]} href="/about">
+          <Link style={spMenuLinkSx} href="/about">
             About
           </Link>
         </Box>

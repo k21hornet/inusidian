@@ -12,9 +12,9 @@ import React from "react";
 import { convertDate } from "@/util/convertDate";
 import { DeckTableProps } from "./typs";
 import { useRouter } from "next/navigation";
-import styles from "./index.module.scss";
 import StyleIcon from "@mui/icons-material/Style";
-import { SecondaryButton } from "@/components/ui/button/secondary-button";
+import { deckTableIconBoxSx, deckTableIconSx, deckTableInfoSx } from "./styles";
+import { Button } from "@/components/ui/button";
 
 export const DeckTable = ({ decks }: DeckTableProps) => {
   const router = useRouter();
@@ -49,9 +49,9 @@ export const DeckTable = ({ decks }: DeckTableProps) => {
             onClick={() => router.push(`/deck/${deck.id}`)}
           >
             <TableCell>
-              <Box className={styles["deck-table__deck-info"]}>
-                <Box className={styles["deck-table__icon-box"]}>
-                  <StyleIcon className={styles["deck-table__icon"]} />
+              <Box sx={deckTableInfoSx}>
+                <Box sx={deckTableIconBoxSx}>
+                  <StyleIcon sx={deckTableIconSx} />
                 </Box>
                 <Box>
                   <Box sx={{ fontWeight: "bold" }}>{deck.deckName}</Box>
@@ -66,7 +66,9 @@ export const DeckTable = ({ decks }: DeckTableProps) => {
               {convertDate(deck.createdAt)}
             </TableCell>
             <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
-              <SecondaryButton variant="outlined">詳細</SecondaryButton>
+              <Button variant="outlined" buttonDesign="secondary">
+                詳細
+              </Button>
             </TableCell>
           </TableRow>
         ))}

@@ -1,6 +1,16 @@
 import { Auth0Provider } from "@auth0/nextjs-auth0";
-import { Box } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
+import { Roboto } from "next/font/google";
+import { ThemeProvider } from "@mui/material/styles";
+import { theme } from "@/components/theme";
+import { CssBaseline } from "@mui/material";
+
+const roboto = Roboto({
+  weight: ["100", "300", "400", "500", "600", "700"],
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-roboto",
+});
 
 export default function RootLayout({
   children,
@@ -9,25 +19,15 @@ export default function RootLayout({
 }>) {
   return (
     <Auth0Provider>
-      <html lang="ja">
-        <Box
-          component="body"
-          sx={{
-            m: 0,
-            p: 0,
-            minHeight: "100vh",
-            background: `linear-gradient(
-        135deg,
-        rgba(64, 196, 255, 0.06) 0%,
-        rgba(255, 255, 255, 0.9) 25%,
-        rgba(255, 255, 255, 0.05) 50%,
-        rgba(41, 98, 255, 0.06) 75%,
-        rgba(64, 196, 255, 0.03) 100%
-      );`,
-          }}
-        >
-          <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
-        </Box>
+      <html lang="ja" className={roboto.variable}>
+        <body>
+          <AppRouterCacheProvider>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              {children}
+            </ThemeProvider>
+          </AppRouterCacheProvider>
+        </body>
       </html>
     </Auth0Provider>
   );
