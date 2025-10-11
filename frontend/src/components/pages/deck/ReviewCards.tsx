@@ -14,7 +14,7 @@ import {
   getReviewCards,
   reviewFailure,
   reviewSuccess,
-} from "@/app/actions/review";
+} from "@/features/review";
 import Congratulations from "./Congratulations";
 import { PrimaryButton } from "@/components/ui/button/primary-button";
 

@@ -1,5 +1,5 @@
 import { Deck } from "@/type";
 
-export type DashboardPageProps = {
+export type DecksPageProps = {
   decks: Deck[];
 };

@@ -1,6 +1,6 @@
 "use client";
 
-import { postDeck } from "@/app/actions/deck";
+import { postDeck } from "@/features/deck";
 import { PrimaryButton } from "@/components/ui/button/primary-button";
 import { Box, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";

@@ -26,7 +26,7 @@ export const SPMenu = () => {
             Decks
           </Link>
           <Divider />
-          <Link style={spMenuLinkSx} href="/review-list">
+          <Link style={spMenuLinkSx} href="/reviews">
             Review
           </Link>
           <Divider />

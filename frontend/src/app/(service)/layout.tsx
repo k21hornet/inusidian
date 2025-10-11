@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { syncUser } from "../actions/user";
+import { syncUser } from "../../features/user";
 import { Header } from "@/components/common/header";
 
 export default async function ServiceLayout({

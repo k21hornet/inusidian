@@ -1,6 +1,6 @@
 "use client";
 
-import { postCard } from "@/app/actions/card";
+import { postCard } from "@/features/card";
 import { PrimaryButton } from "@/components/ui/button/primary-button";
 import { Deck } from "@/type/index";
 import { PostCardFormData } from "@/type/request";

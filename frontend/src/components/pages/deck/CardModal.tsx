@@ -1,4 +1,4 @@
-import { deleteCard, updateCard } from "@/app/actions/card";
+import { deleteCard, updateCard } from "@/features/card";
 import { PrimaryButton } from "@/components/ui/button/primary-button";
 import { Card } from "@/type/index";
 import { PostCardFormData } from "@/type/request";

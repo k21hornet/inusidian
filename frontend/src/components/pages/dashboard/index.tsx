@@ -1,36 +1,19 @@
-import Link from "next/link";
 import { Box, Typography } from "@mui/material";
 import { DashboardPageProps } from "./typs";
-import { DeckTable } from "./DeckTable";
+import { DeckTable } from "@/components/common/DeckTable";
+
 import {
   dashboardPageSx,
-  deckListSx,
-  deckListHeaderSx,
-  deckListTitleSx,
-  deckListEmptySx,
   dashboardReportSx,
   dashboardReportBoxSx,
   dashboardReportBoxOverlaySx,
   dashboardReportBoxImgSx,
 } from "./styles";
-import { Button } from "@/components/ui/button";
 
 export default function DashboardPage({ decks }: DashboardPageProps) {
   return (
     <Box sx={dashboardPageSx}>
-      <Box sx={deckListSx}>
-        <Box sx={deckListHeaderSx}>
-          <Typography sx={deckListTitleSx}>デッキ一覧</Typography>
-          <Button component={Link} href="/deck/create" buttonDesign="secondary">
-            デッキ作成
-          </Button>
-        </Box>
-        {decks.length > 0 ? (
-          <DeckTable decks={decks} />
-        ) : (
-          <Box sx={deckListEmptySx}>デッキを作成しましょう！</Box>
-        )}
-      </Box>
+      <DeckTable decks={decks} />
 
       <Box
         sx={{
