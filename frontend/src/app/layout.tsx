@@ -4,6 +4,7 @@ import { Roboto } from "next/font/google";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "@/components/theme";
 import { CssBaseline } from "@mui/material";
+import { Metadata } from "next";
 
 const roboto = Roboto({
   weight: ["100", "300", "400", "500", "600", "700"],
@@ -11,6 +12,21 @@ const roboto = Roboto({
   display: "swap",
   variable: "--font-roboto",
 });
+
+export const metadata: Metadata = {
+  title: "INUSIDIAN",
+  description: "INUSIDIAN",
+  manifest: "/manifest.json",
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "INUSIDIAN",
+  },
+};
 
 export default function RootLayout({
   children,
