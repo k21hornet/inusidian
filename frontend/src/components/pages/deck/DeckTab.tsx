@@ -5,13 +5,13 @@ import React, { useEffect, useState } from "react";
 import DeckTabPanel from "./DeckTabPanel";
 import { useRouter, useSearchParams } from "next/navigation";
 import CardList from "./CardList";
-import { deleteDeck, getDeck } from "@/app/actions/deck";
+import { deleteDeck, getDeck } from "@/features/deck";
 
 import { Deck } from "@/type/index";
 import CreateCardForm from "./CreateCardForm";
 import ReviewCards from "./ReviewCards";
 import EditDeckForm from "./EditDeckForm";
-import { PrimaryButton } from "@/components/ui/button/primary-button";
+import { PrimaryButton } from "@/components/ui/Button/primary-button";
 
 type Props = {
   deck: Deck;

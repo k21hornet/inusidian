@@ -1,6 +1,5 @@
 import { Box, Typography } from "@mui/material";
 import Link from "next/link";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { UserIcon } from "./UserIcon";
 import { SPMenu } from "./SPMenu";
 import {
@@ -47,16 +46,14 @@ export const Header = () => {
                   Decks
                 </Link>
               </Typography>
-              <ExpandMoreIcon />
             </Box>
 
             <Box sx={navItemSx}>
               <Typography>
-                <Link href="/review-list" style={navLinkSx}>
+                <Link href="/reviews" style={navLinkSx}>
                   Review
                 </Link>
               </Typography>
-              <ExpandMoreIcon />
             </Box>
 
             <Box sx={navItemSx}>

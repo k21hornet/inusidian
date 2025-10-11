@@ -1,7 +1,7 @@
 "use client";
 
-import { exportDeck, putDeck } from "@/app/actions/deck";
-import { PrimaryButton } from "@/components/ui/button/primary-button";
+import { exportDeck, putDeck } from "@/features/deck";
+import { PrimaryButton } from "@/components/ui/Button/primary-button";
 import { Deck } from "@/type";
 import { Alert, Box, Snackbar, TextField, Typography } from "@mui/material";
 import React, { ChangeEvent, FormEvent, useState } from "react";

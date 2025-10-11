@@ -1,7 +1,7 @@
 "use client";
 
-import { postDeck } from "@/app/actions/deck";
-import { PrimaryButton } from "@/components/ui/button/primary-button";
+import { postDeck } from "@/features/deck";
+import { PrimaryButton } from "@/components/ui/Button/primary-button";
 import { Box, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React, { ChangeEvent, FormEvent, useState } from "react";
@@ -56,7 +56,7 @@ export default function CreateDeckForm() {
 
     const data = await postDeck(formData);
     if (data) {
-      router.push(`/deck/${data.id}`);
+      router.push(`/decks/${data.id}`);
     }
   };
 

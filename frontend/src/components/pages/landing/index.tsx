@@ -9,7 +9,7 @@ import {
   lpTitleSpSx,
   lpTitleSx,
 } from "./styles";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 
 export const LandingPage = () => {
   return (

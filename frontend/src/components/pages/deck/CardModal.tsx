@@ -1,5 +1,5 @@
-import { deleteCard, updateCard } from "@/app/actions/card";
-import { PrimaryButton } from "@/components/ui/button/primary-button";
+import { deleteCard, updateCard } from "@/features/card";
+import { PrimaryButton } from "@/components/ui/Button/primary-button";
 import { Card } from "@/type/index";
 import { PostCardFormData } from "@/type/request";
 import { Box, Modal, TextField } from "@mui/material";

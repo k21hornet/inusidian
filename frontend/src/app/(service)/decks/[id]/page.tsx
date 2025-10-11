@@ -1,4 +1,4 @@
-import { getDeck } from "@/app/actions/deck";
+import { getDeck } from "@/features/deck";
 import DeckPage from "@/components/pages/deck";
 
 type Params = {

@@ -1,6 +1,6 @@
 "use client";
 
-import { importDeck } from "@/app/actions/deck";
+import { importDeck } from "@/features/deck";
 import { Box } from "@mui/material";
 import { useRouter } from "next/navigation";
 
