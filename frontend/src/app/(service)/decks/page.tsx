@@ -1,4 +1,4 @@
-import { DecksPage } from "@/components/pages/decks";
+import { DecksPage } from "@/components/pages/Decks";
 import { getAllDecks } from "@/features/deck";
 
 export default async function Decks() {

@@ -22,7 +22,7 @@ import { useRouter } from "next/navigation";
 import StyleIcon from "@mui/icons-material/Style";
 
 import { ReviewTableProps } from "./type";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 
 export const ReviewTable = ({ decks }: ReviewTableProps) => {
   const router = useRouter();
@@ -57,7 +57,7 @@ export const ReviewTable = ({ decks }: ReviewTableProps) => {
                     bgcolor: "#f1f2f3",
                   },
                 }}
-                onClick={() => router.push(`/decks/${deck.id}/review`)}
+                onClick={() => router.push(`/decks/${deck.id}?review`)}
               >
                 <TableCell>
                   <Box sx={deckTableInfoSx}>

@@ -16,7 +16,7 @@ import {
   reviewSuccess,
 } from "@/features/review";
 import Congratulations from "./Congratulations";
-import { PrimaryButton } from "@/components/ui/button/primary-button";
+import { PrimaryButton } from "@/components/ui/Button/primary-button";
 
 export default function ReviewCards({
   deckId,

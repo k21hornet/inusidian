@@ -1,8 +1,5 @@
-import DashboardPage from "@/components/pages/dashboard";
-import { getAllDecks } from "@/features/deck";
+import { AboutPage } from "@/components/pages/About";
 
 export default async function About() {
-  const decks = await getAllDecks();
-
-  return <DashboardPage decks={decks} />;
+  return <AboutPage />;
 }

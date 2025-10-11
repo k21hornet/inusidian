@@ -23,7 +23,7 @@ import {
 import { useRouter } from "next/navigation";
 import StyleIcon from "@mui/icons-material/Style";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { DeckTableProps } from "./type";
 import Link from "next/link";
 
@@ -34,7 +34,7 @@ export const DeckTable = ({ decks }: DeckTableProps) => {
     <Box sx={deckListSx}>
       <Box sx={deckListHeaderSx}>
         <Typography sx={deckListTitleSx}>デッキ一覧</Typography>
-        <Button component={Link} href="/deck/create" buttonDesign="secondary">
+        <Button component={Link} href="/decks/create" buttonDesign="secondary">
           デッキ作成
         </Button>
       </Box>
@@ -65,7 +65,7 @@ export const DeckTable = ({ decks }: DeckTableProps) => {
                     bgcolor: "#f1f2f3",
                   },
                 }}
-                onClick={() => router.push(`/deck/${deck.id}`)}
+                onClick={() => router.push(`/decks/${deck.id}`)}
               >
                 <TableCell>
                   <Box sx={deckTableInfoSx}>
