@@ -2,7 +2,16 @@
 
 import { Card } from "@/type/index";
 import { PostCardFormData } from "@/type/request";
-import { postApi, putApi, deleteApi } from "@/util/fetcher";
+import { getApi, postApi, putApi, deleteApi } from "@/util/fetcher";
+
+// カードを取得
+export async function getCard(id: number): Promise<Card | undefined> {
+  try {
+    return await getApi(`/cards/${id}`);
+  } catch {
+    return undefined;
+  }
+}
 
 // カードを作成
 export async function postCard(

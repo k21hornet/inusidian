@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { DashboardPageProps } from "./typs";
-import { DeckTable } from "@/components/common/DeckTable";
+import { DeckTable } from "@/components/base/DeckTable";
 
 import {
   dashboardPageSx,

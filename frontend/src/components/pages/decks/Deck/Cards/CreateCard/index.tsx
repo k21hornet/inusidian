@@ -9,10 +9,9 @@ import { FormEvent, useState } from "react";
 
 type Props = {
   deck: Deck;
-  onCardCreated?: () => void; // カード作成後のコールバック
 };
 
-export default function CreateCardForm({ deck, onCardCreated }: Props) {
+export default function CreateCardPage({ deck }: Props) {
   const [open, setOpen] = useState(false); // Snackbarの開閉状態
 
   // 各カード属性ごとにfieldIdとcontentを持つ
@@ -47,10 +46,6 @@ export default function CreateCardForm({ deck, onCardCreated }: Props) {
         })),
       });
 
-      // カード作成後のコールバックを実行
-      if (onCardCreated) {
-        onCardCreated();
-      }
       setOpen(true);
     }
   };

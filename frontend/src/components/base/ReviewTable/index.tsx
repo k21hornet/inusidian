@@ -57,7 +57,7 @@ export const ReviewTable = ({ decks }: ReviewTableProps) => {
                     bgcolor: "#f1f2f3",
                   },
                 }}
-                onClick={() => router.push(`/decks/${deck.id}?review`)}
+                onClick={() => router.push(`/decks/${deck.id}/review`)}
               >
                 <TableCell>
                   <Box sx={deckTableInfoSx}>

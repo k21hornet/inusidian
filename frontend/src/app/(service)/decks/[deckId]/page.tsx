@@ -1,13 +1,13 @@
+import { DeckPage } from "@/components/pages/Decks/Deck";
 import { getDeck } from "@/features/deck";
-import DeckPage from "@/components/pages/deck";
 
 type Params = {
-  params: Promise<{ id: number }>;
+  params: Promise<{ deckId: number }>;
 };
 
 export default async function Deck({ params }: Params) {
-  const { id } = await params;
-  const deck = await getDeck(id);
+  const { deckId } = await params;
+  const deck = await getDeck(deckId);
 
   if (!deck) return;
 

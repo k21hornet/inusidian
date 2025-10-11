@@ -9,16 +9,10 @@ export default function CardModal({
   open,
   handleClose,
   card,
-  onCardUpdated,
-  setOpenUpdateSnackbar,
-  setOpenDeleteSnackbar,
 }: {
   open: boolean;
   handleClose: () => void;
   card: Card | undefined;
-  onCardUpdated: () => void;
-  setOpenUpdateSnackbar: (open: boolean) => void;
-  setOpenDeleteSnackbar: (open: boolean) => void;
 }) {
   const [formData, setFormData] = useState<PostCardFormData>({
     cardId: 0,
@@ -55,13 +49,7 @@ export default function CardModal({
 
     const data = await updateCard(formData);
     if (data) {
-      // カード編集後のコールバックを実行
-      if (onCardUpdated) {
-        onCardUpdated();
-      }
-
       handleClose();
-      setOpenUpdateSnackbar(true);
     }
   };
 
@@ -71,11 +59,6 @@ export default function CardModal({
     if (!confirm) return;
     await deleteCard(id);
     handleClose();
-    setOpenDeleteSnackbar(true);
-    // カード削除後のコールバックを実行
-    if (onCardUpdated) {
-      onCardUpdated();
-    }
   };
 
   if (card === undefined) return;
