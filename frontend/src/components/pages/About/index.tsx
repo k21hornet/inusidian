@@ -1,3 +1,3 @@
 export const AboutPage = () => {
-  return <div>AboutPage</div>;
+  return <div>AboutPage is comming soon...</div>;
 };

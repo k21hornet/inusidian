@@ -8,10 +8,9 @@ import React, { ChangeEvent, FormEvent, useState } from "react";
 
 type Props = {
   deck: Deck;
-  onDeckUpdated: () => void;
 };
 
-export default function EditDeckForm({ deck, onDeckUpdated }: Props) {
+export default function DeckSettingsPage({ deck }: Props) {
   const [open, setOpen] = useState(false); // Snackbarの開閉状態
   const [formData, setFormData] = useState({
     deckId: deck.id,
@@ -48,8 +47,6 @@ export default function EditDeckForm({ deck, onDeckUpdated }: Props) {
 
     const data = await putDeck(formData);
     if (data) {
-      // コールバック実行
-      onDeckUpdated();
       setOpen(true);
     }
   };

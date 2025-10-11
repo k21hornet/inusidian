@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import {
   Accordion,
@@ -18,13 +20,7 @@ import {
 import Congratulations from "./Congratulations";
 import { PrimaryButton } from "@/components/ui/Button/primary-button";
 
-export default function ReviewCards({
-  deckId,
-  onReviewCompleted,
-}: {
-  deckId: number;
-  onReviewCompleted: () => void;
-}) {
+export default function ReviewPage({ deckId }: { deckId: number }) {
   const [dueCards, setDueCards] = useState<Card[]>([]);
   const [dueCard, setDueCard] = useState<Card | null>();
   const [accordionExpanded, setAccordionExpanded] = useState(false); // アコーディオンの開閉状態
@@ -62,7 +58,6 @@ export default function ReviewCards({
     await reviewSuccess(id, Math.round(elapsedTime));
     setDueCards(dueCards.filter((rc) => rc.id !== id)); //正解した問題を除外
     setAccordionExpanded(false);
-    onReviewCompleted(); // 復習完了後のコールバック
   };
 
   // 問題不正解時

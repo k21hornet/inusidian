@@ -13,29 +13,15 @@ import {
   TableRow,
 } from "@mui/material";
 import React, { useState } from "react";
-import { Card } from "@/type/index";
 import { convertDate } from "@/util/convertDate";
-import CardModal from "./CardModal";
+import { useRouter } from "next/navigation";
 
-export default function CardList({
-  deck,
-  onCardUpdated,
-}: {
-  deck: Deck;
-  onCardUpdated: () => void;
-}) {
-  const [cardDetail, setCardDetail] = useState<Card>();
-  const [open, setOpen] = useState(false);
-  const handleOpen = (card: Card) => {
-    setOpen(true);
-    setCardDetail(card);
-  };
-  const handleClose = () => {
-    setOpen(false);
-    setCardDetail(undefined);
+export default function CardList({ deck }: { deck: Deck }) {
+  const router = useRouter();
+  const handleOpen = (cardId: number) => {
+    router.push(`/decks/${deck.id}/cards/${cardId}`);
   };
 
-  const [openUpdateSnackbar, setOpenUpdateSnackbar] = useState(false);
   const [openDeleteSnackbar, setOpenDeleteSnackbar] = useState(false);
 
   return (
@@ -43,7 +29,6 @@ export default function CardList({
       <TableContainer
         component={Paper}
         sx={{
-          maxHeight: 580,
           overflowY: "auto", // 縦方向のスクロールを有効化
         }}
       >
@@ -85,7 +70,7 @@ export default function CardList({
                       bgcolor: "#eee",
                     },
                   }}
-                  onClick={() => handleOpen(card)}
+                  onClick={() => handleOpen(card.id)}
                 >
                   <TableCell sx={{ fontWeight: "bold" }}>
                     {card.cardValues[0].content}
@@ -106,26 +91,6 @@ export default function CardList({
           </TableBody>
         </Table>
       </TableContainer>
-
-      <CardModal
-        open={open}
-        handleClose={handleClose}
-        card={cardDetail}
-        onCardUpdated={onCardUpdated}
-        setOpenUpdateSnackbar={setOpenUpdateSnackbar}
-        setOpenDeleteSnackbar={setOpenDeleteSnackbar}
-      />
-
-      <Snackbar
-        open={openUpdateSnackbar}
-        autoHideDuration={1000}
-        onClose={() => setOpenUpdateSnackbar(false)}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      >
-        <Alert severity="success" variant="filled">
-          カードを更新しました
-        </Alert>
-      </Snackbar>
 
       <Snackbar
         open={openDeleteSnackbar}
