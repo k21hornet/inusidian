@@ -79,7 +79,7 @@ export const DeckTable = ({ decks }: DeckTableProps) => {
                   </Box>
                 </TableCell>
                 <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
-                  0
+                  {deck.cardCount || 0}
                 </TableCell>
                 <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
                   {convertDate(deck.createdAt)}

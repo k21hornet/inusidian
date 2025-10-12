@@ -38,9 +38,6 @@ export const ReviewTable = ({ decks }: ReviewTableProps) => {
           <TableHead>
             <TableRow>
               <TableCell>デッキ</TableCell>
-              <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
-                今日の復習カード数
-              </TableCell>
               <TableCell
                 sx={{ display: { xs: "none", sm: "table-cell" } }}
               ></TableCell>
@@ -69,9 +66,6 @@ export const ReviewTable = ({ decks }: ReviewTableProps) => {
                       <Box>{deck.deckDescription}</Box>
                     </Box>
                   </Box>
-                </TableCell>
-                <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
-                  0
                 </TableCell>
                 <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
                   <Button variant="outlined" buttonDesign="secondary">

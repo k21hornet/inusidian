@@ -46,7 +46,7 @@ export const DeckPage = ({ deck }: Props) => {
             component={Link}
             href={`/decks/${deck.id}/review`}
             variant="contained"
-            buttonDesign="primary"
+            buttonDesign="secondary"
           >
             復習する
           </Button>

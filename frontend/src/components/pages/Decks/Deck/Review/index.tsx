@@ -18,7 +18,7 @@ import {
   reviewSuccess,
 } from "@/features/review";
 import Congratulations from "./Congratulations";
-import { PrimaryButton } from "@/components/ui/Button/primary-button";
+import { Button } from "@/components/ui/Button";
 
 export default function ReviewPage({ deckId }: { deckId: number }) {
   const [dueCards, setDueCards] = useState<Card[]>([]);
@@ -146,7 +146,9 @@ export default function ReviewPage({ deckId }: { deckId: number }) {
               <Typography component="span" sx={{ color: "text.secondary" }}>
                 0 day
               </Typography>
-              <PrimaryButton onClick={failure}>Again</PrimaryButton>
+              <Button buttonDesign="secondary" onClick={failure}>
+                Again
+              </Button>
             </Box>
 
             <Box
@@ -160,9 +162,13 @@ export default function ReviewPage({ deckId }: { deckId: number }) {
               <Typography component="span" sx={{ color: "text.secondary" }}>
                 {dueCard.successCount * 2 + 1} day
               </Typography>
-              <PrimaryButton onClick={() => success(dueCard.id)}>
+              <Button
+                buttonDesign="secondary"
+                variant="outlined"
+                onClick={() => success(dueCard.id)}
+              >
                 Easy
-              </PrimaryButton>
+              </Button>
             </Box>
           </Box>
         </AccordionDetails>
@@ -175,7 +181,7 @@ export default function ReviewPage({ deckId }: { deckId: number }) {
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
       >
         <Alert severity="error" variant="filled">
-          ドンマイ！
+          残念！
         </Alert>
       </Snackbar>
     </Box>

@@ -1,9 +1,9 @@
 import { deleteCard, updateCard } from "@/features/card";
-import { PrimaryButton } from "@/components/ui/Button/primary-button";
 import { Card } from "@/type/index";
 import { PostCardFormData } from "@/type/request";
 import { Box, Modal, TextField } from "@mui/material";
 import React, { FormEvent, useEffect, useState } from "react";
+import { Button } from "@/components/ui/Button";
 
 export default function CardModal({
   open,
@@ -99,12 +99,25 @@ export default function CardModal({
               />
             ))}
 
-            <Box sx={{ display: "flex", gap: 2 }}>
-              <PrimaryButton type="submit">保存</PrimaryButton>
-              <PrimaryButton onClick={() => handleDelete(card.id)}>
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Button
+                buttonDesign="secondary"
+                onClick={() => handleDelete(card.id)}
+              >
                 削除
-              </PrimaryButton>
-              <PrimaryButton onClick={handleClose}>戻る</PrimaryButton>
+              </Button>
+              <Box sx={{ display: "flex", gap: 1 }}>
+                <Button
+                  buttonDesign="secondary"
+                  variant="outlined"
+                  onClick={handleClose}
+                >
+                  戻る
+                </Button>
+                <Button buttonDesign="secondary" type="submit">
+                  保存
+                </Button>
+              </Box>
             </Box>
           </Box>
         </Box>

@@ -3,3 +3,4 @@
 /database/data
 /database/data-dev
 setup-prd.sh
+docker-compose.yml

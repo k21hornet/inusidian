@@ -1,10 +1,10 @@
 "use client";
 
 import { postDeck } from "@/features/deck";
-import { PrimaryButton } from "@/components/ui/Button/primary-button";
 import { Box, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React, { ChangeEvent, FormEvent, useState } from "react";
+import { Button } from "@/components/ui/Button";
 
 export default function CreateDeckForm() {
   const router = useRouter();
@@ -61,10 +61,12 @@ export default function CreateDeckForm() {
   };
 
   return (
-    <Box component={"form"} onSubmit={handleSubmit}>
-      <Typography variant="h6" gutterBottom>
-        デッキ基本情報
-      </Typography>
+    <Box
+      component={"form"}
+      onSubmit={handleSubmit}
+      sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+    >
+      <Typography variant="h6">デッキ基本情報</Typography>
       <TextField
         label="デッキ名"
         type="text"
@@ -72,6 +74,9 @@ export default function CreateDeckForm() {
         value={formData.deckName}
         onChange={handleChange}
         required
+        sx={{ maxWidth: 200 }}
+        size="small"
+        variant="standard"
       />
       <TextField
         label="デッキ説明文"
@@ -81,16 +86,25 @@ export default function CreateDeckForm() {
         value={formData.deckDescription}
         onChange={handleChange}
         required
+        size="small"
+        variant="standard"
       />
 
-      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Typography variant="h6" gutterBottom>
-          カードのフィールドを設定（表）
-        </Typography>
+      <Box
+        sx={{
+          display: { xs: "block", md: "flex" },
+          justifyContent: "space-between",
+        }}
+      >
+        <Typography variant="h6">カードのフィールドを設定【表面】</Typography>
 
-        <PrimaryButton onClick={() => handleAddField("front")}>
-          フィールドを追加（表）
-        </PrimaryButton>
+        <Button
+          buttonDesign="secondary"
+          variant="outlined"
+          onClick={() => handleAddField("front")}
+        >
+          フィールドを追加
+        </Button>
       </Box>
 
       <TextField
@@ -99,58 +113,84 @@ export default function CreateDeckForm() {
         value={formData.cardFields[0].fieldName}
         onChange={(e) => handleFieldChange(0, e.target.value)}
         required
+        size="small"
+        variant="standard"
+        sx={{ maxWidth: 300 }}
       />
 
       {formData.cardFields.map((field, index) => (
         <Box key={index}>
           {field.fieldType === "front" && (
-            <Box>
+            <Box sx={{ display: "flex", gap: 2 }}>
               <TextField
                 label="例：単語"
                 type="text"
                 value={field.fieldName}
                 onChange={(e) => handleFieldChange(index, e.target.value)}
                 required
+                size="small"
+                variant="standard"
+                sx={{ flex: 1, maxWidth: 300 }}
               />
-              <PrimaryButton onClick={() => handleDeleteField(index)}>
+              <Button
+                buttonDesign="secondary"
+                variant="outlined"
+                onClick={() => handleDeleteField(index)}
+              >
                 削除
-              </PrimaryButton>
+              </Button>
             </Box>
           )}
         </Box>
       ))}
 
-      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Typography variant="h6" gutterBottom>
-          カードのフィールドを設定（裏）
-        </Typography>
+      <Box
+        sx={{
+          display: { xs: "block", md: "flex" },
+          justifyContent: "space-between",
+        }}
+      >
+        <Typography variant="h6">カードのフィールドを設定【裏面】</Typography>
 
-        <PrimaryButton onClick={() => handleAddField("back")}>
-          フィールドを追加（裏）
-        </PrimaryButton>
+        <Button
+          buttonDesign="secondary"
+          variant="outlined"
+          onClick={() => handleAddField("back")}
+        >
+          フィールドを追加
+        </Button>
       </Box>
 
       {formData.cardFields.map((field, index) => (
         <Box key={index}>
           {field.fieldType === "back" && (
-            <Box>
+            <Box sx={{ display: "flex", gap: 2 }}>
               <TextField
                 label="例：意味"
                 type="text"
                 value={field.fieldName}
                 onChange={(e) => handleFieldChange(index, e.target.value)}
                 required
+                size="small"
+                variant="standard"
+                sx={{ flex: 1, maxWidth: 300 }}
               />
-              <PrimaryButton onClick={() => handleDeleteField(index)}>
+              <Button
+                buttonDesign="secondary"
+                variant="outlined"
+                onClick={() => handleDeleteField(index)}
+              >
                 削除
-              </PrimaryButton>
+              </Button>
             </Box>
           )}
         </Box>
       ))}
 
       <Box>
-        <PrimaryButton type="submit">デッキを作成</PrimaryButton>
+        <Button buttonDesign="secondary" type="submit">
+          デッキを作成
+        </Button>
       </Box>
     </Box>
   );

@@ -23,6 +23,8 @@ public class DeckSummaryDTO {
 
     private String deckDescription;
 
+    private Integer cardCount;
+
     private LocalDateTime createdAt;
 
     public static DeckSummaryDTO fromEntity(Deck deck) {
@@ -30,6 +32,7 @@ public class DeckSummaryDTO {
                 deck.getId(),
                 deck.getDeckName(),
                 deck.getDeckDescription(),
+                deck.getCards().size(),
                 deck.getCreatedAt()
         );
     }

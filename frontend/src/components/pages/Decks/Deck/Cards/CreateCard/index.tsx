@@ -1,11 +1,11 @@
 "use client";
 
 import { postCard } from "@/features/card";
-import { PrimaryButton } from "@/components/ui/Button/primary-button";
 import { Deck } from "@/type/index";
 import { PostCardFormData } from "@/type/request";
 import { Alert, Box, Snackbar, TextField } from "@mui/material";
 import { FormEvent, useState } from "react";
+import { Button } from "@/components/ui/Button";
 
 type Props = {
   deck: Deck;
@@ -65,11 +65,15 @@ export default function CreateCardPage({ deck }: Props) {
             fullWidth
             value={formData.values[idx].content}
             onChange={(e) => handleFieldChange(idx, e.target.value)}
+            size="small"
+            variant="standard"
           />
         ))}
 
         <Box>
-          <PrimaryButton type="submit">カードを作成</PrimaryButton>
+          <Button buttonDesign="secondary" type="submit">
+            カードを作成
+          </Button>
         </Box>
       </Box>
 

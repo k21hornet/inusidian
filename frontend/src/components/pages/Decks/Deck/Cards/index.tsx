@@ -48,7 +48,9 @@ export const CardPage = ({ card }: { card: Card }) => {
       </Box>
 
       <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <Button onClick={() => handleOpen()}>編集</Button>
+        <Button buttonDesign="secondary" onClick={() => handleOpen()}>
+          編集
+        </Button>
       </Box>
 
       <CardModal open={open} handleClose={handleClose} card={card} />

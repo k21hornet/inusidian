@@ -1,10 +1,10 @@
 "use client";
 
 import { exportDeck, putDeck } from "@/features/deck";
-import { PrimaryButton } from "@/components/ui/Button/primary-button";
 import { Deck } from "@/type";
 import { Alert, Box, Snackbar, TextField, Typography } from "@mui/material";
 import React, { ChangeEvent, FormEvent, useState } from "react";
+import { Button } from "@/components/ui/Button";
 
 type Props = {
   deck: Deck;
@@ -73,12 +73,29 @@ export default function DeckSettingsPage({ deck }: Props) {
 
   return (
     <>
-      <PrimaryButton onClick={handleExport}>デッキをエクスポート</PrimaryButton>
-
-      <Box component={"form"} onSubmit={handleSubmit}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          justifyContent: "space-between",
+          mb: 2,
+        }}
+      >
         <Typography variant="h6" gutterBottom>
           デッキ基本情報
         </Typography>
+        <Button buttonDesign="secondary" onClick={handleExport}>
+          デッキをエクスポート
+        </Button>
+      </Box>
+
+      <Box
+        component={"form"}
+        onSubmit={handleSubmit}
+        display="flex"
+        flexDirection="column"
+        gap={2}
+      >
         <TextField
           label="デッキ名"
           type="text"
@@ -86,6 +103,8 @@ export default function DeckSettingsPage({ deck }: Props) {
           value={formData.deckName}
           onChange={handleChange}
           required
+          size="small"
+          variant="standard"
         />
         <TextField
           label="デッキ説明文"
@@ -95,6 +114,8 @@ export default function DeckSettingsPage({ deck }: Props) {
           value={formData.deckDescription}
           onChange={handleChange}
           required
+          size="small"
+          variant="standard"
         />
 
         <Typography variant="h6" gutterBottom>
@@ -102,18 +123,22 @@ export default function DeckSettingsPage({ deck }: Props) {
         </Typography>
 
         {formData.cardFields.map((field, index) => (
-          <Box key={index}>
-            <TextField
-              label={field.fieldType === "primary" || "front" ? "表" : "裏"}
-              type="text"
-              value={field.fieldName}
-              onChange={(e) => handleFieldChange(index, e.target.value)}
-              required
-            />
-          </Box>
+          <TextField
+            key={index}
+            label={field.fieldType === "primary" || "front" ? "表" : "裏"}
+            type="text"
+            value={field.fieldName}
+            onChange={(e) => handleFieldChange(index, e.target.value)}
+            required
+            size="small"
+            variant="standard"
+            sx={{ maxWidth: 300 }}
+          />
         ))}
 
-        <PrimaryButton type="submit">更新</PrimaryButton>
+        <Button buttonDesign="secondary" type="submit" sx={{ maxWidth: 300 }}>
+          更新
+        </Button>
       </Box>
 
       <Snackbar

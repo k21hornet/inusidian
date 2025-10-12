@@ -32,7 +32,7 @@ export default function ImportDeckForm() {
   };
 
   return (
-    <Box component={"form"} onSubmit={(e) => e.preventDefault()}>
+    <Box component={"form"} onSubmit={(e) => e.preventDefault()} sx={{ mb: 4 }}>
       <input type="file" onChange={handleFileImport} />
     </Box>
   );

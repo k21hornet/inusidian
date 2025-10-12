@@ -11,6 +11,7 @@ export type Deck = {
   createdAt: string;
   cards: Card[];
   cardFields: CardField[];
+  cardCount?: number;
 };
 
 export type CardField = {
