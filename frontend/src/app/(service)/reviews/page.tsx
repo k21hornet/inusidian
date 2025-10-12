@@ -1,4 +1,4 @@
-import { ReviewsPage } from "@/components/pages/reviewsTmp";
+import { ReviewsPage } from "@/components/pages/Reviews";
 import { getAllDecks } from "@/features/deck";
 
 export default async function Reviews() {

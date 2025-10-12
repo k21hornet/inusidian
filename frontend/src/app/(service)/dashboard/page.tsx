@@ -1,4 +1,4 @@
-import DashboardPage from "@/components/pages/dashboardTmp";
+import DashboardPage from "@/components/pages/Dashboard";
 import { getAllDecks } from "@/features/deck";
 
 export default async function Dashboard() {

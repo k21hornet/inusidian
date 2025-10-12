@@ -1,4 +1,4 @@
-import ReviewPage from "@/components/pages/decksTmp/Deck/Review";
+import ReviewPage from "@/components/pages/Decks/Deck/Review";
 
 type Params = {
   params: Promise<{ deckId: number }>;

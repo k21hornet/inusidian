@@ -1,4 +1,4 @@
-import { DeckPage } from "@/components/pages/decksTmp/Deck";
+import { DeckPage } from "@/components/pages/Decks/Deck";
 import { getDeck } from "@/features/deck";
 
 type Params = {

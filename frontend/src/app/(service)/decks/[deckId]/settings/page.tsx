@@ -1,4 +1,4 @@
-import DeckSettingsPage from "@/components/pages/decksTmp/Deck/Settings";
+import DeckSettingsPage from "@/components/pages/Decks/Deck/Settings";
 import { getDeck } from "@/features/deck";
 
 type Params = {
