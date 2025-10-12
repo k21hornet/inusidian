@@ -1,4 +1,4 @@
-import CreateCardPage from "@/components/pages/Decks/Deck/Cards/CreateCard";
+import CreateCardPage from "@/components/pages/decksTmp/Deck/Cards/CreateCard";
 import { getDeck } from "@/features/deck";
 
 type Params = {
