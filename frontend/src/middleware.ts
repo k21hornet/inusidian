@@ -10,6 +10,11 @@ export async function middleware(request: NextRequest) {
     return response;
   }
 
+  // ログインエラーページは認証チェックをスキップ
+  if (request.nextUrl.pathname === "/error/access-denied") {
+    return response;
+  }
+
   // セッションチェック（ルートページは認証なしでアクセス可能）
   const session = await auth0.getSession(request);
   if (!session && request.nextUrl.pathname !== "/") {

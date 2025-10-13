@@ -11,7 +11,15 @@ export const auth0 = new Auth0Client({
     audience: process.env.AUTH0_AUDIENCE,
   },
 
-  onCallback() {
+  onCallback(error) {
+    if (error) {
+      return Promise.resolve(
+        NextResponse.redirect(
+          new URL("/error/access-denied", process.env.NEXT_PUBLIC_APP_BASE_URL)
+        )
+      );
+    }
+
     return Promise.resolve(
       NextResponse.redirect(
         new URL("/dashboard", process.env.NEXT_PUBLIC_APP_BASE_URL)
