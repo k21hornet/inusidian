@@ -16,4 +16,10 @@ public interface CardRepository extends JpaRepository<Card, Integer> {
             AND c.nextReviewDate <= :now
             """)
     List<Card> findDueCards(int deckId, LocalDate now);
+
+    @Query("""
+            SELECT c.id FROM Card c
+            WHERE c.deck.id = :deckId
+            """)
+    List<Integer> findIdByDeckId(int deckId);
 }

@@ -23,7 +23,7 @@ export type CardField = {
 
 export type Card = {
   id: number;
-  deckId?: number;
+  deckId: number;
   deck: Deck;
   cardValues: CardValue[];
   successCount: number;
