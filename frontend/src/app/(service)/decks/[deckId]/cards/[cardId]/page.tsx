@@ -1,5 +1,5 @@
 import { CardPage } from "@/components/pages/Decks/Deck/Cards";
-import { getCard } from "@/features/card";
+import { getCard, getNextCardId, getPrevCardId } from "@/features/card";
 
 type Params = {
   params: Promise<{ cardId: number }>;
@@ -8,8 +8,12 @@ type Params = {
 export default async function Card({ params }: Params) {
   const { cardId } = await params;
   const card = await getCard(cardId);
-
   if (!card) return;
 
-  return <CardPage card={card} />;
+  const nextCardId = await getNextCardId(card.deckId, cardId);
+  const prevCardId = await getPrevCardId(card.deckId, cardId);
+
+  return (
+    <CardPage card={card} nextCardId={nextCardId} prevCardId={prevCardId} />
+  );
 }

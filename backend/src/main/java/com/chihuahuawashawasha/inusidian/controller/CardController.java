@@ -63,4 +63,20 @@ public class CardController {
     public void deleteCard(@PathVariable int id) {
         cardService.deleteById(id);
     }
+
+    @GetMapping("/next/{deckId}/{cardId}")
+    public int nextCardId(
+            @PathVariable int deckId,
+            @PathVariable int cardId
+    ) {
+        return cardService.findNextCardId(deckId, cardId);
+    }
+
+    @GetMapping("/prev/{deckId}/{cardId}")
+    public int prevCardId(
+            @PathVariable int deckId,
+            @PathVariable int cardId
+    ) {
+        return cardService.findPrevCardId(deckId, cardId);
+    }
 }

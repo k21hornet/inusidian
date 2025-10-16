@@ -176,4 +176,20 @@ public class CardService {
     public void deleteById(int id) {
         cardRepository.deleteById(id);
     }
+
+    public int findNextCardId(int deckId, int currentId) {
+        List<Integer> idList = cardRepository.findIdByDeckId(deckId);
+        for (int i =0 ; i < idList.size() - 1; i++) {
+            if (idList.get(i) == currentId) return idList.get(i+1);
+        }
+        return -999;
+    }
+
+    public int findPrevCardId(int deckId, int currentId) {
+        List<Integer> idList = cardRepository.findIdByDeckId(deckId);
+        for (int i =1 ; i < idList.size() ; i++) {
+            if (idList.get(i) == currentId) return idList.get(i-1);
+        }
+        return -999;
+    }
 }
