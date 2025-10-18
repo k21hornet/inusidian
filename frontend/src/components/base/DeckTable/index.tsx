@@ -47,10 +47,10 @@ export const DeckTable = ({ decks }: DeckTableProps) => {
           <TableHead>
             <TableRow>
               <TableCell>デッキ</TableCell>
-              <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
-                カード数
+              <TableCell sx={{ display: { xs: "none", md: "table-cell" } }}>
+                枚数
               </TableCell>
-              <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
+              <TableCell sx={{ display: { xs: "none", md: "table-cell" } }}>
                 作成日
               </TableCell>
               <TableCell
@@ -82,10 +82,10 @@ export const DeckTable = ({ decks }: DeckTableProps) => {
                     </Box>
                   </Box>
                 </TableCell>
-                <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
-                  {deck.cardCount || 0}
+                <TableCell sx={{ display: { xs: "none", md: "table-cell" } }}>
+                  {deck.cardCount || 0}枚
                 </TableCell>
-                <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
+                <TableCell sx={{ display: { xs: "none", md: "table-cell" } }}>
                   {convertDate(deck.createdAt)}
                 </TableCell>
                 <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
