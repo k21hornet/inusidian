@@ -18,20 +18,20 @@ export const SPMenu = () => {
       <MenuIcon onClick={toggleDrawer(true)} />
       <Drawer open={open} onClose={toggleDrawer(false)}>
         <Box sx={spMenuSx}>
-          <Link style={spMenuLinkSx} href="/dashboard">
-            Home
+          <Link style={spMenuLinkSx} href="/home">
+            ホーム
           </Link>
           <Divider />
           <Link style={spMenuLinkSx} href="/decks">
-            Decks
+            デッキ一覧
           </Link>
           <Divider />
-          <Link style={spMenuLinkSx} href="/reviews">
-            Review
+          <Link style={spMenuLinkSx} href="/statistics">
+            統計
           </Link>
           <Divider />
-          <Link style={spMenuLinkSx} href="/about">
-            About
+          <Link style={spMenuLinkSx} href="/learning-goals">
+            学習目標
           </Link>
         </Box>
       </Drawer>

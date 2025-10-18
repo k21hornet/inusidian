@@ -4,7 +4,7 @@ export const headerSx = {
   left: 0,
   right: 0,
   zIndex: 1000,
-  display: { xs: "none", sm: "flex" },
+  display: { xs: "none", md: "flex" },
   justifyContent: "center",
   alignItems: "center",
   height: "64px",
@@ -17,12 +17,16 @@ export const headerContentSx = {
   justifyContent: "space-between",
   alignItems: "center",
   width: "100%",
-  maxWidth: "calc(1280px - 64px)",
-  m: "0 32px",
+  maxWidth: "1280px",
+  px: { xs: 2, md: 8 },
 };
 
 export const headerLeftSx = {
   flex: 1,
+};
+
+export const headerLinkSx = {
+  textDecoration: "none",
 };
 
 export const gradientTextSx = {
@@ -89,7 +93,7 @@ export const headerSpWrapperSx = {
   left: 0,
   right: 0,
   zIndex: 1000,
-  display: { xs: "flex", sm: "none" },
+  display: { xs: "flex", md: "none" },
   justifyContent: "center",
   alignItems: "center",
   height: "64px",

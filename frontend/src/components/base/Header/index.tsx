@@ -13,6 +13,7 @@ import {
   rightSx,
   headerSpSx,
   headerSpWrapperSx,
+  headerLinkSx,
 } from "./styles";
 
 export const Header = () => {
@@ -23,7 +24,7 @@ export const Header = () => {
         <Box sx={headerContentSx}>
           <Box sx={headerLeftSx}>
             <Typography>
-              <Link href="/dashboard" style={{ textDecoration: "none" }}>
+              <Link href="/home" style={headerLinkSx}>
                 <Box component="span" sx={gradientTextSx}>
                   INUSIDIAN
                 </Box>
@@ -34,8 +35,8 @@ export const Header = () => {
           <Box component="nav" sx={navSx}>
             <Box sx={navItemSx}>
               <Typography>
-                <Link href="/dashboard" style={navLinkSx}>
-                  Home
+                <Link href="/home" style={navLinkSx}>
+                  ホーム
                 </Link>
               </Typography>
             </Box>
@@ -43,23 +44,23 @@ export const Header = () => {
             <Box sx={navItemSx}>
               <Typography>
                 <Link href="/decks" style={navLinkSx}>
-                  Decks
+                  デッキ一覧
                 </Link>
               </Typography>
             </Box>
 
             <Box sx={navItemSx}>
               <Typography>
-                <Link href="/reviews" style={navLinkSx}>
-                  Review
+                <Link href="/statistics" style={navLinkSx}>
+                  統計
                 </Link>
               </Typography>
             </Box>
 
             <Box sx={navItemSx}>
               <Typography>
-                <Link href="/about" style={navLinkSx}>
-                  About
+                <Link href="/learning-goals" style={navLinkSx}>
+                  学習目標
                 </Link>
               </Typography>
             </Box>
@@ -76,7 +77,7 @@ export const Header = () => {
         <Box sx={headerContentSx}>
           <Box sx={headerSpSx}>
             <SPMenu />
-            <Link href="/dashboard" style={{ textDecoration: "none" }}>
+            <Link href="/home" style={headerLinkSx}>
               <Box component="span" sx={gradientTextSx}>
                 INUSIDIAN
               </Box>

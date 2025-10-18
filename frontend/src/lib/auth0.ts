@@ -22,7 +22,7 @@ export const auth0 = new Auth0Client({
 
     return Promise.resolve(
       NextResponse.redirect(
-        new URL("/dashboard", process.env.NEXT_PUBLIC_APP_BASE_URL)
+        new URL("/home", process.env.NEXT_PUBLIC_APP_BASE_URL)
       )
     );
   },

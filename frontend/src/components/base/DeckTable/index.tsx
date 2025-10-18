@@ -24,8 +24,12 @@ import { useRouter } from "next/navigation";
 import StyleIcon from "@mui/icons-material/Style";
 
 import { Button } from "@/components/ui/Button";
-import { DeckTableProps } from "./type";
 import Link from "next/link";
+import { Deck } from "@/type";
+
+export type DeckTableProps = {
+  decks: Deck[];
+};
 
 export const DeckTable = ({ decks }: DeckTableProps) => {
   const router = useRouter();

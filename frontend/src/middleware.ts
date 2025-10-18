@@ -26,9 +26,9 @@ export async function middleware(request: NextRequest) {
     );
   }
 
-  // ログイン済みユーザーがルートページにアクセスした場合は/dashboardにリダイレクト
+  // ログイン済みユーザーがルートページにアクセスした場合は/homeにリダイレクト
   if (request.nextUrl.pathname === "/" && session) {
-    return NextResponse.redirect(new URL("/dashboard", request.nextUrl.origin));
+    return NextResponse.redirect(new URL("/home", request.nextUrl.origin));
   }
 
   return response;

@@ -17,7 +17,7 @@ export default async function ServiceLayout({
       }}
     >
       <Header />
-      <Box component="main" sx={{ mt: "64px", px: 4, pt: 2 }}>
+      <Box component="main" sx={{ px: { xs: 2, md: 8 }, pt: 8 }}>
         {children}
       </Box>
     </Box>
