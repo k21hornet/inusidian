@@ -26,9 +26,9 @@ export async function middleware(request: NextRequest) {
     );
   }
 
-  // ログイン済みユーザーがルートページにアクセスした場合は/dashboardにリダイレクト
+  // ログイン済みユーザーがルートページにアクセスした場合は/homeにリダイレクト
   if (request.nextUrl.pathname === "/" && session) {
-    return NextResponse.redirect(new URL("/dashboard", request.nextUrl.origin));
+    return NextResponse.redirect(new URL("/home", request.nextUrl.origin));
   }
 
   return response;
@@ -42,6 +42,6 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico, sitemap.xml, robots.txt (metadata files)
      */
-    "/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
+    "/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|manifest.json).*)",
   ],
 };

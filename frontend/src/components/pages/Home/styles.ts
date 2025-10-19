@@ -1,16 +1,17 @@
-export const dashboardPageSx = {
+export const homePageSx = {
   mb: "20px",
 };
 
-export const dashboardReportSx = {
+export const homeReportSx = {
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
+  flexDirection: { xs: "column", md: "row" },
   mb: "24px",
   gap: "24px",
 };
 
-export const dashboardReportBoxSx = {
+export const homeReportBoxSx = {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -23,7 +24,7 @@ export const dashboardReportBoxSx = {
   position: "relative",
 };
 
-export const dashboardReportBoxImgSx = {
+export const homeReportBoxImgSx = {
   maxWidth: "100%",
   maxHeight: "100%",
   objectFit: "contain",
@@ -32,7 +33,7 @@ export const dashboardReportBoxImgSx = {
   filter: "blur(8px)",
 };
 
-export const dashboardReportBoxOverlaySx = {
+export const homeReportBoxOverlaySx = {
   position: "absolute",
   inset: "0",
   display: "flex",
