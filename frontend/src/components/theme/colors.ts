@@ -6,4 +6,5 @@ export const colors = {
   blueA400: "#2979FF",
   lightGreenA700: "#64DD17",
   redA700: "D50000",
+  white: "#FFFFFF",
 };

@@ -41,4 +41,5 @@ export const deckButtonsRightSx = {
   display: "flex",
   alignItems: "center",
   gap: 2,
+  width: { xs: "100%", md: "auto" },
 };

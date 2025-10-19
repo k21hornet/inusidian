@@ -41,12 +41,13 @@ export const DeckPage = ({ deck }: Props) => {
       </Box>
 
       <Box sx={deckButtonsSx}>
-        <Box>
+        <Box sx={{ width: { xs: "100%", md: "auto" } }}>
           <Button
             component={Link}
             href={`/decks/${deck.id}/review`}
             variant="contained"
             buttonDesign="secondary"
+            sx={{ width: { xs: "100%", md: "auto" } }}
           >
             復習する
           </Button>
@@ -58,6 +59,7 @@ export const DeckPage = ({ deck }: Props) => {
             href={`/decks/${deck.id}/cards/create`}
             variant="outlined"
             buttonDesign="secondary"
+            sx={{ width: { xs: "100%", md: "auto" } }}
           >
             カード作成
           </Button>
@@ -66,6 +68,7 @@ export const DeckPage = ({ deck }: Props) => {
             href={`/decks/${deck.id}/settings`}
             variant="outlined"
             buttonDesign="secondary"
+            sx={{ width: { xs: "100%", md: "auto" } }}
           >
             デッキ設定
           </Button>

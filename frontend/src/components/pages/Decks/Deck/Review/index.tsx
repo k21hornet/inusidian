@@ -19,6 +19,17 @@ import {
 } from "@/features/review";
 import Congratulations from "./Congratulations";
 import { Button } from "@/components/ui/Button";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useRouter } from "next/navigation";
+import {
+  cardContentAccordionDetailsSx,
+  cardContentAccordionSummaryColorSx,
+  cardContentAccordionSx,
+  cardContentSx,
+  cardContentTextSx,
+  reviewPageBackSx,
+  reviewPageSx,
+} from "./styles";
 
 export default function ReviewPage({ deckId }: { deckId: number }) {
   const [dueCards, setDueCards] = useState<Card[]>([]);
@@ -69,121 +80,127 @@ export default function ReviewPage({ deckId }: { deckId: number }) {
     setOpen(true);
   };
 
+  const router = useRouter();
+
   if (!dueCard) return <Congratulations />;
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        height: "100%",
-      }}
-    >
-      {/* カード表面 */}
-      {dueCard.cardValues
-        .filter((value) => value.field.fieldType !== "back") // 表のカードのみ取得
-        .map((value, idx) => (
-          <Typography
-            key={idx}
-            sx={{ mb: 2, fontSize: 20, textAlign: "center" }}
+    <Box sx={reviewPageSx}>
+      <Typography
+        sx={reviewPageBackSx}
+        onClick={() => router.push(`/decks/${dueCard.deckId}`)}
+      >
+        <ArrowBackIcon />
+        デッキに戻る
+      </Typography>
+
+      <Box sx={cardContentSx}>
+        {/* カード表面 */}
+        {dueCard.cardValues
+          .filter((value) => value.field.fieldType === "primary") // primaryフィールドのみ取得
+          .map((value, idx) => (
+            <Typography
+              key={idx}
+              sx={{ ...cardContentTextSx, fontSize: 18, fontWeight: "bold" }}
+            >
+              {value.content}
+            </Typography>
+          ))}
+
+        {dueCard.cardValues
+          .filter((value) => value.field.fieldType === "front") // 表フィールドのみ取得
+          .map((value, idx) => (
+            <Typography key={idx} sx={cardContentTextSx}>
+              {value.content}
+            </Typography>
+          ))}
+
+        {/* カード裏面 */}
+        <Accordion
+          expanded={accordionExpanded}
+          onChange={(_, isExpanded) => setAccordionExpanded(isExpanded)}
+          slotProps={{ transition: { timeout: 0 } }} // アコーディオン開閉時文字が出ないようにする
+          sx={cardContentAccordionSx}
+        >
+          <AccordionSummary
+            expandIcon={
+              <ExpandMoreIcon sx={cardContentAccordionSummaryColorSx} />
+            }
+            aria-controls="panel1-content"
+            id="panel1-header"
           >
-            {value.content}
-          </Typography>
-        ))}
-
-      {/* カード裏面 */}
-      <Accordion
-        expanded={accordionExpanded}
-        onChange={(_, isExpanded) => setAccordionExpanded(isExpanded)}
-        slotProps={{ transition: { timeout: 0 } }} // アコーディオン開閉時文字が出ないようにする
-        sx={{
-          width: "100%",
-          backgroundColor: "transparent",
-          border: "none",
-          borderTop: "1px solid #e0e0e0",
-          boxShadow: "none",
-        }}
-      >
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1-content"
-          id="panel1-header"
-        >
-          <Typography component="span" sx={{ color: "text.secondary" }}>
-            カード裏面を表示
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          {dueCard.cardValues
-            .filter((value) => value.field.fieldType === "back") // 裏のカードのみ取得
-            .map((value, idx) => (
-              <Typography
-                key={idx}
-                sx={{ mb: 2, fontSize: 20, textAlign: "center" }}
-              >
-                {value.content}
-              </Typography>
-            ))}
-          {/* ボタン */}
-          <Box sx={{ display: "flex", marginTop: 2 }}>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                margin: 1,
-              }}
+            <Typography
+              component="span"
+              sx={{ ...cardContentAccordionSummaryColorSx, fontSize: 14 }}
             >
-              <Typography component="span" sx={{ color: "text.secondary" }}>
-                0 day
-              </Typography>
-              <Button buttonDesign="secondary" onClick={failure}>
-                Again
-              </Button>
-            </Box>
-
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                margin: 1,
-              }}
-            >
-              <Typography component="span" sx={{ color: "text.secondary" }}>
-                {dueCard.successCount * 2 + 1} day
-              </Typography>
-              <Button
-                buttonDesign="secondary"
-                variant="outlined"
-                onClick={() => success(dueCard.id)}
+              カード裏面を表示
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails sx={cardContentAccordionDetailsSx}>
+            {dueCard.cardValues
+              .filter((value) => value.field.fieldType === "back") // 裏のカードのみ取得
+              .map((value, idx) => (
+                <Typography key={idx} sx={cardContentTextSx}>
+                  {value.content}
+                </Typography>
+              ))}
+            {/* ボタン */}
+            <Box sx={{ display: "flex", marginTop: 2 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  margin: 1,
+                }}
               >
-                Easy
-              </Button>
-            </Box>
-          </Box>
-        </AccordionDetails>
-      </Accordion>
+                <Typography component="span" sx={{ color: "text.secondary" }}>
+                  0 day
+                </Typography>
+                <Button
+                  buttonDesign="secondary"
+                  onClick={failure}
+                  sx={{ width: "100px" }}
+                >
+                  もう一度
+                </Button>
+              </Box>
 
-      <Snackbar
-        open={open}
-        onClose={() => setOpen(false)}
-        autoHideDuration={1000}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      >
-        <Alert severity="error" variant="filled">
-          残念！
-        </Alert>
-      </Snackbar>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  margin: 1,
+                }}
+              >
+                <Typography component="span" sx={{ color: "text.secondary" }}>
+                  {dueCard.successCount * 2 + 1} day
+                </Typography>
+                <Button
+                  buttonDesign="secondary"
+                  variant="outlined"
+                  onClick={() => success(dueCard.id)}
+                  sx={{ width: "100px" }}
+                >
+                  簡単
+                </Button>
+              </Box>
+            </Box>
+          </AccordionDetails>
+        </Accordion>
+
+        <Snackbar
+          open={open}
+          onClose={() => setOpen(false)}
+          autoHideDuration={1000}
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        >
+          <Alert severity="error" variant="filled">
+            残念！
+          </Alert>
+        </Snackbar>
+      </Box>
     </Box>
   );
 }
