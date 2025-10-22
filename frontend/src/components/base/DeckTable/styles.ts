@@ -1,3 +1,5 @@
+import { colors } from "@/components/theme/colors";
+
 export const deckListSx = {
   mb: "24px",
   boxShadow: "0 20px 40px rgba(0, 0, 0, 0.1)",
@@ -17,8 +19,24 @@ export const deckListTitleSx = {
 };
 
 export const deckListEmptySx = {
+  width: "100%",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  gap: 2,
+  py: 4,
+  alignItems: "center",
   textAlign: "center",
   color: "#888",
+};
+
+export const deckListEmptyImageSx = {
+  width: { xs: "140px", md: "195px" },
+};
+
+export const deckListEmptyTextSx = {
+  fontWeight: "bold",
+  color: colors.black500,
 };
 
 export const deckTableInfoSx = {

@@ -14,13 +14,22 @@ export const formDescriptionSx = {
 };
 
 export const formBaseInfoSx = {
-  display: "flex",
+  display: { xs: "block", md: "flex" },
   gap: 2,
   mb: 3,
 };
 
+export const deckNameInputSx = {
+  width: { xs: "100%", md: 225 },
+  mb: 2,
+};
+
+export const deckDescriptionInputSx = {
+  flex: 1,
+};
+
 export const formFieldContainerSx = {
-  display: "flex",
+  display: { xs: "block", md: "flex" },
   gap: 4,
 };
 
@@ -35,7 +44,12 @@ export const formFieldAddIconSx = {
   cursor: "pointer",
 };
 
+export const dividerSx = {
+  display: { xs: "block", md: "none" },
+  my: 3,
+};
+
 export const formSubmitButtonSx = {
   display: "flex",
-  justifyContent: "flex-end",
+  justifyContent: { xs: "flex-start", md: "flex-end" },
 };

@@ -3,11 +3,14 @@
 import { useRouter } from "next/navigation";
 import { Heading } from "@/components/ui/Heading";
 import { importDeck, postDeck } from "@/features/deck";
-import { Box, Typography } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import {
   cardContentSx,
+  deckDescriptionInputSx,
+  deckNameInputSx,
+  dividerSx,
   formBaseInfoSx,
   formDescriptionSx,
   formFieldAddIconSx,
@@ -55,7 +58,8 @@ export default function CreateDeckPage() {
   const [formData, setFormData] = useState({
     deckName: "",
     deckDescription: "",
-    cardFields: [{ fieldName: "", fieldType: "primary" }],
+    frontFields: [{ fieldName: "", fieldType: "front" }],
+    backFields: [{ fieldName: "", fieldType: "back" }],
   });
 
   // 通常のフィールドの変更処理
@@ -67,38 +71,75 @@ export default function CreateDeckPage() {
     }));
   };
 
-  // cardFieldsの特定のインデックスの値変更処理
-  const handleFieldChange = (index: number, value: string) => {
-    const newFields = [...formData.cardFields]; // 現在の値をコピー
-    newFields[index] = { ...newFields[index], fieldName: value }; // 該当フィールドのみ更新
+  // 表のフィールド変更処理
+  const handleFrontFieldChange = (index: number, value: string) => {
+    const newFields = [...formData.frontFields];
+    newFields[index] = { ...newFields[index], fieldName: value };
     setFormData((prev) => ({
       ...prev,
-      cardFields: newFields,
+      frontFields: newFields,
     }));
   };
 
-  // cardFieldsを追加
-  const handleAddField = (fieldType: "front" | "back") => {
+  // 裏のフィールド変更処理
+  const handleBackFieldChange = (index: number, value: string) => {
+    const newFields = [...formData.backFields];
+    newFields[index] = { ...newFields[index], fieldName: value };
     setFormData((prev) => ({
       ...prev,
-      cardFields: [...prev.cardFields, { fieldName: "", fieldType }],
+      backFields: newFields,
     }));
   };
 
-  // cardFieldsを削除
-  const handleDeleteField = (index: number) => {
-    const newFields = [...formData.cardFields];
+  // 表のフィールド追加
+  const handleAddFrontField = () => {
+    setFormData((prev) => ({
+      ...prev,
+      frontFields: [...prev.frontFields, { fieldName: "", fieldType: "front" }],
+    }));
+  };
+
+  // 裏のフィールド追加
+  const handleAddBackField = () => {
+    setFormData((prev) => ({
+      ...prev,
+      backFields: [...prev.backFields, { fieldName: "", fieldType: "back" }],
+    }));
+  };
+
+  // 表のフィールド削除
+  const handleDeleteFrontField = (index: number) => {
+    const newFields = [...formData.frontFields];
     newFields.splice(index, 1);
     setFormData((prev) => ({
       ...prev,
-      cardFields: newFields,
+      frontFields: newFields,
+    }));
+  };
+
+  // 裏のフィールド削除
+  const handleDeleteBackField = (index: number) => {
+    const newFields = [...formData.backFields];
+    newFields.splice(index, 1);
+    setFormData((prev) => ({
+      ...prev,
+      backFields: newFields,
     }));
   };
 
   const handleSubmit = async (e: FormEvent<Element>) => {
     e.preventDefault();
 
-    const data = await postDeck(formData);
+    // 表と裏のフィールドを結合
+    const cardFields = [...formData.frontFields, ...formData.backFields];
+
+    const submitData = {
+      deckName: formData.deckName,
+      deckDescription: formData.deckDescription,
+      cardFields: cardFields,
+    };
+
+    const data = await postDeck(submitData);
     if (data) {
       router.push(`/decks/${data.id}`);
     }
@@ -157,7 +198,7 @@ export default function CreateDeckPage() {
               onChange={handleChange}
               required
               placeholder="デッキ名を入力"
-              sx={{ width: 225 }}
+              sx={deckNameInputSx}
             />
             <FormInput
               label="デッキ説明文*"
@@ -167,7 +208,7 @@ export default function CreateDeckPage() {
               onChange={handleChange}
               required
               placeholder="デッキ説明文を入力"
-              sx={{ flex: 1 }}
+              sx={deckDescriptionInputSx}
             />
           </Box>
 
@@ -176,91 +217,87 @@ export default function CreateDeckPage() {
           </Heading>
 
           <Box sx={formFieldContainerSx}>
+            {/* 表のフィールド */}
             <Box>
               <Box sx={formFieldSx}>
                 <FormInput
                   label="フィールド表1*"
                   type="text"
-                  name={formData.cardFields[0].fieldName}
-                  value={formData.cardFields[0].fieldName}
-                  onChange={(e) => handleFieldChange(0, e.target.value)}
+                  name={`frontField_0`}
+                  value={formData.frontFields[0].fieldName}
+                  onChange={(e) => handleFrontFieldChange(0, e.target.value)}
                   required
                   placeholder="例：単語"
                   sx={{ width: 225 }}
                 />
                 <AddCircleIcon
                   sx={formFieldAddIconSx}
-                  onClick={() => handleAddField("front")}
+                  onClick={handleAddFrontField}
                 />
               </Box>
 
-              {formData.cardFields.map((field, index) => (
-                <div key={index}>
-                  {field.fieldType === "front" && (
-                    <Box key={index} sx={formFieldSx}>
-                      <FormInput
-                        label={`フィールド表${index + 1}*`}
-                        type="text"
-                        name={field.fieldName}
-                        value={field.fieldName}
-                        onChange={(e) =>
-                          handleFieldChange(index, e.target.value)
-                        }
-                        required
-                        placeholder="例：単語"
-                        sx={{ width: 225 }}
-                      />
-                      <ClearIcon
-                        sx={formFieldAddIconSx}
-                        onClick={() => handleDeleteField(index)}
-                      />
-                    </Box>
-                  )}
-                </div>
+              {formData.frontFields.slice(1).map((field, index) => (
+                <Box key={index + 1} sx={formFieldSx}>
+                  <FormInput
+                    label={`フィールド表${index + 2}*`}
+                    type="text"
+                    name={`frontField_${index + 1}`}
+                    value={field.fieldName}
+                    onChange={(e) =>
+                      handleFrontFieldChange(index + 1, e.target.value)
+                    }
+                    required
+                    placeholder="例：単語"
+                    sx={{ width: 225 }}
+                  />
+                  <ClearIcon
+                    sx={formFieldAddIconSx}
+                    onClick={() => handleDeleteFrontField(index + 1)}
+                  />
+                </Box>
               ))}
             </Box>
 
+            <Divider sx={dividerSx} />
+
+            {/* 裏のフィールド */}
             <Box>
               <Box sx={formFieldSx}>
                 <FormInput
                   label="フィールド裏1*"
                   type="text"
-                  name={formData.cardFields[0].fieldName}
-                  value={formData.cardFields[0].fieldName}
-                  onChange={(e) => handleFieldChange(0, e.target.value)}
+                  name={`backField_0`}
+                  value={formData.backFields[0].fieldName}
+                  onChange={(e) => handleBackFieldChange(0, e.target.value)}
                   required
-                  placeholder="例：単語"
+                  placeholder="例：意味"
                   sx={{ width: 225 }}
                 />
                 <AddCircleIcon
                   sx={formFieldAddIconSx}
-                  onClick={() => handleAddField("back")}
+                  onClick={handleAddBackField}
                 />
               </Box>
 
-              {formData.cardFields.map((field, index) => (
-                <div key={index}>
-                  {field.fieldType === "back" && (
-                    <Box key={index} sx={formFieldSx}>
-                      <FormInput
-                        label={`フィールド裏${index + 1}*`}
-                        type="text"
-                        name={field.fieldName}
-                        value={field.fieldName}
-                        onChange={(e) =>
-                          handleFieldChange(index, e.target.value)
-                        }
-                        required
-                        placeholder="例：単語"
-                        sx={{ width: 225 }}
-                      />
-                      <ClearIcon
-                        sx={formFieldAddIconSx}
-                        onClick={() => handleDeleteField(index)}
-                      />
-                    </Box>
-                  )}
-                </div>
+              {formData.backFields.slice(1).map((field, index) => (
+                <Box key={index + 1} sx={formFieldSx}>
+                  <FormInput
+                    label={`フィールド裏${index + 2}*`}
+                    type="text"
+                    name={`backField_${index + 1}`}
+                    value={field.fieldName}
+                    onChange={(e) =>
+                      handleBackFieldChange(index + 1, e.target.value)
+                    }
+                    required
+                    placeholder="例：意味"
+                    sx={{ width: 225 }}
+                  />
+                  <ClearIcon
+                    sx={formFieldAddIconSx}
+                    onClick={() => handleDeleteBackField(index + 1)}
+                  />
+                </Box>
               ))}
             </Box>
           </Box>

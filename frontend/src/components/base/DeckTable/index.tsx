@@ -12,7 +12,9 @@ import {
 import React from "react";
 import { convertDate } from "@/util/convertDate";
 import {
+  deckListEmptyImageSx,
   deckListEmptySx,
+  deckListEmptyTextSx,
   deckListHeaderSx,
   deckListSx,
   deckListTitleSx,
@@ -98,7 +100,17 @@ export const DeckTable = ({ decks }: DeckTableProps) => {
           </TableBody>
         </Table>
       ) : (
-        <Box sx={deckListEmptySx}>デッキを作成しましょう！</Box>
+        <Box sx={deckListEmptySx}>
+          <Box
+            component="img"
+            sx={deckListEmptyImageSx}
+            src="/empty-deck.png"
+            alt="デッキがありません"
+          />
+          <Typography sx={deckListEmptyTextSx}>
+            デッキを作成して学習を始めましょう！
+          </Typography>
+        </Box>
       )}
     </Box>
   );
