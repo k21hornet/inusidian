@@ -1,10 +1,11 @@
 "use client";
 
-import { exportDeck, putDeck } from "@/features/deck";
+import { deleteDeck, exportDeck, putDeck } from "@/features/deck";
 import { Deck } from "@/type";
 import { Alert, Box, Snackbar, TextField, Typography } from "@mui/material";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { useRouter } from "next/navigation";
 
 type Props = {
   deck: Deck;
@@ -69,6 +70,15 @@ export default function DeckSettingsPage({ deck }: Props) {
     a.click();
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);
+  };
+
+  const router = useRouter();
+  // デッキを削除
+  const handleDelete = async () => {
+    if (confirm("デッキを削除しますか？")) {
+      await deleteDeck(deck.id);
+      router.push("/decks");
+    }
   };
 
   return (
@@ -138,6 +148,13 @@ export default function DeckSettingsPage({ deck }: Props) {
 
         <Button buttonDesign="secondary" type="submit" sx={{ maxWidth: 300 }}>
           更新
+        </Button>
+        <Button
+          buttonDesign="secondary"
+          sx={{ maxWidth: 300 }}
+          onClick={handleDelete}
+        >
+          デッキを削除
         </Button>
       </Box>
 
