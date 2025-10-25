@@ -4,8 +4,11 @@ import com.chihuahuawashawasha.inusidian.model.dto.DeckDTO;
 import com.chihuahuawashawasha.inusidian.model.dto.DeckIoDTO;
 import com.chihuahuawashawasha.inusidian.model.dto.DeckSummaryDTO;
 import com.chihuahuawashawasha.inusidian.model.input.DeckInput;
+import com.chihuahuawashawasha.inusidian.model.response.DeckListResponse;
+import com.chihuahuawashawasha.inusidian.model.response.DeckResponse;
 import com.chihuahuawashawasha.inusidian.service.DeckService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.validation.BindingResult;
@@ -21,15 +24,15 @@ public class DeckController {
     private final DeckService deckService;
 
     @GetMapping
-    public List<DeckSummaryDTO> decks(@AuthenticationPrincipal Jwt jwt) {
+    public ResponseEntity<DeckListResponse> decks(@AuthenticationPrincipal Jwt jwt) {
         String auth0Id = jwt.getSubject();
-        return deckService.findAll(auth0Id);
+        return ResponseEntity.ok(deckService.findAll(auth0Id));
     }
 
     @GetMapping("/{id}")
-    public DeckDTO deck(@AuthenticationPrincipal Jwt jwt, @PathVariable int id) {
+    public ResponseEntity<DeckResponse> deck(@AuthenticationPrincipal Jwt jwt, @PathVariable int id) {
         String auth0Id = jwt.getSubject();
-        return deckService.findById(auth0Id, id);
+        return ResponseEntity.ok(deckService.findById(auth0Id, id));
     }
 
     @PostMapping("/create")

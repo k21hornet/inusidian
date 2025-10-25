@@ -27,11 +27,7 @@ import StyleIcon from "@mui/icons-material/Style";
 
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
-import { Deck } from "@/type";
-
-export type DeckTableProps = {
-  decks: Deck[];
-};
+import { DeckTableProps } from "./type";
 
 export const DeckTable = ({ decks }: DeckTableProps) => {
   const router = useRouter();
@@ -49,6 +45,9 @@ export const DeckTable = ({ decks }: DeckTableProps) => {
           <TableHead>
             <TableRow>
               <TableCell>デッキ</TableCell>
+              <TableCell sx={{ display: { xs: "none", md: "table-cell" } }}>
+                ステータス
+              </TableCell>
               <TableCell sx={{ display: { xs: "none", md: "table-cell" } }}>
                 枚数
               </TableCell>
@@ -83,6 +82,11 @@ export const DeckTable = ({ decks }: DeckTableProps) => {
                       <Box>{deck.deckDescription}</Box>
                     </Box>
                   </Box>
+                </TableCell>
+                <TableCell sx={{ display: { xs: "none", md: "table-cell" } }}>
+                  {deck.dueCardCount > 0
+                    ? "残り" + deck.dueCardCount + "枚"
+                    : "復習済み"}
                 </TableCell>
                 <TableCell sx={{ display: { xs: "none", md: "table-cell" } }}>
                   {deck.cardCount || 0}枚

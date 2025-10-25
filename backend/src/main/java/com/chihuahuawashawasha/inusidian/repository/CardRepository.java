@@ -10,6 +10,7 @@ import java.util.List;
 
 @Repository
 public interface CardRepository extends JpaRepository<Card, Integer> {
+
     @Query("""
             SELECT c FROM Card c
             WHERE c.deck.id = :deckId

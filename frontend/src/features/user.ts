@@ -15,6 +15,7 @@ export async function syncUser(): Promise<undefined> {
 export async function getLoginEmail(): Promise<string> {
   try {
     const response = await getApi(`/auth/me`);
+    console.log(response);
     return response.email;
   } catch {
     return "";

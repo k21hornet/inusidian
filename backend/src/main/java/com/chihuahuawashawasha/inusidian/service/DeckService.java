@@ -1,11 +1,13 @@
 package com.chihuahuawashawasha.inusidian.service;
 
+import com.chihuahuawashawasha.inusidian.mapper.DeckListResponseMapper;
+import com.chihuahuawashawasha.inusidian.mapper.DeckResponseMapper;
 import com.chihuahuawashawasha.inusidian.model.dto.DeckDTO;
 import com.chihuahuawashawasha.inusidian.model.dto.DeckIoDTO;
-import com.chihuahuawashawasha.inusidian.model.dto.DeckSummaryDTO;
 import com.chihuahuawashawasha.inusidian.model.entity.*;
 import com.chihuahuawashawasha.inusidian.model.input.CardFieldInput;
 import com.chihuahuawashawasha.inusidian.model.input.DeckInput;
+import com.chihuahuawashawasha.inusidian.model.response.*;
 import com.chihuahuawashawasha.inusidian.repository.*;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -21,25 +23,56 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 public class DeckService {
-    private final DeckRepository deckRepository;
+
     private final UserRepository userRepository;
+
+    private final DeckRepository deckRepository;
+
+    private final CardRepository cardRepository;
+
     private final CardFieldRepository cardFieldRepository;
+
     private final CardValueRepository cardValueRepository;
+
     private final CardLogRepository cardLogRepository;
 
-    public List<DeckSummaryDTO> findAll(String authId) {
-        return deckRepository.findAllByUserId(authId)
-                .stream()
-                .map(DeckSummaryDTO::fromEntity)
-                .toList();
+    private final DeckListResponseMapper deckListResponseMapper;
+
+    private final DeckResponseMapper deckResponseMapper;
+
+    /**
+     * デッキ一覧を取得
+     * @param authId ユーザーID
+     * @return デッキ一覧
+     */
+    public DeckListResponse findAll(String authId) {
+        List<Deck> decks = deckRepository.findAllByUserId(authId);
+        List<DeckListResponseItem> items = decks.stream().map(deck -> {
+            // デッキごとに復習カード枚数を取得しマッピングする
+            int dueCardCount = cardRepository.findDueCards(deck.getId(), LocalDate.now()).size();
+            return deckListResponseMapper.toResponseItem(deck, dueCardCount);
+        }).toList();
+        return deckListResponseMapper.toResponse(items);
     }
 
-    public DeckDTO findById(String auth0Id, int id) {
+    /**
+     * デッキ詳細情報とカード一覧を取得
+     * @param auth0Id ユーザーID
+     * @param id デッキID
+     * @return デッキ詳細情報とカード一覧
+     */
+    public DeckResponse findById(String auth0Id, int id) {
         Deck deck = findDeckById(id);
         if (!auth0Id.equals(deck.getUser().getId())) {
             throw new RuntimeException("UserIdが一致しません");
         }
-        return DeckDTO.fromEntity(deck);
+
+        List<DeckResponseCardItem> cardItems = cardValueRepository.findByDeckId(id)
+                .stream().map(deckResponseMapper::toResponseCardItem).toList();
+        List<DeckResponseFieldItem> fieldItems = cardFieldRepository.findByDeckId(id)
+                .stream().map(deckResponseMapper::toResponseFieldItem).toList();
+
+        return deckResponseMapper.toResponse(deck, cardItems, fieldItems);
     }
 
     public DeckDTO create(String auth0Id, DeckInput input) {

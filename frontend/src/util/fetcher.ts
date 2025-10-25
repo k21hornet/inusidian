@@ -58,6 +58,7 @@ export const fetcher = {
   delete: (url: string) => request(url, "DELETE", undefined),
 };
 
+// 廃止予定
 export const getApi = (url: string) => request(url, "GET", undefined);
 export const postApi = (url: string, data?: unknown) =>
   request(url, "POST", data);

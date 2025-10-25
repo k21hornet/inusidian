@@ -1,6 +1,6 @@
 "use client";
 
-import CardModal from "@/components/base/Card/CardModal";
+import CardModal from "@/components/common/Card/CardModal";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/type";
 import {

@@ -1,16 +1,18 @@
 package com.chihuahuawashawasha.inusidian.model.entity;
 
+import com.chihuahuawashawasha.inusidian.model.entity.base.AbstractBaseEntity;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "decks")
-@Data
-public class Deck {
+public class Deck extends AbstractBaseEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,31 +25,12 @@ public class Deck {
     private String deckName;
     
     private String deckDescription;
-    
-    private LocalDateTime createdAt;
-    
-    private LocalDateTime updatedAt;
-    
-    private LocalDateTime deletedAt;
 
     @OneToMany(mappedBy = "deck", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Card> cards;
 
     @OneToMany(mappedBy = "deck", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CardField> cardFields;
-
-    @PrePersist
-    protected void onCreate() {
-        if (this.createdAt == null) {
-            this.createdAt = LocalDateTime.now();
-        }
-        this.updatedAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        this.updatedAt = LocalDateTime.now();
-    }
 
     // デッキにカードが一枚も含まれていない場合
     public List<Card> getCards() {

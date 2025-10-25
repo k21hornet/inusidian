@@ -1,4 +1,3 @@
-import { Deck } from "@/type";
 import { Box, Typography } from "@mui/material";
 import StyleIcon from "@mui/icons-material/Style";
 import InfoOutlineIcon from "@mui/icons-material/InfoOutline";
@@ -13,14 +12,11 @@ import {
   deckStyleIconSx,
 } from "./styles";
 import { Button } from "@/components/ui/Button";
-import CardList from "@/components/base/Card/CardList";
+import CardList from "@/components/common/Card/CardList";
 import Link from "next/link";
+import { DeckPageProps } from "./type";
 
-type Props = {
-  deck: Deck;
-};
-
-export const DeckPage = ({ deck }: Props) => {
+export const DeckPage = ({ deck }: DeckPageProps) => {
   return (
     <>
       <Box sx={deckPageSx}>
@@ -75,7 +71,11 @@ export const DeckPage = ({ deck }: Props) => {
         </Box>
       </Box>
 
-      <CardList deck={deck} />
+      <CardList
+        id={deck.id}
+        primaryCardFieldName={deck.cardFields[0].fieldName}
+        cards={deck.cards}
+      />
     </>
   );
 };

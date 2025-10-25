@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { DeckTable } from "@/components/base/DeckTable";
+import { DeckTable } from "@/components/common/DeckTable";
 import {
   homePageSx,
   homeReportSx,
@@ -7,11 +7,7 @@ import {
   homeReportBoxImgSx,
   homeReportBoxOverlaySx,
 } from "./styles";
-import { Deck } from "@/type";
-
-export type HomePageProps = {
-  decks: Deck[];
-};
+import { HomePageProps } from "./type";
 
 export default function HomePage({ decks }: HomePageProps) {
   return (

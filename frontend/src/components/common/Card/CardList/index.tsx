@@ -1,6 +1,5 @@
 "use client";
 
-import { Deck } from "@/type/index";
 import {
   Alert,
   Paper,
@@ -15,11 +14,16 @@ import {
 import React, { useState } from "react";
 import { convertDate } from "@/util/convertDate";
 import { useRouter } from "next/navigation";
+import { CardListProps } from "./type";
 
-export default function CardList({ deck }: { deck: Deck }) {
+export default function CardList({
+  id,
+  primaryCardFieldName,
+  cards,
+}: CardListProps) {
   const router = useRouter();
   const handleOpen = (cardId: number) => {
-    router.push(`/decks/${deck.id}/cards/${cardId}`);
+    router.push(`/decks/${id}/cards/${cardId}`);
   };
 
   const [openDeleteSnackbar, setOpenDeleteSnackbar] = useState(false);
@@ -43,7 +47,7 @@ export default function CardList({ deck }: { deck: Deck }) {
             }}
           >
             <TableRow>
-              <TableCell>{deck.cardFields[0].fieldName}</TableCell>
+              <TableCell>{primaryCardFieldName}</TableCell>
               <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
                 連続正解数
               </TableCell>
@@ -58,36 +62,33 @@ export default function CardList({ deck }: { deck: Deck }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {deck.cards
-              .slice() // 配列をコピー
-              .reverse() // 最新のカードを上に表示する
-              .map((card) => (
-                <TableRow
-                  key={card.id}
-                  sx={{
-                    cursor: "pointer",
-                    "&:hover": {
-                      bgcolor: "#eee",
-                    },
-                  }}
-                  onClick={() => handleOpen(card.id)}
-                >
-                  <TableCell sx={{ fontWeight: "bold" }}>
-                    {card.cardValues[0].content}
-                  </TableCell>
-                  <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
-                    {card.successCount}回
-                  </TableCell>
-                  <TableCell>{card.reviewInterval}日</TableCell>
-                  <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
-                    {convertDate(card.nextReviewDate)}
-                  </TableCell>
-                  <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
-                    {convertDate(card.createdAt)}
-                  </TableCell>
-                  <TableCell sx={{ color: "primary.main" }}>詳細</TableCell>
-                </TableRow>
-              ))}
+            {cards.map((card) => (
+              <TableRow
+                key={card.id}
+                sx={{
+                  cursor: "pointer",
+                  "&:hover": {
+                    bgcolor: "#eee",
+                  },
+                }}
+                onClick={() => handleOpen(card.id)}
+              >
+                <TableCell sx={{ fontWeight: "bold" }}>
+                  {card.primaryValue}
+                </TableCell>
+                <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
+                  {card.successCount}回
+                </TableCell>
+                <TableCell>{card.reviewInterval}日</TableCell>
+                <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
+                  {convertDate(card.nextReviewDate)}
+                </TableCell>
+                <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
+                  {convertDate(card.createdAt)}
+                </TableCell>
+                <TableCell sx={{ color: "primary.main" }}>詳細</TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>

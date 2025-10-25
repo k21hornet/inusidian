@@ -2,24 +2,16 @@
 
 import { Deck } from "@/type";
 import { IODeckData, PostDeckFormData } from "@/type/request";
-import { deleteApi, getApi, postApi, putApi } from "@/util/fetcher";
+import { deleteApi, fetcher, getApi, postApi, putApi } from "@/util/fetcher";
 
 // ユーザーのデッキ一覧を取得
-export async function getAllDecks(): Promise<Deck[]> {
-  try {
-    return await getApi(`/decks`);
-  } catch {
-    return [];
-  }
+export async function getAllDecks() {
+  return await fetcher.get("/decks");
 }
 
 // デッキを取得
-export async function getDeck(id: number): Promise<Deck | undefined> {
-  try {
-    return await getApi(`/decks/${id}`);
-  } catch {
-    return undefined;
-  }
+export async function getDeck(id: number) {
+  return await fetcher.get(`/decks/${id}`);
 }
 
 // デッキを作成

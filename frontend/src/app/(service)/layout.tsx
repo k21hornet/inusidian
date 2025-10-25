@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { syncUser } from "../../features/user";
-import { Header } from "@/components/base/Header";
-import { Footer } from "@/components/base/Footer/idnex";
+import { Header } from "@/components/common/Header";
+import { Footer } from "@/components/common/Footer/idnex";
 
 export default async function ServiceLayout({
   children,
