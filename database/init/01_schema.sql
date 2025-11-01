@@ -1,21 +1,21 @@
 CREATE TABLE IF NOT EXISTS users (
-    id varchar(255) PRIMARY KEY,
-    email VARCHAR(100) UNIQUE NOT NULL,
+    id VARCHAR(255) PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
     authority VARCHAR(20),
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP,
-    deleted_at TIMESTAMP
+    created_at DATETIME,
+    updated_at DATETIME,
+    deleted_at DATETIME
 );
 
 CREATE TABLE IF NOT EXISTS decks (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id varchar(255) NOT NULL,
+    user_id VARCHAR(255) NOT NULL,
     deck_name VARCHAR(50) NOT NULL,
     deck_description VARCHAR(100) NOT NULL,
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP,
-    deleted_at TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    created_at DATETIME,
+    updated_at DATETIME,
+    deleted_at DATETIME,
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE IF NOT EXISTS card_fields (
@@ -23,10 +23,10 @@ CREATE TABLE IF NOT EXISTS card_fields (
     deck_id INT NOT NULL,
     field_name VARCHAR(50) NOT NULL,
     field_type VARCHAR(50) NOT NULL,
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP,
-    deleted_at TIMESTAMP,
-    FOREIGN KEY (deck_id) REFERENCES decks(id) ON DELETE CASCADE
+    created_at DATETIME,
+    updated_at DATETIME,
+    deleted_at DATETIME,
+    FOREIGN KEY (deck_id) REFERENCES decks(id)
 );
 
 CREATE TABLE IF NOT EXISTS cards (
@@ -34,11 +34,11 @@ CREATE TABLE IF NOT EXISTS cards (
     deck_id INT NOT NULL,
     success_count INT NOT NULL,
     review_interval INT NOT NULL,
-    next_review_date TIMESTAMP NOT NULL,
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP,
-    deleted_at TIMESTAMP,
-    FOREIGN KEY (deck_id) REFERENCES decks(id) ON DELETE CASCADE
+    next_review_date DATETIME NOT NULL,
+    created_at DATETIME,
+    updated_at DATETIME,
+    deleted_at DATETIME,
+    FOREIGN KEY (deck_id) REFERENCES decks(id)
 );
 
 CREATE TABLE IF NOT EXISTS card_values (
@@ -46,11 +46,11 @@ CREATE TABLE IF NOT EXISTS card_values (
     field_id INT NOT NULL,
     card_id INT NOT NULL,
     content VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP,
-    deleted_at TIMESTAMP,
-    FOREIGN KEY (field_id) REFERENCES card_fields(id) ON DELETE CASCADE,
-    FOREIGN KEY (card_id) REFERENCES cards(id) ON DELETE CASCADE
+    created_at DATETIME,
+    updated_at DATETIME,
+    deleted_at DATETIME,
+    FOREIGN KEY (field_id) REFERENCES card_fields(id),
+    FOREIGN KEY (card_id) REFERENCES cards(id)
 );
 
 CREATE TABLE IF NOT EXISTS card_logs (
@@ -58,8 +58,8 @@ CREATE TABLE IF NOT EXISTS card_logs (
     card_id INT NOT NULL,
     elapsed_time INT NOT NULL,
     next_review_interval INT NOT NULL,
-    created_at TIMESTAMP,
-    FOREIGN KEY (card_id) REFERENCES cards(id) ON DELETE CASCADE
+    created_at DATETIME,
+    FOREIGN KEY (card_id) REFERENCES cards(id)
 );
 
 -- drop table card_logs, card_values, cards, card_fields, decks, users;

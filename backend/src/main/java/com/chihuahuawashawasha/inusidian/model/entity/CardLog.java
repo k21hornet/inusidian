@@ -1,32 +1,25 @@
 package com.chihuahuawashawasha.inusidian.model.entity;
 
+import com.chihuahuawashawasha.inusidian.model.entity.base.AbstractBaseEntity;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.time.LocalDateTime;
-
+@Getter
+@Setter
 @Entity
 @Table(name = "card_logs")
-@Data
-public class CardLog {
+public class CardLog extends AbstractBaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @ManyToOne
-    @JoinColumn(name = "card_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "card_id")
     private Card card;
 
     private Integer elapsedTime;
 
     private Integer nextReviewInterval;
-    
-    private LocalDateTime createdAt;
-
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-    }
-
-} 
+}
