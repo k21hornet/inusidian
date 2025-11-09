@@ -2,10 +2,14 @@ package com.chihuahuawashawasha.inusidian.controller;
 
 import com.chihuahuawashawasha.inusidian.model.dto.DeckDTO;
 import com.chihuahuawashawasha.inusidian.model.dto.DeckIoDTO;
-import com.chihuahuawashawasha.inusidian.model.dto.DeckSummaryDTO;
-import com.chihuahuawashawasha.inusidian.model.input.DeckInput;
+import com.chihuahuawashawasha.inusidian.model.request.DeckInput;
+import com.chihuahuawashawasha.inusidian.model.response.DeckListItemResponse;
+import com.chihuahuawashawasha.inusidian.model.response.DeckListResponse;
+import com.chihuahuawashawasha.inusidian.model.response.DeckResponse;
+import com.chihuahuawashawasha.inusidian.service.CardService;
 import com.chihuahuawashawasha.inusidian.service.DeckService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.validation.BindingResult;
@@ -18,18 +22,35 @@ import java.util.List;
 @RequestMapping("/api/decks")
 @RequiredArgsConstructor
 public class DeckController {
+
     private final DeckService deckService;
 
+    private final CardService cardService;
+
     @GetMapping
-    public List<DeckSummaryDTO> decks(@AuthenticationPrincipal Jwt jwt) {
+    public ResponseEntity<DeckListResponse> decks(@AuthenticationPrincipal Jwt jwt) {
         String auth0Id = jwt.getSubject();
-        return deckService.findAll(auth0Id);
+        List<DeckListItemResponse> decks = deckService.findAll(auth0Id)
+                .stream()
+                .map(deckDTO -> {
+                    int dueCardCount = cardService.findDueCards(deckDTO.getId()).size();
+                    return new DeckListItemResponse(
+                        deckDTO.getId(),
+                        deckDTO.getDeckName(),
+                        deckDTO.getDeckDescription(),
+                        deckDTO.getCards().size(),
+                        dueCardCount,
+                        deckDTO.getCreatedAt()
+                    );
+                })
+                .toList();
+        return ResponseEntity.ok(new DeckListResponse(decks.size(), decks));
     }
 
     @GetMapping("/{id}")
-    public DeckDTO deck(@AuthenticationPrincipal Jwt jwt, @PathVariable int id) {
+    public ResponseEntity<DeckResponse> deck(@AuthenticationPrincipal Jwt jwt, @PathVariable int id) {
         String auth0Id = jwt.getSubject();
-        return deckService.findById(auth0Id, id);
+        return ResponseEntity.ok(new DeckResponse(deckService.findById(auth0Id, id)));
     }
 
     @PostMapping("/create")

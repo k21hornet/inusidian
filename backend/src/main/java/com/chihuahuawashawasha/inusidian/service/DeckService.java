@@ -1,11 +1,11 @@
 package com.chihuahuawashawasha.inusidian.service;
 
+import com.chihuahuawashawasha.inusidian.mapper.DeckMapper;
 import com.chihuahuawashawasha.inusidian.model.dto.DeckDTO;
 import com.chihuahuawashawasha.inusidian.model.dto.DeckIoDTO;
-import com.chihuahuawashawasha.inusidian.model.dto.DeckSummaryDTO;
 import com.chihuahuawashawasha.inusidian.model.entity.*;
-import com.chihuahuawashawasha.inusidian.model.input.CardFieldInput;
-import com.chihuahuawashawasha.inusidian.model.input.DeckInput;
+import com.chihuahuawashawasha.inusidian.model.request.CardFieldInput;
+import com.chihuahuawashawasha.inusidian.model.request.DeckInput;
 import com.chihuahuawashawasha.inusidian.repository.*;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -21,25 +21,39 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 public class DeckService {
+
     private final DeckRepository deckRepository;
+
     private final UserRepository userRepository;
+
     private final CardFieldRepository cardFieldRepository;
+
     private final CardValueRepository cardValueRepository;
+
     private final CardLogRepository cardLogRepository;
 
-    public List<DeckSummaryDTO> findAll(String authId) {
+    private final DeckMapper deckMapper;
+
+    /**
+     * デッキ一覧取得
+     * @param authId authId
+     * @return デッキ一覧
+     */
+    public List<DeckDTO> findAll(String authId) {
         return deckRepository.findAllByUserId(authId)
                 .stream()
-                .map(DeckSummaryDTO::fromEntity)
+                .map(deckMapper::toDTO)
                 .toList();
     }
 
+    /**
+     * デッキ詳細
+     * @param auth0Id auth0Id
+     * @param id デッキID
+     * @return デッキ詳細
+     */
     public DeckDTO findById(String auth0Id, int id) {
-        Deck deck = findDeckById(id);
-        if (!auth0Id.equals(deck.getUser().getId())) {
-            throw new RuntimeException("UserIdが一致しません");
-        }
-        return DeckDTO.fromEntity(deck);
+        return deckMapper.toDTO(deckRepository.find(auth0Id, id));
     }
 
     public DeckDTO create(String auth0Id, DeckInput input) {

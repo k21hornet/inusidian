@@ -2,12 +2,9 @@ package com.chihuahuawashawasha.inusidian.service;
 
 import com.chihuahuawashawasha.inusidian.model.dto.CardDTO;
 import com.chihuahuawashawasha.inusidian.model.entity.*;
-import com.chihuahuawashawasha.inusidian.model.input.CardInput;
-import com.chihuahuawashawasha.inusidian.model.input.CardValueInput;
-import com.chihuahuawashawasha.inusidian.repository.CardFieldRepository;
-import com.chihuahuawashawasha.inusidian.repository.CardLogRepository;
-import com.chihuahuawashawasha.inusidian.repository.CardRepository;
-import com.chihuahuawashawasha.inusidian.repository.DeckRepository;
+import com.chihuahuawashawasha.inusidian.model.request.CardInput;
+import com.chihuahuawashawasha.inusidian.model.request.CardValueInput;
+import com.chihuahuawashawasha.inusidian.repository.*;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +21,7 @@ public class CardService {
     private final CardRepository cardRepository;
     private final CardFieldRepository cardFieldRepository;
     private final DeckRepository deckRepository;
+    private final CardValueRepository cardValueRepository;
     private final CardLogRepository cardLogRepository;
 
     public CardDTO findById(int id) {
@@ -59,6 +57,9 @@ public class CardService {
         List<CardValue> cardValues = getCardValue(card, input);
 
         // 既存リストをクリアしてから追加
+        for (CardValue cv : card.getCardValues()) {
+            cardValueRepository.delete(cv);
+        }
         card.getCardValues().clear();
         card.getCardValues().addAll(cardValues);
 

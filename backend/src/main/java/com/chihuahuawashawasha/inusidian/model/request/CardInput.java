@@ -1,4 +1,4 @@
-package com.chihuahuawashawasha.inusidian.model.input;
+package com.chihuahuawashawasha.inusidian.model.request;
 
 import lombok.Data;
 
