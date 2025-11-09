@@ -1,9 +1,7 @@
-package com.chihuahuawashawasha.inusidian.model.input;
+package com.chihuahuawashawasha.inusidian.model.request;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 public class CardSuccessInput {

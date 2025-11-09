@@ -50,6 +50,9 @@ export const DeckTable = ({ decks }: DeckTableProps) => {
             <TableRow>
               <TableCell>デッキ</TableCell>
               <TableCell sx={{ display: { xs: "none", md: "table-cell" } }}>
+                ステータス
+              </TableCell>
+              <TableCell sx={{ display: { xs: "none", md: "table-cell" } }}>
                 枚数
               </TableCell>
               <TableCell sx={{ display: { xs: "none", md: "table-cell" } }}>
@@ -83,6 +86,11 @@ export const DeckTable = ({ decks }: DeckTableProps) => {
                       <Box>{deck.deckDescription}</Box>
                     </Box>
                   </Box>
+                </TableCell>
+                <TableCell sx={{ display: { xs: "none", md: "table-cell" } }}>
+                  {deck.dueCardCount > 0
+                    ? "残り" + deck.dueCardCount + "枚"
+                    : "復習済み"}
                 </TableCell>
                 <TableCell sx={{ display: { xs: "none", md: "table-cell" } }}>
                   {deck.cardCount || 0}枚

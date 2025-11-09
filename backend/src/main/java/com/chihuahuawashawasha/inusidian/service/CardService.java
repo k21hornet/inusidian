@@ -2,8 +2,8 @@ package com.chihuahuawashawasha.inusidian.service;
 
 import com.chihuahuawashawasha.inusidian.model.dto.CardDTO;
 import com.chihuahuawashawasha.inusidian.model.entity.*;
-import com.chihuahuawashawasha.inusidian.model.input.CardInput;
-import com.chihuahuawashawasha.inusidian.model.input.CardValueInput;
+import com.chihuahuawashawasha.inusidian.model.request.CardInput;
+import com.chihuahuawashawasha.inusidian.model.request.CardValueInput;
 import com.chihuahuawashawasha.inusidian.repository.*;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;

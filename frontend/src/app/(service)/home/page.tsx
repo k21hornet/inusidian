@@ -2,7 +2,7 @@ import HomePage from "@/components/pages/Home";
 import { getAllDecks } from "@/features/deck";
 
 export default async function Home() {
-  const decks = await getAllDecks();
+  const response = await getAllDecks();
 
-  return <HomePage decks={decks} />;
+  return <HomePage decks={response.decks} />;
 }

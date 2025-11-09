@@ -1,8 +1,8 @@
 package com.chihuahuawashawasha.inusidian.controller;
 
 import com.chihuahuawashawasha.inusidian.model.dto.CardDTO;
-import com.chihuahuawashawasha.inusidian.model.input.CardInput;
-import com.chihuahuawashawasha.inusidian.model.input.CardSuccessInput;
+import com.chihuahuawashawasha.inusidian.model.request.CardInput;
+import com.chihuahuawashawasha.inusidian.model.request.CardSuccessInput;
 import com.chihuahuawashawasha.inusidian.service.CardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

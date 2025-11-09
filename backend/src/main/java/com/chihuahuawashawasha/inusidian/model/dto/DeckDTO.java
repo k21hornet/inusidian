@@ -17,8 +17,6 @@ import java.util.List;
 public class DeckDTO {
     private Integer id;
 
-    private String userId;
-
     private String deckName;
 
     private String deckDescription;
@@ -36,7 +34,6 @@ public class DeckDTO {
     public static DeckDTO fromEntity(Deck deck) {
         return new DeckDTO(
                 deck.getId(),
-                deck.getUser().getId(),
                 deck.getDeckName(),
                 deck.getDeckDescription(),
                 deck.getCreatedAt(),
