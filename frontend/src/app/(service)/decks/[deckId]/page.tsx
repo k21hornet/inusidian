@@ -7,9 +7,9 @@ type Params = {
 
 export default async function Deck({ params }: Params) {
   const { deckId } = await params;
-  const response = await getDeck(deckId);
+  const deck = await getDeck(deckId);
 
-  if (!response?.deck) return;
+  if (!deck) return;
 
-  return <DeckPage deck={response.deck} />;
+  return <DeckPage deck={deck} />;
 }
