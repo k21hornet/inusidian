@@ -1,5 +1,5 @@
 import { CardPage } from "@/components/pages/Decks/Deck/Cards";
-import { getCard, getNextCardId, getPrevCardId } from "@/features/card";
+import { getCard, getNextCardId, getPrevCardId } from "@/lib/api/card";
 
 type Params = {
   params: Promise<{ cardId: number }>;

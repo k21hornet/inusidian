@@ -12,11 +12,8 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Card } from "@/type/index";
-import {
-  getReviewCards,
-  reviewFailure,
-  reviewSuccess,
-} from "@/features/review";
+import { reviewFailure, reviewSuccess } from "@/actions/review";
+import { getReviewCards } from "@/lib/api/review";
 import Congratulations from "./Congratulations";
 import { Button } from "@/components/ui/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";

@@ -1,5 +1,6 @@
 import { Auth0Client } from "@auth0/nextjs-auth0/server";
 import { NextResponse } from "next/server";
+import { syncUser } from "./api/user";
 
 export const auth0 = new Auth0Client({
   domain: process.env.AUTH0_DOMAIN,
@@ -11,7 +12,7 @@ export const auth0 = new Auth0Client({
     audience: process.env.AUTH0_AUDIENCE,
   },
 
-  onCallback(error) {
+  async onCallback(error) {
     if (error) {
       return Promise.resolve(
         NextResponse.redirect(
@@ -19,6 +20,8 @@ export const auth0 = new Auth0Client({
         )
       );
     }
+
+    await syncUser(); // 新規ユーザーがログインした時にユーザー情報を同期
 
     return Promise.resolve(
       NextResponse.redirect(

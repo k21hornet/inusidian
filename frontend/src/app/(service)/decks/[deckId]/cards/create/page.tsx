@@ -1,5 +1,5 @@
 import CreateCardPage from "@/components/pages/Decks/Deck/Cards/CreateCard";
-import { getDeck } from "@/features/deck";
+import { getDeck } from "@/lib/api/deck";
 
 type Params = {
   params: Promise<{ deckId: number }>;

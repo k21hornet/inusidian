@@ -1,16 +1,6 @@
 "use server";
 
-import { Card } from "@/type";
-import { getApi, postApi } from "@/util/fetcher";
-
-// レビュー対象カード一覧を取得
-export async function getReviewCards(deckId: number): Promise<Card[]> {
-  try {
-    return await getApi(`/cards/review/${deckId}`);
-  } catch {
-    return [];
-  }
-}
+import { postApi } from "@/util/fetcher";
 
 // レビュー成功
 export async function reviewSuccess(

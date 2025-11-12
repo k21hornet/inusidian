@@ -1,5 +1,3 @@
-"use server";
-
 import { getApi } from "@/util/fetcher";
 
 // 新規ユーザーがログインした時にユーザー情報を同期
