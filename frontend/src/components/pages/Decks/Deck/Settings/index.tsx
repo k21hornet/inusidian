@@ -1,6 +1,7 @@
 "use client";
 
-import { deleteDeck, exportDeck, putDeck } from "@/features/deck";
+import { deleteDeck, exportDeck } from "@/actions/deck";
+import { putDeck } from "@/actions/deck";
 import { Deck } from "@/type";
 import { Alert, Box, Snackbar, TextField, Typography } from "@mui/material";
 import React, { ChangeEvent, FormEvent, useState } from "react";

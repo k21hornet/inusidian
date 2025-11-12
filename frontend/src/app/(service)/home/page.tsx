@@ -1,8 +1,8 @@
 import HomePage from "@/components/pages/Home";
-import { getAllDecks } from "@/features/deck";
+import { getAllDecks } from "@/lib/api/deck";
 
 export default async function Home() {
-  const response = await getAllDecks();
+  const { decks } = await getAllDecks();
 
-  return <HomePage decks={response.decks} />;
+  return <HomePage decks={decks} />;
 }

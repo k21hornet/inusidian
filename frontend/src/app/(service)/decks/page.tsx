@@ -1,8 +1,8 @@
 import { DecksPage } from "@/components/pages/Decks";
-import { getAllDecks } from "@/features/deck";
+import { getAllDecks } from "@/lib/api/deck";
 
 export default async function Decks() {
-  const response = await getAllDecks();
+  const { decks } = await getAllDecks();
 
-  return <DecksPage decks={response.decks} />;
+  return <DecksPage decks={decks} />;
 }

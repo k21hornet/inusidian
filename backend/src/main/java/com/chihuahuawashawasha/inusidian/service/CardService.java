@@ -1,5 +1,6 @@
 package com.chihuahuawashawasha.inusidian.service;
 
+import com.chihuahuawashawasha.inusidian.mapper.CardMapper;
 import com.chihuahuawashawasha.inusidian.model.dto.CardDTO;
 import com.chihuahuawashawasha.inusidian.model.entity.*;
 import com.chihuahuawashawasha.inusidian.model.request.CardInput;
@@ -18,15 +19,21 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 public class CardService {
+
     private final CardRepository cardRepository;
+
     private final CardFieldRepository cardFieldRepository;
+
     private final DeckRepository deckRepository;
+
     private final CardValueRepository cardValueRepository;
+
     private final CardLogRepository cardLogRepository;
 
-    public CardDTO findById(int id) {
-        Card card = findCardById(id);
-        return CardDTO.fromEntity(card);
+    private final CardMapper cardMapper;
+
+    public CardDTO findById(String auth0Id, int id) {
+        return cardMapper.toDTO(cardRepository.find(auth0Id, id));
     }
 
     public CardDTO create(CardInput input) {

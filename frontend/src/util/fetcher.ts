@@ -38,17 +38,7 @@ const request = async (url: string, method: string, data?: unknown) => {
     return null;
   }
 
-  const text = await response.text();
-  if (!text) {
-    return null;
-  }
-
-  try {
-    return JSON.parse(text);
-  } catch {
-    console.warn("Failed to parse JSON response:", text);
-    return null;
-  }
+  return response.json();
 };
 
 export const fetcher = {

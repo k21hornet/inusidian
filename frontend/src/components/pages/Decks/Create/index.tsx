@@ -2,7 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { Heading } from "@/components/ui/Heading";
-import { importDeck, postDeck } from "@/features/deck";
+import { importDeck } from "@/actions/deck";
+import { postDeck } from "@/actions/deck";
 import { Box, Divider, Typography } from "@mui/material";
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";

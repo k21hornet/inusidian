@@ -1,6 +1,6 @@
 "use client";
 
-import { postCard } from "@/features/card";
+import { postCard } from "@/actions/card";
 import { Deck } from "@/type/index";
 import { PostCardFormData } from "@/type/request";
 import { Alert, Box, Snackbar, TextField } from "@mui/material";

@@ -1,4 +1,4 @@
-import { deleteCard, updateCard } from "@/features/card";
+import { deleteCard, updateCard } from "@/actions/card";
 import { Card } from "@/type/index";
 import { PostCardFormData } from "@/type/request";
 import { Box, Modal, TextField } from "@mui/material";

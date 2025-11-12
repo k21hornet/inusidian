@@ -1,10 +1,11 @@
 package com.chihuahuawashawasha.inusidian.controller;
 
+import com.chihuahuawashawasha.inusidian.mapper.DeckResponseMapper;
+import com.chihuahuawashawasha.inusidian.mapper.DecksResponseMapper;
 import com.chihuahuawashawasha.inusidian.model.dto.DeckDTO;
 import com.chihuahuawashawasha.inusidian.model.dto.DeckIoDTO;
 import com.chihuahuawashawasha.inusidian.model.request.DeckInput;
-import com.chihuahuawashawasha.inusidian.model.response.DeckListItemResponse;
-import com.chihuahuawashawasha.inusidian.model.response.DeckListResponse;
+import com.chihuahuawashawasha.inusidian.model.response.DecksResponse;
 import com.chihuahuawashawasha.inusidian.model.response.DeckResponse;
 import com.chihuahuawashawasha.inusidian.service.CardService;
 import com.chihuahuawashawasha.inusidian.service.DeckService;
@@ -27,55 +28,53 @@ public class DeckController {
 
     private final CardService cardService;
 
+    private final DecksResponseMapper decksResponseMapper;
+
+    private final DeckResponseMapper deckResponseMapper;
+
     @GetMapping
-    public ResponseEntity<DeckListResponse> decks(@AuthenticationPrincipal Jwt jwt) {
+    public ResponseEntity<DecksResponse> decks(@AuthenticationPrincipal Jwt jwt) {
         String auth0Id = jwt.getSubject();
-        List<DeckListItemResponse> decks = deckService.findAll(auth0Id)
-                .stream()
-                .map(deckDTO -> {
-                    int dueCardCount = cardService.findDueCards(deckDTO.getId()).size();
-                    return new DeckListItemResponse(
-                        deckDTO.getId(),
-                        deckDTO.getDeckName(),
-                        deckDTO.getDeckDescription(),
-                        deckDTO.getCards().size(),
-                        dueCardCount,
-                        deckDTO.getCreatedAt()
-                    );
+        List<DecksResponse.DeckListItem> decks = deckService.findAll(auth0Id).stream()
+                .map(deck -> {
+                    int dueCardCount = cardService.findDueCards(deck.getId()).size();
+                    return decksResponseMapper.toResponse(deck, dueCardCount);
                 })
                 .toList();
-        return ResponseEntity.ok(new DeckListResponse(decks.size(), decks));
+        return ResponseEntity.ok(decksResponseMapper.toResponse(decks));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<DeckResponse> deck(@AuthenticationPrincipal Jwt jwt, @PathVariable int id) {
         String auth0Id = jwt.getSubject();
-        return ResponseEntity.ok(new DeckResponse(deckService.findById(auth0Id, id)));
+        DeckDTO dto = deckService.findById(auth0Id, id);
+        return ResponseEntity.ok(deckResponseMapper.toResponse(dto));
     }
 
     @PostMapping("/create")
-    public DeckDTO create(
+    public ResponseEntity<DeckResponse> create(
             @AuthenticationPrincipal Jwt jwt,
             @RequestBody @Validated DeckInput input,
             BindingResult result
     ){
         if (result.hasErrors()) throw new RuntimeException();
         String auth0Id = jwt.getSubject();
-        return deckService.create(auth0Id,input);
+        return ResponseEntity.ok(deckResponseMapper.toResponse(deckService.create(auth0Id,input)));
     }
 
     @PutMapping("/update")
-    public DeckDTO update(
+    public ResponseEntity<DeckResponse> update(
             @RequestBody @Validated DeckInput input,
             BindingResult result
     ){
         if (result.hasErrors()) throw new RuntimeException();
-        return deckService.update(input);
+        return ResponseEntity.ok(deckResponseMapper.toResponse(deckService.update(input)));
     }
 
     @DeleteMapping("/{id}")
-    public void deleteDeck (@PathVariable int id) {
+    public ResponseEntity<Void> deleteDeck (@PathVariable int id) {
         deckService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}/export")
