@@ -22,6 +22,6 @@ docker buildx rm mybuilder
 docker buildx create --use --name mybuilder
 
 # イメージを生成
-docker build -t "${FRONTEND_IMAGE_NAME}" -f ./frontend/Dockerfile ./frontend
-docker build -t "${BACKEND_IMAGE_NAME}" -f ./backend/Dockerfile ./backend
+docker build -t "${FRONTEND_IMAGE_NAME}" -f ./inusidian-frontend/Dockerfile ./frontend
+docker build -t "${BACKEND_IMAGE_NAME}" -f ./inusidian-backend/Dockerfile ./backend
 docker buildx build --platform linux/amd64 -t "${DATABASE_IMAGE_NAME}" --load -f ./database/Dockerfile ./database
