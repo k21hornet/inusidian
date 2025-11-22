@@ -13,7 +13,7 @@ unzip gradle-8.14-bin.zip -d /opt/gradle && \
 
 FROM openjdk:21
 
-COPY --from=builder /app/build/libs/inusidian-0.0.1-SNAPSHOT.jar /app/inusidian.jar
+COPY --from=builder /app/build/libs/inusidian-api-1.3.0.jar /app/inusidian-api.jar
 
 RUN microdnf install -y nc && \
 ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime

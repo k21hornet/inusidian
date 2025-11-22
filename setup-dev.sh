@@ -1,8 +1,8 @@
 #!/bin/zsh
 
 # イメージ名
-FRONTEND_IMAGE_NAME="inusidian/frontend:1.0"
-BACKEND_IMAGE_NAME="inusidian/backend:1.0"
+FRONTEND_IMAGE_NAME="inusidian/inusidian-web:1.3.0"
+BACKEND_IMAGE_NAME="inusidian/inusidian-api:1.3.0"
 DATABASE_IMAGE_NAME="inusidian/database:1.0"
 
 docker-compose down --volumes --remove-orphans
@@ -22,6 +22,6 @@ docker buildx rm mybuilder
 docker buildx create --use --name mybuilder
 
 # イメージを生成
-docker build -t "${FRONTEND_IMAGE_NAME}" -f ./frontend/Dockerfile ./frontend
-docker build -t "${BACKEND_IMAGE_NAME}" -f ./backend/Dockerfile ./backend
+docker build -t "${FRONTEND_IMAGE_NAME}" -f ./inusidian-web/Dockerfile ./inusidian-web
+docker build -t "${BACKEND_IMAGE_NAME}" -f ./inusidian-api/Dockerfile ./inusidian-api
 docker buildx build --platform linux/amd64 -t "${DATABASE_IMAGE_NAME}" --load -f ./database/Dockerfile ./database
