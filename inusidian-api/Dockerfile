@@ -1,23 +1,28 @@
-FROM openjdk:21 AS builder
+FROM eclipse-temurin:21-jdk AS builder
 
-COPY . /app
 WORKDIR /app
 
-RUN microdnf update && \
-microdnf install -y findutils && \
-microdnf install -y unzip && \
-curl -LO https://services.gradle.org/distributions/gradle-8.14-bin.zip && \
-mkdir -p /opt/gradle && \
-unzip gradle-8.14-bin.zip -d /opt/gradle && \
-./gradlew build -x test
+COPY gradlew .
+COPY gradle gradle
+COPY build.gradle settings.gradle ./
 
-FROM openjdk:21
+RUN chmod +x gradlew && ./gradlew dependencies --no-daemon || true
+
+COPY . .
+
+RUN ./gradlew build -x test --no-daemon
+
+FROM eclipse-temurin:21-jre
+
+WORKDIR /app
 
 COPY --from=builder /app/build/libs/inusidian-api-1.3.0.jar /app/inusidian-api.jar
 
-RUN microdnf install -y nc && \
-ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+RUN apt-get update && \
+    apt-get install -y netcat-openbsd && \
+    ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
+    rm -rf /var/lib/apt/lists/*
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "/app/inusidian.jar"]
+CMD ["java", "-jar", "/app/inusidian-api.jar"]
