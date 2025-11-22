@@ -13,7 +13,6 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Card } from "@/type/index";
 import { reviewFailure, reviewSuccess } from "@/actions/review";
-import { getReviewCards } from "@/lib/api/review";
 import Congratulations from "./Congratulations";
 import { Button } from "@/components/ui/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -28,7 +27,7 @@ import {
   reviewPageSx,
 } from "./styles";
 
-export default function ReviewPage({ deckId }: { deckId: number }) {
+export default function ReviewPage({ data }: { data: Card[] }) {
   const [dueCards, setDueCards] = useState<Card[]>([]);
   const [dueCard, setDueCard] = useState<Card | null>();
   const [accordionExpanded, setAccordionExpanded] = useState(false); // アコーディオンの開閉状態
@@ -44,7 +43,6 @@ export default function ReviewPage({ deckId }: { deckId: number }) {
 
   useEffect(() => {
     const fetchReviewCards = async () => {
-      const data = await getReviewCards(deckId);
       setDueCards(data);
     };
     fetchReviewCards();
