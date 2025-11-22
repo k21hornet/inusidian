@@ -4,3 +4,10 @@
 /database/data-for-dev
 setup-prd.sh
 docker-compose-prod.yml
+
+# terraform
+terraform/.terraform
+terraform/.terraform.lock.hcl
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
+terraform/terraform.tfvars
