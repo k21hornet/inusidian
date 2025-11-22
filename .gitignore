@@ -1,5 +1,6 @@
 .env
 .DS_Store
-/database/data-local
+/database/data-for-local
+/database/data-for-dev
 setup-prd.sh
-docker-compose.yml
+docker-compose-prod.yml

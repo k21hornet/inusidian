@@ -9,7 +9,8 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./database/data-local:/var/lib/mysql
+      - ./data-for-local:/var/lib/mysql
+      # - ./data-for-dev:/var/lib/mysql
     restart: always
     networks:
       - default
