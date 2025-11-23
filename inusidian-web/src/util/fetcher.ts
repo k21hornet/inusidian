@@ -2,14 +2,19 @@ import { getAccessToken } from "./auth";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
-const request = async (url: string, method: string, data?: unknown) => {
+const request = async (
+  url: string,
+  method: string,
+  data?: unknown,
+  customAccessToken?: string
+) => {
   const fullUrl = `${BASE_URL}${url}`;
 
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
   };
 
-  const accessToken = await getAccessToken();
+  const accessToken = customAccessToken || (await getAccessToken());
 
   // 認証が必要な場合はアクセストークンを追加
   if (accessToken) {
@@ -49,8 +54,8 @@ export const fetcher = {
 };
 
 export const getApi = (url: string) => request(url, "GET", undefined);
-export const postApi = (url: string, data?: unknown) =>
-  request(url, "POST", data);
+export const postApi = (url: string, data?: unknown, accessToken?: string) =>
+  request(url, "POST", data, accessToken);
 export const putApi = (url: string, data?: unknown) =>
   request(url, "PUT", data);
 export const deleteApi = (url: string) => request(url, "DELETE", undefined);

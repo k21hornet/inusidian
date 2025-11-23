@@ -1,10 +1,14 @@
-import { getApi } from "@/util/fetcher";
+import { getApi, postApi } from "@/util/fetcher";
 
-// 新規ユーザーがログインした時にユーザー情報を同期
-export async function syncUser(): Promise<undefined> {
+// 新規ユーザーがログインした時にユーザー情報を登録
+export async function signupUser(
+  email: string,
+  accessToken: string
+): Promise<undefined> {
   try {
-    return await getApi(`/auth/sync-user`);
-  } catch {
+    return await postApi(`/auth/signup`, { email }, accessToken);
+  } catch (e) {
+    console.log("signupUser error: ", e);
     return undefined;
   }
 }
