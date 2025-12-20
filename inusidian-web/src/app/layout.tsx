@@ -1,16 +1,16 @@
-import { Auth0Provider } from "@auth0/nextjs-auth0";
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
-import { Roboto } from "next/font/google";
-import { ThemeProvider } from "@mui/material/styles";
-import { theme } from "@/components/theme";
-import { CssBaseline } from "@mui/material";
 import { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+import { Toaster } from "@/components/ui/sonner";
 
-const roboto = Roboto({
-  weight: ["100", "300", "400", "500", "600", "700"],
+const geistSans = Geist({
+  variable: "--font-geist-sans",
   subsets: ["latin"],
-  display: "swap",
-  variable: "--font-roboto",
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
@@ -34,17 +34,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <Auth0Provider>
-      <html lang="ja" className={roboto.variable}>
-        <body>
-          <AppRouterCacheProvider>
-            <ThemeProvider theme={theme}>
-              <CssBaseline />
-              {children}
-            </ThemeProvider>
-          </AppRouterCacheProvider>
-        </body>
-      </html>
-    </Auth0Provider>
+    <html lang="ja">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        {children}
+        <Toaster />
+      </body>
+    </html>
   );
 }

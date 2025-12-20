@@ -1,33 +1,22 @@
 "use client";
 
-import { Button } from "@/components/ui/Button";
-import { Box, Typography } from "@mui/material";
+import { Button } from "@/components/ui/button";
 
 export default function Error() {
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100vh",
-        gap: 2,
-        p: 2,
-      }}
-    >
-      <Typography sx={{ fontSize: { xs: 24, md: 34 } }}>
+    <div className="flex flex-col items-center justify-center h-screen gap-2 p-2">
+      <h1 className="text-2xl md:text-[34px]">
         アクセス権限がありません
-      </Typography>
-      <Typography sx={{ textAlign: "center" }}>
+      </h1>
+      <p className="text-center">
         申し訳ございません。アクセス権限がないためサービスを利用できません。
-      </Typography>
+      </p>
       <Button
         buttonDesign="secondary"
         onClick={() => (window.location.href = "/auth/logout")}
       >
         ログアウトしてホームに戻る
       </Button>
-    </Box>
+    </div>
   );
 }
