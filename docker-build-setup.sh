@@ -1,0 +1,25 @@
+# イメージタグ
+FRONTEND_IMAGE_TAG="1.3.0"
+BACKEND_IMAGE_TAG="1.3.0"
+DATABASE_IMAGE_TAG="1.0.0"
+
+# イメージ名
+FRONTEND_IMAGE_NAME="inusidian-web"
+BACKEND_IMAGE_NAME="inusidian-api"
+DATABASE_IMAGE_NAME="database"
+
+# 以前生成したイメージを削除
+if docker image inspect "${FRONTEND_IMAGE_NAME}":"${FRONTEND_IMAGE_TAG}" > /dev/null 2>&1; then
+    docker image rm "${FRONTEND_IMAGE_NAME}":"${FRONTEND_IMAGE_TAG}"
+fi
+if docker image inspect "${BACKEND_IMAGE_NAME}":"${BACKEND_IMAGE_TAG}" > /dev/null 2>&1; then
+    docker image rm "${BACKEND_IMAGE_NAME}":"${BACKEND_IMAGE_TAG}"
+fi
+if docker image inspect "${DATABASE_IMAGE_NAME}":"${DATABASE_IMAGE_TAG}" > /dev/null 2>&1; then
+    docker image rm "${DATABASE_IMAGE_NAME}":"${DATABASE_IMAGE_TAG}"
+fi
+
+# イメージの生成
+docker buildx build --platform linux/amd64 -t "${FRONTEND_IMAGE_NAME}":"${FRONTEND_IMAGE_TAG}" -f ./inusidian-web/Dockerfile --load ./inusidian-web
+docker buildx build --platform linux/amd64 -t "${BACKEND_IMAGE_NAME}":"${BACKEND_IMAGE_TAG}" -f ./inusidian-api/Dockerfile --load ./inusidian-api
+docker buildx build --platform linux/amd64 -t "${DATABASE_IMAGE_NAME}":"${DATABASE_IMAGE_TAG}" -f ./database/Dockerfile --load ./database
