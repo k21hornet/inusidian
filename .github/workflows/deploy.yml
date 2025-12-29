@@ -19,13 +19,40 @@ jobs:
           echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Debug - Extract public key
+        run: |
+          echo "=== Extracting public key from private key ==="
+          ssh-keygen -y -f ~/.ssh/deploy_key > ~/.ssh/deploy_key.pub || echo "Failed to extract public key"
+          echo "=== Public key content ==="
+          cat ~/.ssh/deploy_key.pub || echo "No public key found"
+          echo ""
+          echo "=== Private key file info ==="
+          ls -la ~/.ssh/deploy_key
+          file ~/.ssh/deploy_key
+
+      - name: Test SSH connection with verbose output
+        run: |
+          ssh -vvv -i ~/.ssh/deploy_key \
+            -o BatchMode=yes \
+            -o StrictHostKeyChecking=no \
+            -o UserKnownHostsFile=~/.ssh/known_hosts \
+            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} \
+            "echo 'Connection successful'" || echo "Connection failed"
 
       - name: Deploy to VPS
-        env:
-          VPS_HOST: ${{ secrets.VPS_HOST }}
-          VPS_USER: ${{ secrets.VPS_USER }}
+        if: success()
         run: |
-          ssh -v -i ~/.ssh/deploy_key "${VPS_USER}@${VPS_HOST}" << 'EOF'
+          ssh -i ~/.ssh/deploy_key \
+            -o BatchMode=yes \
+            -o StrictHostKeyChecking=no \
+            -o UserKnownHostsFile=~/.ssh/known_hosts \
+            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'ENDSSH'
             cd /opt/inusidian
+            git pull origin main
+            chmod +x docker-build-setup.sh
             ./docker-build-setup.sh
-          EOF
+            docker-compose -f docker-compose.yml up -d --build
+            docker system prune -f
+          ENDSSH
