@@ -1,3 +1,9 @@
+# git pull
+git pull origin main
+
+# docker-compose down
+docker-compose down
+
 # イメージタグ
 FRONTEND_IMAGE_TAG="1.3.0"
 BACKEND_IMAGE_TAG="1.3.0"
@@ -23,3 +29,6 @@ fi
 docker buildx build --platform linux/amd64 -t "${FRONTEND_IMAGE_NAME}":"${FRONTEND_IMAGE_TAG}" -f ./inusidian-web/Dockerfile --load ./inusidian-web
 docker buildx build --platform linux/amd64 -t "${BACKEND_IMAGE_NAME}":"${BACKEND_IMAGE_TAG}" -f ./inusidian-api/Dockerfile --load ./inusidian-api
 docker buildx build --platform linux/amd64 -t "${DATABASE_IMAGE_NAME}":"${DATABASE_IMAGE_TAG}" -f ./database/Dockerfile --load ./database
+
+# コンテナ起動
+docker-compose up -d
