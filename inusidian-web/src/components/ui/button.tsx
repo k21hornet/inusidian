@@ -1,8 +1,8 @@
-import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
-import { cva, type VariantProps } from "class-variance-authority"
-import Link from "next/link"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { Slot } from "@radix-ui/react-slot";
+import { cva, type VariantProps } from "class-variance-authority";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
@@ -34,7 +34,7 @@ const buttonVariants = cva(
       size: "default",
     },
   }
-)
+);
 
 function ButtonBase({
   className,
@@ -44,9 +44,9 @@ function ButtonBase({
   ...props
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
-    asChild?: boolean
+    asChild?: boolean;
   }) {
-  const Comp = asChild ? Slot : "button"
+  const Comp = asChild ? Slot : "button";
 
   return (
     <Comp
@@ -56,7 +56,7 @@ function ButtonBase({
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
     />
-  )
+  );
 }
 
 // カスタムButtonコンポーネント（MUI互換API）
@@ -84,10 +84,10 @@ export const Button = ({
     buttonDesign === "primary"
       ? variant === "contained"
         ? "bg-gradient-to-b from-[#40c4ff] to-[#2962ff] text-white border-none hover:opacity-90"
-        : "bg-transparent text-[#40c4ff] border border-[#40c4ff] hover:bg-[#40c4ff]/10"
+        : "bg-white text-black border border-black hover:bg-gray-100"
       : variant === "contained"
       ? "bg-gradient-to-b from-[#263238] to-[#000000] text-white border-none hover:opacity-90"
-      : "bg-transparent text-[#263238] border border-[#263238] hover:bg-[#263238]/10";
+      : "bg-white text-black border border-black hover:bg-gray-100";
 
   const buttonClassName = cn(
     "px-5 py-1.5 rounded-lg text-sm font-medium transition-all",
@@ -97,10 +97,8 @@ export const Button = ({
 
   if (component === Link && href) {
     return (
-      <ButtonBase asChild>
-        <Link href={href} className={buttonClassName}>
-          {children}
-        </Link>
+      <ButtonBase asChild className={buttonClassName}>
+        <Link href={href}>{children}</Link>
       </ButtonBase>
     );
   }
@@ -117,4 +115,4 @@ export const Button = ({
   );
 };
 
-export { buttonVariants }
+export { buttonVariants };
