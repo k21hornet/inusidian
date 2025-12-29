@@ -25,7 +25,7 @@ jobs:
           VPS_HOST: ${{ secrets.VPS_HOST }}
           VPS_USER: ${{ secrets.VPS_USER }}
         run: |
-          ssh -i ~/.ssh/deploy_key ${VPS_USER}@${VPS_HOST} << 'EOF'
+          ssh -i ~/.ssh/deploy_key "${VPS_USER}@${VPS_HOST}" << 'EOF'
             cd /opt/inusidian
             ./docker-build-setup.sh
           EOF
