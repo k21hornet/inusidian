@@ -13,13 +13,15 @@ public class CardLog extends AbstractBaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "card_id")
     private Card card;
 
-    private Integer elapsedTime;
+    @Column(name = "answer_time")
+    private Double answerTime;
 
+    @Column(name = "next_review_interval")
     private Integer nextReviewInterval;
 }

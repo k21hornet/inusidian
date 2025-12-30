@@ -15,17 +15,20 @@ import java.util.List;
 public class Card extends AbstractBaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "id")
+    private String id;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "deck_id")
     private Deck deck;
 
+    @Column(name = "success_count")
     private Integer successCount;
 
+    @Column(name = "review_interval")
     private Integer reviewInterval;
 
+    @Column(name = "next_review_date")
     private LocalDate nextReviewDate;
 
     @OneToMany(mappedBy = "card", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

@@ -16,15 +16,17 @@ import java.util.List;
 public class Deck extends AbstractBaseEntity {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "id")
+    private String id;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-    
+
+    @Column(name = "deck_name")
     private String deckName;
-    
+
+    @Column(name = "deck_description")
     private String deckDescription;
 
     @OneToMany(mappedBy = "deck", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -32,12 +34,4 @@ public class Deck extends AbstractBaseEntity {
 
     @OneToMany(mappedBy = "deck", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<CardField> cardFields;
-
-    // デッキにカードが一枚も含まれていない場合
-    public List<Card> getCards() {
-        if (cards == null) {
-            return Collections.emptyList();
-        }
-        return cards;
-    }
 }

@@ -11,17 +11,23 @@ import lombok.Setter;
 @Table(name = "card_values")
 public class CardValue extends AbstractBaseEntity {
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "field_id")
-    private CardField field;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "card_id")
-    private Card card;
-    
+    @EmbeddedId
+    private CardValueId id;
+
+    @Column(name = "content")
     private String content;
+
+    @Getter
+    @Setter
+    @Embeddable
+    public static class CardValueId {
+
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "card_id")
+        private Card card;
+
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "card_field_id")
+        private CardField field;
+    }
 }
