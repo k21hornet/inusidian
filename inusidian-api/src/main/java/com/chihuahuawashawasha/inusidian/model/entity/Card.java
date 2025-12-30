@@ -31,7 +31,7 @@ public class Card extends AbstractBaseEntity {
     @Column(name = "next_review_date")
     private LocalDate nextReviewDate;
 
-    @OneToMany(mappedBy = "card", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "id.card", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<CardValue> cardValues;
 
     @OneToMany(mappedBy = "card", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

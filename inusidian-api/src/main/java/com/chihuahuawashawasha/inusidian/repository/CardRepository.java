@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public interface CardRepository extends JpaRepository<Card, Integer> {
+public interface CardRepository extends JpaRepository<Card, String> {
 
     @Query("""
             SELECT
@@ -17,21 +17,21 @@ public interface CardRepository extends JpaRepository<Card, Integer> {
             FROM
                 Card c
             WHERE
-                c.deck.user.id = :auth0Id
+                c.deck.user.id = :userId
                 AND c.id = :id
             """)
-    Card find(String auth0Id, int id);
+    Card find(String userId, String id);
 
     @Query("""
             SELECT c FROM Card c
             WHERE c.deck.id = :deckId
             AND c.nextReviewDate <= :now
             """)
-    List<Card> findDueCards(int deckId, LocalDate now);
+    List<Card> findDueCards(String deckId, LocalDate now);
 
     @Query("""
             SELECT c.id FROM Card c
             WHERE c.deck.id = :deckId
             """)
-    List<Integer> findIdByDeckId(int deckId);
+    List<String> findIdByDeckId(String deckId);
 }

@@ -1,11 +1,12 @@
-package com.chihuahuawashawasha.inusidian.model.request;
+package com.chihuahuawashawasha.inusidian.model.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class CardFieldInput{
+public class CardFieldRequest {
+
     private Integer fieldId;
 
     @NotBlank

@@ -12,7 +12,7 @@ export type PostCardFormData = {
   cardId?: number;
   deckId?: number;
   values: {
-    fieldId: number;
+    cardFieldId: number;
     content: string;
   }[];
 };

@@ -1,4 +1,4 @@
-package com.chihuahuawashawasha.inusidian.model.request;
+package com.chihuahuawashawasha.inusidian.model.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -6,9 +6,9 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class CardValueInput {
+public class CardValueRequest {
     @NotNull
-    private Integer fieldId;
+    private Integer cardFieldId;
 
     @NotBlank
     @Size(max = 255)

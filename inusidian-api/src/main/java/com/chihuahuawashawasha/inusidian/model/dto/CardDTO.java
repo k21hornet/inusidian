@@ -1,7 +1,7 @@
 package com.chihuahuawashawasha.inusidian.model.dto;
 
-import com.chihuahuawashawasha.inusidian.model.entity.Card;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,13 +10,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class CardDTO {
 
-    private Integer id;
+    private String id;
 
-    private Integer deckId;
+    private String deckId;
 
     private Integer successCount;
 
@@ -27,26 +28,6 @@ public class CardDTO {
     private LocalDateTime createdAt;
     
     private LocalDateTime updatedAt;
-    
-    private LocalDateTime deletedAt;
 
     private List<CardValueDTO> cardValues;
-
-    public static CardDTO fromEntity(Card card) {
-        return new CardDTO(
-                card.getId(),
-                card.getDeck().getId(),
-                card.getSuccessCount(),
-                card.getReviewInterval(),
-                card.getNextReviewDate(),
-                card.getCreatedAt(),
-                card.getUpdatedAt(),
-                card.getDeletedAt(),
-                card.getCardValues()
-                        .stream()
-                        .map(CardValueDTO::fromEntity)
-                        .toList()
-        );
-    }
-
 } 

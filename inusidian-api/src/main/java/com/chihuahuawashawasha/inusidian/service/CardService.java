@@ -3,9 +3,10 @@ package com.chihuahuawashawasha.inusidian.service;
 import com.chihuahuawashawasha.inusidian.mapper.CardMapper;
 import com.chihuahuawashawasha.inusidian.model.dto.CardDTO;
 import com.chihuahuawashawasha.inusidian.model.entity.*;
-import com.chihuahuawashawasha.inusidian.model.request.CardInput;
-import com.chihuahuawashawasha.inusidian.model.request.CardValueInput;
+import com.chihuahuawashawasha.inusidian.model.dto.CardRequest;
+import com.chihuahuawashawasha.inusidian.model.dto.CardValueRequest;
 import com.chihuahuawashawasha.inusidian.repository.*;
+import com.chihuahuawashawasha.inusidian.util.ShortIdGenerator;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -32,20 +33,34 @@ public class CardService {
 
     private final CardMapper cardMapper;
 
-    public CardDTO findById(String auth0Id, int id) {
-        return cardMapper.toDTO(cardRepository.find(auth0Id, id));
+    /**
+     * カード詳細取得
+     *
+     * @param userId ユーザーID
+     * @param id カードID
+     * @return カード詳細
+     */
+    public CardDTO findById(String userId, String id) {
+        return cardMapper.toDTO(cardRepository.find(userId, id));
     }
 
-    public CardDTO create(CardInput input) {
+    /**
+     * カード作成
+     *
+     * @param request
+     * @return
+     */
+    public CardDTO create(CardRequest request) {
         // カードを作成
         Card card = new Card();
+        card.setId(ShortIdGenerator.generateShortId(12));
 
         // 紐づくDeckを取得
-        Deck deck = deckRepository.findById(input.getDeckId()).orElseThrow();
+        Deck deck = deckRepository.findById(request.getDeckId()).orElseThrow();
         card.setDeck(deck);
 
         // カード情報を属性ごとに作成
-        List<CardValue> cardValues = getCardValue(card, input);
+        List<CardValue> cardValues = getCardValue(card, request);
         card.setCardValues(cardValues);
 
         // 単語カード学習記録を作成
@@ -54,14 +69,19 @@ public class CardService {
         card.setNextReviewDate(LocalDate.now());
 
         card = cardRepository.save(card);
-        return CardDTO.fromEntity(card);
+        return cardMapper.toDTO(card);
     }
 
-    public CardDTO update(CardInput input) {
-        Card card = findCardById(input.getCardId());
+    /**
+     * カード更新
+     * @param request
+     * @return
+     */
+    public CardDTO update(CardRequest request) {
+        Card card = findCardById(request.getCardId());
 
         // カード情報を属性ごとに作成
-        List<CardValue> cardValues = getCardValue(card, input);
+        List<CardValue> cardValues = getCardValue(card, request);
 
         // 既存リストをクリアしてから追加
         for (CardValue cv : card.getCardValues()) {
@@ -71,24 +91,26 @@ public class CardService {
         card.getCardValues().addAll(cardValues);
 
         card = cardRepository.save(card);
-        return CardDTO.fromEntity(card);
+        return cardMapper.toDTO(card);
     }
 
     /**
      * カード情報を属性ごとに作成する関数
-     * @param input
+     * @param request
      * @return
      */
-    private List<CardValue> getCardValue(Card card, CardInput input) {
+    private List<CardValue> getCardValue(Card card, CardRequest request) {
         List<CardValue> cardValues = new ArrayList<>();
-        for (CardValueInput cvi : input.getValues()) {
+        for (CardValueRequest cvi : request.getValues()) {
             // カード属性を取得
-            CardField field = cardFieldRepository.findById(cvi.getFieldId())
+            CardField field = cardFieldRepository.findById(cvi.getCardFieldId())
                     .orElseThrow(() -> new EntityNotFoundException("Field Not Found"));
 
             CardValue cardValue = new CardValue();
-            cardValue.setCard(card);
-            cardValue.setField(field);
+            CardValue.CardValueId id = new CardValue.CardValueId();
+            id.setCard(card);
+            id.setField(field);
+            cardValue.setId(id);
             cardValue.setContent(cvi.getContent());
             cardValues.add(cardValue);
         }
@@ -100,10 +122,10 @@ public class CardService {
      * @param deckId デッキID
      * @return 復習カード一覧
      */
-    public List<CardDTO> findDueCards(int deckId) {
+    public List<CardDTO> findDueCards(String deckId) {
         return cardRepository.findDueCards(deckId, LocalDate.now())
                 .stream()
-                .map(CardDTO::fromEntity)
+                .map(cardMapper::toDTO)
                 .toList();
     }
 
@@ -113,7 +135,7 @@ public class CardService {
      * @param id 復習記録ID
      * @param elapsedTime 回答時間
      */
-    public void success(int id, int elapsedTime) {
+    public void success(String id, Double elapsedTime) {
         Card card = findCardById(id);
         int count = card.getSuccessCount();
         card.setSuccessCount(++count);
@@ -127,7 +149,7 @@ public class CardService {
 
         CardLog log = new CardLog();
         log.setCard(card);
-        log.setElapsedTime(elapsedTime);
+//        log.setElapsedTime(elapsedTime);
         log.setNextReviewInterval(nextReviewInterval);
         cardLogRepository.save(log);
     }
@@ -136,7 +158,7 @@ public class CardService {
      * 不正解の場合、正解記録をリセット
      * @param id 復習記録ID
      */
-    public void failure(int id) {
+    public void failure(String id) {
         Card card = findCardById(id);
         card.setSuccessCount(0);
         card.setReviewInterval(0);
@@ -146,12 +168,12 @@ public class CardService {
 
         CardLog log = new CardLog();
         log.setCard(card);
-        log.setElapsedTime(-999);
+//        log.setElapsedTime(-999);
         log.setNextReviewInterval(0);
         cardLogRepository.save(log);
     }
 
-    private Card findCardById(int id) {
+    private Card findCardById(String id) {
         return cardRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Card Not Found"));
     }
@@ -164,7 +186,7 @@ public class CardService {
      * @param elapsedTime 回答時間
      * @return 復習間隔
      */
-    private int calcNextReviewInterval(int count, int reviewInterval, int elapsedTime) {
+    private int calcNextReviewInterval(int count, int reviewInterval, Double elapsedTime) {
         double difficulty = calcDifficulty(elapsedTime);
         return (int) Math.round((2 * count -1 + reviewInterval) * difficulty);
     }
@@ -174,30 +196,30 @@ public class CardService {
      * @param elapsedTime 回答時間
      * @return 難易度
      */
-    private double calcDifficulty(int elapsedTime) {
+    private double calcDifficulty(Double elapsedTime) {
         if (elapsedTime < 5) return 1.0;
         if (elapsedTime < 10) return 0.9;
         if (elapsedTime < 15) return 0.8;
         return 0.7;
     }
 
-    public void deleteById(int id) {
+    public void deleteById(String id) {
         cardRepository.deleteById(id);
     }
 
-    public int findNextCardId(int deckId, int currentId) {
-        List<Integer> idList = cardRepository.findIdByDeckId(deckId);
+    public String findNextCardId(String deckId, String currentId) {
+        List<String> idList = cardRepository.findIdByDeckId(deckId);
         for (int i =0 ; i < idList.size() - 1; i++) {
-            if (idList.get(i) == currentId) return idList.get(i+1);
+            if (idList.get(i).equals(currentId)) return idList.get(i+1);
         }
-        return -999;
+        return "-999";
     }
 
-    public int findPrevCardId(int deckId, int currentId) {
-        List<Integer> idList = cardRepository.findIdByDeckId(deckId);
+    public String findPrevCardId(String deckId, String currentId) {
+        List<String> idList = cardRepository.findIdByDeckId(deckId);
         for (int i =1 ; i < idList.size() ; i++) {
-            if (idList.get(i) == currentId) return idList.get(i-1);
+            if (idList.get(i).equals(currentId)) return idList.get(i-1);
         }
-        return -999;
+        return "-999";
     }
 }

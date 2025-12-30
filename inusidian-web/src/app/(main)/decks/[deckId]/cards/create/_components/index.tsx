@@ -14,11 +14,11 @@ type Props = {
 };
 
 export default function CreateCardPage({ deck }: Props) {
-  // 各カード属性ごとにfieldIdとcontentを持つ
+  // 各カード属性ごとにcardFieldIdとcontentを持つ
   const [formData, setFormData] = useState<PostCardFormData>({
     deckId: deck.id,
     values: deck.cardFields.map((field) => ({
-      fieldId: field.id, // 各フィールドのIDをセット
+      cardFieldId: field.id, // 各フィールドのIDをセット
       content: "",
     })),
   });
@@ -41,7 +41,7 @@ export default function CreateCardPage({ deck }: Props) {
       setFormData({
         deckId: deck.id,
         values: deck.cardFields.map((field) => ({
-          fieldId: field.id,
+          cardFieldId: field.id,
           content: "",
         })),
       });

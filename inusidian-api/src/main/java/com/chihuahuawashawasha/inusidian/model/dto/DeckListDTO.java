@@ -1,21 +1,28 @@
-package com.chihuahuawashawasha.inusidian.model.response;
+package com.chihuahuawashawasha.inusidian.model.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
+@Builder
+@NoArgsConstructor
 @AllArgsConstructor
-public class DecksResponse {
+public class DeckListDTO {
 
-    List<DeckListItem> decks;
+    List<Deck> decks;
 
     @Data
-    public static class DeckListItem {
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Deck {
 
-        Integer id;
+        String id;
 
         String deckName;
 

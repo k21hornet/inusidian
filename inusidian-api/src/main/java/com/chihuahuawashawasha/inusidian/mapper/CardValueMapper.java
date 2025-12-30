@@ -8,6 +8,6 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring", uses = CardFieldMapper.class)
 public interface CardValueMapper {
 
-    @Mapping(target = "field", source = "field")
+    @Mapping(target = "field", source = "id.field")
     CardValueDTO toDTO(CardValue value);
 }

@@ -28,6 +28,6 @@ public class CardField extends AbstractBaseEntity {
     @Column(name = "field_type")
     private String fieldType;
 
-    @OneToMany(mappedBy = "field", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "id.field", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<CardValue> cardValues;
 }
