@@ -1,9 +1,6 @@
 package com.chihuahuawashawasha.inusidian.controller;
 
-import com.chihuahuawashawasha.inusidian.model.dto.DeckDTO;
-import com.chihuahuawashawasha.inusidian.model.dto.DeckListDTO;
-import com.chihuahuawashawasha.inusidian.model.dto.UserDTO;
-import com.chihuahuawashawasha.inusidian.model.dto.DeckRequest;
+import com.chihuahuawashawasha.inusidian.model.dto.*;
 import com.chihuahuawashawasha.inusidian.service.DeckService;
 import com.chihuahuawashawasha.inusidian.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -49,9 +46,12 @@ public class DeckController {
 
     @PutMapping("/update")
     public ResponseEntity<DeckDTO> update(
+            @AuthenticationPrincipal Jwt jwt,
             @RequestBody @Validated DeckRequest input
     ){
-        return ResponseEntity.ok(deckService.update(input));
+        UserDTO userDTO = userService.findByEmail(jwt.getClaimAsString("http://claim/email"));
+
+        return ResponseEntity.ok(deckService.update(userDTO.getId(), input));
     }
 
     @DeleteMapping("/{id}")
@@ -60,19 +60,21 @@ public class DeckController {
         return ResponseEntity.noContent().build();
     }
 
-//    @GetMapping("/{id}/export")
-//    public DeckIoDTO exportDeck(
-//            @AuthenticationPrincipal Jwt jwt,
-//            @PathVariable int id) {
-//        String auth0Id = jwt.getSubject();
-//        return  deckService.exportDeck(auth0Id, id);
-//    }
-//
-//    @PostMapping("/import")
-//    public DeckDTO importDeck(
-//            @AuthenticationPrincipal Jwt jwt,
-//            @RequestBody DeckIoDTO importData) {
-//        String auth0Id = jwt.getSubject();
-//        return deckService.importDeck(auth0Id, importData);
-//    }
+    @GetMapping("/{id}/export")
+    public DeckIoDTO exportDeck(
+            @AuthenticationPrincipal Jwt jwt,
+            @PathVariable String id) {
+        UserDTO userDTO = userService.findByEmail(jwt.getClaimAsString("http://claim/email"));
+
+        return  deckService.exportDeck(userDTO.getId(), id);
+    }
+
+    @PostMapping("/import")
+    public DeckDTO importDeck(
+            @AuthenticationPrincipal Jwt jwt,
+            @RequestBody DeckIoDTO importData) {
+        UserDTO userDTO = userService.findByEmail(jwt.getClaimAsString("http://claim/email"));
+
+        return deckService.importDeck(userDTO.getId(), importData);
+    }
 }

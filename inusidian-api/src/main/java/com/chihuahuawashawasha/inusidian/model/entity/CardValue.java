@@ -2,6 +2,7 @@ package com.chihuahuawashawasha.inusidian.model.entity;
 
 import com.chihuahuawashawasha.inusidian.model.entity.base.AbstractBaseEntity;
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +21,7 @@ public class CardValue extends AbstractBaseEntity {
     @Getter
     @Setter
     @Embeddable
+    @EqualsAndHashCode
     public static class CardValueId {
 
         @ManyToOne(fetch = FetchType.LAZY)

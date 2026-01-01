@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface DeckRepository extends JpaRepository<Deck, String> {
@@ -21,5 +22,5 @@ public interface DeckRepository extends JpaRepository<Deck, String> {
                 d.user.id = :userId
                 AND d.id = :id
             """)
-    Deck find(String userId, String id);
+    Optional<Deck> find(String userId, String id);
 }

@@ -53,7 +53,7 @@ public class CardService {
     public CardDTO create(CardRequest request) {
         // カードを作成
         Card card = new Card();
-        card.setId(ShortIdGenerator.generateShortId(12));
+        card.setId(ShortIdGenerator.generateShortId(16));
 
         // 紐づくDeckを取得
         Deck deck = deckRepository.findById(request.getDeckId()).orElseThrow();
