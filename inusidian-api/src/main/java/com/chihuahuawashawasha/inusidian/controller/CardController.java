@@ -1,16 +1,15 @@
 package com.chihuahuawashawasha.inusidian.controller;
 
-import com.chihuahuawashawasha.inusidian.mapper.CardResponseMapper;
 import com.chihuahuawashawasha.inusidian.model.dto.CardDTO;
-import com.chihuahuawashawasha.inusidian.model.request.CardInput;
-import com.chihuahuawashawasha.inusidian.model.request.CardSuccessInput;
-import com.chihuahuawashawasha.inusidian.model.response.CardResponse;
+import com.chihuahuawashawasha.inusidian.model.dto.UserDTO;
+import com.chihuahuawashawasha.inusidian.model.dto.CardRequest;
+import com.chihuahuawashawasha.inusidian.model.dto.CardSuccessRequest;
 import com.chihuahuawashawasha.inusidian.service.CardService;
+import com.chihuahuawashawasha.inusidian.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,69 +20,67 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CardController {
 
+    private final UserService userService;
+
     private final CardService cardService;
 
-    private final CardResponseMapper mapper;
-
     @GetMapping("/{id}")
-    public ResponseEntity<CardResponse> card(@AuthenticationPrincipal Jwt jwt, @PathVariable int id) {
-        String auth0Id = jwt.getSubject();
-        return ResponseEntity.ok(mapper.toResponse(cardService.findById(auth0Id, id)));
+    public ResponseEntity<CardDTO> card(@AuthenticationPrincipal Jwt jwt, @PathVariable String id) {
+        UserDTO userDTO = userService.findByEmail(jwt.getClaimAsString("http://claim/email"));
+
+        return ResponseEntity.ok(cardService.findById(userDTO.getId(), id));
     }
 
     @PostMapping("/create")
-    public ResponseEntity<CardResponse> create(@RequestBody @Validated CardInput input, BindingResult result) {
-        if (result.hasErrors()) throw new RuntimeException();
+    public ResponseEntity<CardDTO> create(@RequestBody @Validated CardRequest request) {
 
-        return ResponseEntity.ok(mapper.toResponse(cardService.create(input)));
+        return ResponseEntity.ok(cardService.create(request));
     }
 
     @PutMapping("/update")
-    public ResponseEntity<CardResponse> update(@RequestBody @Validated CardInput input, BindingResult result) {
-        if (result.hasErrors()) throw new RuntimeException();
+    public ResponseEntity<CardDTO> update(@RequestBody @Validated CardRequest request) {
 
-        return ResponseEntity.ok(mapper.toResponse(cardService.update(input)));
+        return ResponseEntity.ok(cardService.update(request));
     }
 
     @GetMapping("/review/{deckId}")
-    public List<CardDTO> getDueCards(@PathVariable int deckId) {
+    public List<CardDTO> getDueCards(@PathVariable String deckId) {
         return cardService.findDueCards(deckId);
     }
 
     @PostMapping("/review/{id}/success")
-    public ResponseEntity<?> reviewSuccess(
-            @PathVariable int id,
-            @RequestBody @Validated CardSuccessInput input,
-            BindingResult result) {
-        if (result.hasErrors()) throw new RuntimeException();
-
-        cardService.success(id, input.getElapsedTime());
+    public ResponseEntity<Void> reviewSuccess(
+            @PathVariable String id,
+            @RequestBody @Validated CardSuccessRequest request) {
+        cardService.success(id, request.getAnswerTime());
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/review/{id}/failure")
-    public ResponseEntity<?> reviewFailure(@PathVariable int id) {
-        cardService.failure(id);
+    public ResponseEntity<Void> reviewFailure(
+            @PathVariable String id,
+            @RequestBody @Validated CardSuccessRequest request) {
+        cardService.failure(id, request.getAnswerTime());
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCard(@PathVariable int id) {
+    public void deleteCard(@PathVariable String id) {
         cardService.deleteById(id);
     }
 
     @GetMapping("/next/{deckId}/{cardId}")
-    public int nextCardId(
-            @PathVariable int deckId,
-            @PathVariable int cardId
+    public String nextCardId(
+            @PathVariable String deckId,
+            @PathVariable String cardId
     ) {
         return cardService.findNextCardId(deckId, cardId);
     }
 
     @GetMapping("/prev/{deckId}/{cardId}")
-    public int prevCardId(
-            @PathVariable int deckId,
-            @PathVariable int cardId
+    public String prevCardId(
+            @PathVariable String deckId,
+            @PathVariable String cardId
     ) {
         return cardService.findPrevCardId(deckId, cardId);
     }

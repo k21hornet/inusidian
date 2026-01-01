@@ -5,9 +5,9 @@ git pull origin main
 docker-compose down
 
 # イメージタグ
-FRONTEND_IMAGE_TAG="1.3.0"
-BACKEND_IMAGE_TAG="1.3.0"
-DATABASE_IMAGE_TAG="1.0.0"
+FRONTEND_IMAGE_TAG="1.4.0"
+BACKEND_IMAGE_TAG="1.4.0"
+DATABASE_IMAGE_TAG="1.4.0"
 
 # イメージ名
 FRONTEND_IMAGE_NAME="inusidian-web"

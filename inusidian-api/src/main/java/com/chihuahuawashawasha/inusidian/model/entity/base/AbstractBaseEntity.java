@@ -17,8 +17,6 @@ public abstract class AbstractBaseEntity {
 
     private LocalDateTime updatedAt;
 
-    private LocalDateTime deletedAt;
-
     @PrePersist
     protected void onCreate() {
         // バックアップ復元の場合は手動で設定するため

@@ -47,16 +47,18 @@ export default function ReviewPage({ data }: { data: Card[] }) {
   const success = async (id: number) => {
     if (!dueCard || !startTime) return;
     const endTime = new Date();
-    const elapsedTime = (endTime.getTime() - startTime.getTime()) / 1000;
-    await reviewSuccess(id, Math.round(elapsedTime));
+    const answerTime = (endTime.getTime() - startTime.getTime()) / 1000;
+    await reviewSuccess(id, answerTime);
     setDueCards(dueCards.filter((rc) => rc.id !== id)); //正解した問題を除外
     setAccordionValue("");
   };
 
   // 問題不正解時
   const failure = async () => {
-    if (!dueCard) return;
-    await reviewFailure(dueCard.id);
+    if (!dueCard || !startTime) return;
+    const endTime = new Date();
+    const answerTime = (endTime.getTime() - startTime.getTime()) / 1000;
+    await reviewFailure(dueCard.id, answerTime);
     setNextReviewCard();
     setAccordionValue("");
     toast.error("残念！");
@@ -81,10 +83,7 @@ export default function ReviewPage({ data }: { data: Card[] }) {
         {dueCard.cardValues
           .filter((value) => value.field.fieldType === "primary") // primaryフィールドのみ取得
           .map((value, idx) => (
-            <p
-              key={idx}
-              className="text-lg font-bold text-center"
-            >
+            <p key={idx} className="text-lg font-bold text-center">
               {value.content}
             </p>
           ))}

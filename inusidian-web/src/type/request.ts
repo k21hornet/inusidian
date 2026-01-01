@@ -12,7 +12,7 @@ export type PostCardFormData = {
   cardId?: number;
   deckId?: number;
   values: {
-    fieldId: number;
+    cardFieldId: number;
     content: string;
   }[];
 };
@@ -39,7 +39,7 @@ export type IODeckData = {
       content: string;
     }[];
     cardLogs: {
-      elapsedTime: number;
+      answerTime: number;
       nextReviewInterval: number;
       createdAt: string;
     }[];

@@ -12,9 +12,15 @@ import lombok.Setter;
 public class User extends AbstractBaseEntity {
     
     @Id
+    @Column(name = "id")
     private String id;
-    
+
+    @Column(name = "user_name")
+    private String userName;
+
+    @Column(name = "email")
     private String email;
-    
-    private String authority;
+
+    @Column(name = "avatar_url")
+    private String avatarUrl;
 }

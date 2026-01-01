@@ -69,7 +69,7 @@ public class DeckIoDTO {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class CardLogData {
-        private Integer elapsedTime;
+        private Double answerTime;
         private Integer nextReviewInterval;
         private LocalDateTime createdAt;
     }

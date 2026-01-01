@@ -1,12 +1,10 @@
 package com.chihuahuawashawasha.inusidian.service;
 
 import com.chihuahuawashawasha.inusidian.mapper.DeckMapper;
-import com.chihuahuawashawasha.inusidian.model.dto.DeckDTO;
-import com.chihuahuawashawasha.inusidian.model.dto.DeckIoDTO;
+import com.chihuahuawashawasha.inusidian.model.dto.*;
 import com.chihuahuawashawasha.inusidian.model.entity.*;
-import com.chihuahuawashawasha.inusidian.model.request.CardFieldInput;
-import com.chihuahuawashawasha.inusidian.model.request.DeckInput;
 import com.chihuahuawashawasha.inusidian.repository.*;
+import com.chihuahuawashawasha.inusidian.util.ShortIdGenerator;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -36,87 +34,91 @@ public class DeckService {
 
     /**
      * デッキ一覧取得
-     * @param authId authId
+     *
+     * @param userId ユーザーID
      * @return デッキ一覧
      */
-    public List<DeckDTO> findAll(String authId) {
-        return deckRepository.findAllByUserId(authId)
+    public DeckListDTO findAll(String userId) {
+        List<DeckListDTO.Deck> decks = deckRepository.findAllByUserId(userId)
                 .stream()
-                .map(deckMapper::toDTO)
+                .map(deck -> DeckListDTO.Deck.builder()
+                        .id(deck.getId())
+                        .deckName(deck.getDeckName())
+                        .deckDescription(deck.getDeckDescription())
+                        .cardCount(deck.getCards().size())
+                        .createdAt(deck.getCreatedAt())
+                        .build())
                 .toList();
+        return DeckListDTO.builder().decks(decks).build();
     }
 
     /**
      * デッキ詳細
-     * @param auth0Id auth0Id
+     *
+     * @param userId userId
      * @param id デッキID
      * @return デッキ詳細
      */
-    public DeckDTO findById(String auth0Id, int id) {
-        return deckMapper.toDTO(deckRepository.find(auth0Id, id));
+    public DeckDTO findById(String userId, String id) {
+        return deckMapper.toDTO(deckRepository.find(userId, id)
+                .orElseThrow(() -> new EntityNotFoundException("Deck Not Found")));
     }
 
-    public DeckDTO create(String auth0Id, DeckInput input) {
-        User user = userRepository.findById(auth0Id).orElseThrow();
+    public DeckDTO create(String userId, DeckRequest request) {
+        User user = userRepository.findById(userId).orElseThrow();
 
         // deckの基本情報を作成
         Deck deck = new Deck();
+        deck.setId(ShortIdGenerator.generateShortId(12));
         deck.setUser(user);
-        deck.setDeckName(input.getDeckName());
-        deck.setDeckDescription(input.getDeckDescription());
+        deck.setDeckName(request.getDeckName());
+        deck.setDeckDescription(request.getDeckDescription());
 
         // deckのカード属性を作成
-        List<CardField> cardFields = new ArrayList<>();
-        for (CardFieldInput cfi : input.getCardFields()) {
-            CardField cardField = new CardField();
-            cardField.setDeck(deck);
-            cardField.setFieldName(cfi.getFieldName());
-            cardField.setFieldType(cfi.getFieldType());
-            cardFields.add(cardField);
-        }
+        Deck finalDeck = deck;
+        List<CardField> cardFields = request.getCardFields().stream()
+                .map(cfr -> {
+                    CardField cardField = new CardField();
+                    cardField.setDeck(finalDeck);
+                    cardField.setFieldName(cfr.getFieldName());
+                    cardField.setFieldType(cfr.getFieldType());
+                    return cardField;
+                }).toList();
         deck.setCardFields(cardFields);
 
         deck = deckRepository.save(deck);
-        return DeckDTO.fromEntity(deck);
+        return deckMapper.toDTO(deck);
     }
 
-    public DeckDTO update(DeckInput input) {
-        int deckId = input.getDeckId();
-        Deck deck = findDeckById(deckId);
-        deck.setDeckName(input.getDeckName());
-        deck.setDeckDescription(input.getDeckDescription());
+    public DeckDTO update(String userId, DeckRequest request) {
+        String deckId = request.getDeckId();
+        Deck deck = deckRepository.find(userId, deckId)
+                .orElseThrow(() -> new EntityNotFoundException("Deck Not Found"));
+        deck.setDeckName(request.getDeckName());
+        deck.setDeckDescription(request.getDeckDescription());
 
-        List<CardField> cardFields = new ArrayList<>();
-        for (CardFieldInput cfi : input.getCardFields()) {
-            CardField cardField = cardFieldRepository.findById(cfi.getFieldId())
-                    .orElseThrow(() -> new EntityNotFoundException("Field Not Found"));
-            cardField.setFieldName(cfi.getFieldName());
-            cardFields.add(cardField);
+        // カード属性をリクエストのものに更新
+        for (CardFieldRequest cfr : request.getCardFields()) {
+            deck.getCardFields().stream()
+                    .filter(cf -> cf.getId().equals(cfr.getFieldId()))
+                    .findFirst()
+                    .ifPresent(cf -> cf.setFieldName(cfr.getFieldName()));
         }
-        deck.getCardFields().clear();
-        deck.getCardFields().addAll(cardFields);
 
         deck = deckRepository.save(deck);
-        return DeckDTO.fromEntity(deck);
+        return deckMapper.toDTO(deck);
     }
 
-    public void deleteById(int id) {
+    public void deleteById(String id) {
         deckRepository.deleteById(id);
-    }
-
-    private Deck findDeckById(int id) {
-        return deckRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Deck Not Found"));
     }
 
     /**
      * デッキ情報とカードをエクスポート
      */
-    public DeckIoDTO exportDeck(String auth0Id, int deckId) {
-        Deck deck = findDeckById(deckId);
-        if (!auth0Id.equals(deck.getUser().getId())) {
-            throw new RuntimeException("UserIdが一致しません");
-        }
+    public DeckIoDTO exportDeck(String userId, String deckId) {
+        Deck deck = deckRepository.find(userId, deckId)
+                .orElseThrow(() -> new EntityNotFoundException("Deck Not Found"));
 
         // デッキ情報
         DeckIoDTO.DeckInfo deckInfo = DeckIoDTO.DeckInfo.builder()
@@ -138,7 +140,7 @@ public class DeckService {
                     // フィールドに紐付く値
                     List<DeckIoDTO.CardFieldValue> fieldValues = card.getCardValues().stream()
                             .map(cardValue -> DeckIoDTO.CardFieldValue.builder()
-                                    .fieldName(cardValue.getField().getFieldName())
+                                    .fieldName(cardValue.getId().getField().getFieldName())
                                     .content(cardValue.getContent())
                                     .build())
                             .toList();
@@ -146,7 +148,7 @@ public class DeckService {
                     // 学習記録
                     List<DeckIoDTO.CardLogData> cardLogs = card.getCardLogs().stream()
                             .map(log -> DeckIoDTO.CardLogData.builder()
-                                    .elapsedTime(log.getElapsedTime())
+                                    .answerTime(log.getAnswerTime())
                                     .nextReviewInterval(log.getNextReviewInterval())
                                     .createdAt(log.getCreatedAt())
                                     .build())
@@ -173,11 +175,12 @@ public class DeckService {
     /**
      * デッキとカードをインポート
      */
-    public DeckDTO importDeck(String auth0Id, DeckIoDTO importData) {
-        User user = userRepository.findById(auth0Id).orElseThrow();
+    public DeckDTO importDeck(String userId, DeckIoDTO importData) {
+        User user = userRepository.findById(userId).orElseThrow();
 
         // デッキの基本情報を作成
         Deck deck = new Deck();
+        deck.setId(ShortIdGenerator.generateShortId(12));
         deck.setUser(user);
         deck.setDeckName(importData.getDeckInfo().getDeckName());
         deck.setDeckDescription(importData.getDeckInfo().getDeckDescription());
@@ -199,6 +202,7 @@ public class DeckService {
         List<Card> cards = new ArrayList<>();
         for (DeckIoDTO.CardData cardData : importData.getCards()) {
             Card card = new Card();
+            card.setId(ShortIdGenerator.generateShortId(16));
             card.setDeck(deck);
             card.setSuccessCount(cardData.getSuccessCount() != null ? cardData.getSuccessCount() : 0);
             card.setReviewInterval(cardData.getReviewInterval() != null ? cardData.getReviewInterval() : 0);
@@ -216,8 +220,10 @@ public class DeckService {
                         .orElseThrow(() -> new RuntimeException("フィールドが見つかりません: " + fieldValue.getFieldName()));
 
                 CardValue cardValue = new CardValue();
-                cardValue.setCard(card);
-                cardValue.setField(field);
+                CardValue.CardValueId id = new CardValue.CardValueId();
+                id.setCard(card);
+                id.setField(field);
+                cardValue.setId(id);
                 cardValue.setContent(fieldValue.getContent());
                 cardValues.add(cardValue);
             }
@@ -228,7 +234,7 @@ public class DeckService {
             for (DeckIoDTO.CardLogData logData : cardData.getCardLogs()) {
                 CardLog cardLog = new CardLog();
                 cardLog.setCard(card);
-                cardLog.setElapsedTime(logData.getElapsedTime());
+                cardLog.setAnswerTime(logData.getAnswerTime());
                 cardLog.setNextReviewInterval(logData.getNextReviewInterval());
                 cardLog.setCreatedAt(logData.getCreatedAt() != null ? logData.getCreatedAt() : LocalDateTime.now());
                 cardLogs.add(cardLog);
@@ -242,16 +248,6 @@ public class DeckService {
         // デッキを保存
         deck = deckRepository.save(deck);
 
-        // カード値を保存
-        for (Card card : cards) {
-            for (CardValue cardValue : card.getCardValues()) {
-                cardValueRepository.save(cardValue);
-            }
-            for (CardLog cardLog : card.getCardLogs()) {
-                cardLogRepository.save(cardLog);
-            }
-        }
-
-        return DeckDTO.fromEntity(deck);
+        return deckMapper.toDTO(deck);
     }
 }

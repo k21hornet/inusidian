@@ -6,11 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public interface DeckRepository extends JpaRepository<Deck, Integer> {
+public interface DeckRepository extends JpaRepository<Deck, String> {
 
-    List<Deck> findAllByUserId(String authId);
+    List<Deck> findAllByUserId(String userId);
 
     @Query("""
             SELECT
@@ -18,8 +19,8 @@ public interface DeckRepository extends JpaRepository<Deck, Integer> {
             FROM
                 Deck d
             WHERE
-                d.user.id = :auth0Id
+                d.user.id = :userId
                 AND d.id = :id
             """)
-    Deck find(String auth0Id, int id);
+    Optional<Deck> find(String userId, String id);
 }
