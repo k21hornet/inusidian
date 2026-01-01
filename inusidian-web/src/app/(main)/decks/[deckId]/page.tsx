@@ -21,7 +21,7 @@ export default async function Deck({ params }: Params) {
 
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2">
-            <div className="flex justify-center items-center w-9 h-9 bg-gradient-to-br from-[#00e5ff] to-[#2962ff] rounded-lg">
+            <div className="flex justify-center items-center w-9 h-9 bg-linear-to-br from-[#00e5ff] to-[#2962ff] rounded-lg">
               <BookOpen className="w-6 h-6 text-white" />
             </div>
             <p>{deck.deckDescription}</p>

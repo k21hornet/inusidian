@@ -53,7 +53,7 @@ export const DeckTable = ({ decks }: DeckTableProps) => {
               >
                 <TableCell>
                   <div className="flex items-center gap-4">
-                    <div className="flex justify-center items-center w-9 h-9 bg-gradient-to-br from-[#00e5ff] to-[#2962ff] rounded-lg">
+                    <div className="flex justify-center items-center w-9 h-9 bg-linear-to-br from-[#00e5ff] to-[#2962ff] rounded-lg">
                       <BookOpen className="w-6 h-6 text-white" />
                     </div>
                     <div>

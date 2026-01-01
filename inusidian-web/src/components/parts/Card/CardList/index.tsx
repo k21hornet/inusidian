@@ -22,7 +22,7 @@ export default function CardList({ deck }: { deck: Deck }) {
   return (
     <div className="overflow-y-auto">
       <Table>
-        <TableHeader className="bg-white sticky top-0 z-[1] shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
+        <TableHeader className="bg-white sticky top-0 z-1 shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
           <TableRow>
             <TableHead>{deck.cardFields[0].fieldName}</TableHead>
             <TableHead className="hidden sm:table-cell">連続正解数</TableHead>
