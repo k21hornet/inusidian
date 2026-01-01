@@ -37,6 +37,7 @@ export const DeckTable = ({ decks }: DeckTableProps) => {
           <TableHeader>
             <TableRow>
               <TableHead>デッキ</TableHead>
+              <TableHead>ステータス</TableHead>
               <TableHead className="hidden md:table-cell">枚数</TableHead>
               <TableHead className="hidden md:table-cell">作成日</TableHead>
               <TableHead className="hidden sm:table-cell"></TableHead>
@@ -60,6 +61,11 @@ export const DeckTable = ({ decks }: DeckTableProps) => {
                       <div>{deck.deckDescription}</div>
                     </div>
                   </div>
+                </TableCell>
+                <TableCell>
+                  {deck.dueCardCount && deck.dueCardCount > 0
+                    ? "残り" + deck.dueCardCount + "枚"
+                    : "復習済み"}
                 </TableCell>
                 <TableCell className="hidden md:table-cell">
                   {deck.cardCount || 0}枚

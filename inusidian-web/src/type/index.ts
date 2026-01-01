@@ -12,6 +12,7 @@ export type Deck = {
   cards: Card[];
   cardFields: CardField[];
   cardCount?: number;
+  dueCardCount?: number;
 };
 
 export type CardField = {

@@ -24,12 +24,6 @@ public class DeckService {
 
     private final UserRepository userRepository;
 
-    private final CardFieldRepository cardFieldRepository;
-
-    private final CardValueRepository cardValueRepository;
-
-    private final CardLogRepository cardLogRepository;
-
     private final DeckMapper deckMapper;
 
     /**

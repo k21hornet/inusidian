@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,8 +25,6 @@ public class CardService {
     private final CardFieldRepository cardFieldRepository;
 
     private final DeckRepository deckRepository;
-
-    private final CardValueRepository cardValueRepository;
 
     private final CardLogRepository cardLogRepository;
 

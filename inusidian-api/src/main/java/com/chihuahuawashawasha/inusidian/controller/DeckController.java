@@ -1,6 +1,7 @@
 package com.chihuahuawashawasha.inusidian.controller;
 
 import com.chihuahuawashawasha.inusidian.model.dto.*;
+import com.chihuahuawashawasha.inusidian.service.CardService;
 import com.chihuahuawashawasha.inusidian.service.DeckService;
 import com.chihuahuawashawasha.inusidian.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/decks")
@@ -19,11 +22,22 @@ public class DeckController {
 
     private final DeckService deckService;
 
+    private final CardService cardService;
+
     @GetMapping
     public ResponseEntity<DeckListDTO> decks(@AuthenticationPrincipal Jwt jwt) {
         UserDTO userDTO = userService.findByEmail(jwt.getClaimAsString("http://claim/email"));
 
-        return ResponseEntity.ok(deckService.findAll(userDTO.getId()));
+        // デッキ一覧を取得し、復習カード枚数を追加
+        List<DeckListDTO.Deck> decks = deckService.findAll(userDTO.getId())
+                .getDecks()
+                .stream()
+                .peek(deck -> {
+                    int dueCardCount = cardService.findDueCards(deck.getId()).size();
+                    deck.setDueCardCount(dueCardCount);
+                })
+                .toList();
+        return ResponseEntity.ok(DeckListDTO.builder().decks(decks).build());
     }
 
     @GetMapping("/{id}")
