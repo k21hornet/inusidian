@@ -36,9 +36,9 @@ export const CardPage = ({
   const router = useRouter();
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[60vh]">
+    <div className="flex flex-col items-center justify-center">
       <div
-        className="flex items-center gap-2 cursor-pointer mb-4 text-[#9E9E9E]"
+        className="flex items-center gap-2 cursor-pointer w-full mb-4 text-[#9E9E9E]"
         onClick={() => router.push(`/decks/${card.deckId}`)}
       >
         <ArrowLeft className="w-5 h-5" />

@@ -38,7 +38,8 @@ public class CardService {
      * @return カード詳細
      */
     public CardDTO findById(String userId, String id) {
-        return cardMapper.toDTO(cardRepository.find(userId, id));
+        return cardMapper.toDTO(cardRepository.find(userId, id)
+                .orElseThrow(() -> new EntityNotFoundException("Card Not Found")));
     }
 
     /**

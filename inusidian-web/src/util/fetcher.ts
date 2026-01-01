@@ -39,11 +39,25 @@ const request = async (
 
   // レスポンスが空の場合はnullを返す
   const contentType = response.headers.get("content-type");
-  if (!contentType || !contentType.includes("application/json")) {
+  if (!contentType) {
     return null;
   }
 
-  return response.json();
+  // text/plain の場合はテキストとして取得
+  if (contentType.includes("text/plain")) {
+    const text = await response.text();
+    // JSONとして解析を試みる（文字列のJSONの場合）
+    try {
+      return JSON.parse(text);
+    } catch {
+      return text;
+    }
+  }
+
+  // application/json の場合
+  if (contentType.includes("application/json")) {
+    return response.json();
+  }
 };
 
 export const fetcher = {

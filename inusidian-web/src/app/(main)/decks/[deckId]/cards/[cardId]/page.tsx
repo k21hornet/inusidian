@@ -13,6 +13,8 @@ export default async function Card({ params }: Params) {
   const nextCardId = await getNextCardId(card.deckId, cardId);
   const prevCardId = await getPrevCardId(card.deckId, cardId);
 
+  console.log(nextCardId, prevCardId);
+
   return (
     <CardPage card={card} nextCardId={nextCardId} prevCardId={prevCardId} />
   );

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CardRepository extends JpaRepository<Card, String> {
@@ -20,7 +21,7 @@ public interface CardRepository extends JpaRepository<Card, String> {
                 c.deck.user.id = :userId
                 AND c.id = :id
             """)
-    Card find(String userId, String id);
+    Optional<Card> find(String userId, String id);
 
     @Query("""
             SELECT c FROM Card c

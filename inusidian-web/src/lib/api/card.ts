@@ -11,25 +11,11 @@ export async function getCard(id: number): Promise<Card | undefined> {
 }
 
 // 次のカードIDを取得
-export async function getNextCardId(
-  deckId: number,
-  cardId: number
-): Promise<number> {
-  try {
-    return await getApi(`/cards/next/${deckId}/${cardId}`);
-  } catch {
-    return -999;
-  }
+export async function getNextCardId(deckId: number, cardId: number) {
+  return await getApi(`/cards/next/${deckId}/${cardId}`);
 }
 
 // 前のカードIDを取得
-export async function getPrevCardId(
-  deckId: number,
-  cardId: number
-): Promise<number> {
-  try {
-    return await getApi(`/cards/prev/${deckId}/${cardId}`);
-  } catch {
-    return -999;
-  }
+export async function getPrevCardId(deckId: number, cardId: number) {
+  return await getApi(`/cards/prev/${deckId}/${cardId}`);
 }

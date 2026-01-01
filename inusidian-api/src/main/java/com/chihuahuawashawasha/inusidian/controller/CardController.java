@@ -70,18 +70,18 @@ public class CardController {
     }
 
     @GetMapping("/next/{deckId}/{cardId}")
-    public String nextCardId(
+    public ResponseEntity<String> nextCardId(
             @PathVariable String deckId,
             @PathVariable String cardId
     ) {
-        return cardService.findNextCardId(deckId, cardId);
+        return ResponseEntity.ok(cardService.findNextCardId(deckId, cardId));
     }
 
     @GetMapping("/prev/{deckId}/{cardId}")
-    public String prevCardId(
+    public ResponseEntity<String> prevCardId(
             @PathVariable String deckId,
             @PathVariable String cardId
     ) {
-        return cardService.findPrevCardId(deckId, cardId);
+        return ResponseEntity.ok(cardService.findPrevCardId(deckId, cardId));
     }
 }
