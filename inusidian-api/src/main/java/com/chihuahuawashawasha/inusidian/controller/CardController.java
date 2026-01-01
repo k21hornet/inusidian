@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,15 +32,15 @@ public class CardController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<CardDTO> create(@RequestBody @Validated CardRequest input) {
+    public ResponseEntity<CardDTO> create(@RequestBody @Validated CardRequest request) {
 
-        return ResponseEntity.ok(cardService.create(input));
+        return ResponseEntity.ok(cardService.create(request));
     }
 
     @PutMapping("/update")
-    public ResponseEntity<CardDTO> update(@RequestBody @Validated CardRequest input) {
+    public ResponseEntity<CardDTO> update(@RequestBody @Validated CardRequest request) {
 
-        return ResponseEntity.ok(cardService.update(input));
+        return ResponseEntity.ok(cardService.update(request));
     }
 
     @GetMapping("/review/{deckId}")
@@ -52,17 +51,16 @@ public class CardController {
     @PostMapping("/review/{id}/success")
     public ResponseEntity<Void> reviewSuccess(
             @PathVariable String id,
-            @RequestBody @Validated CardSuccessRequest input,
-            BindingResult result) {
-        if (result.hasErrors()) throw new RuntimeException();
-
-        cardService.success(id, input.getElapsedTime());
+            @RequestBody @Validated CardSuccessRequest request) {
+        cardService.success(id, request.getAnswerTime());
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/review/{id}/failure")
-    public ResponseEntity<Void> reviewFailure(@PathVariable String id) {
-        cardService.failure(id);
+    public ResponseEntity<Void> reviewFailure(
+            @PathVariable String id,
+            @RequestBody @Validated CardSuccessRequest request) {
+        cardService.failure(id, request.getAnswerTime());
         return ResponseEntity.ok().build();
     }
 

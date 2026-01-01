@@ -39,7 +39,7 @@ export type IODeckData = {
       content: string;
     }[];
     cardLogs: {
-      elapsedTime: number;
+      answerTime: number;
       nextReviewInterval: number;
       createdAt: string;
     }[];

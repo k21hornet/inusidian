@@ -6,5 +6,5 @@ import lombok.Data;
 @Data
 public class CardSuccessRequest {
     @NotNull
-    private Double elapsedTime;
+    private Double answerTime;
 }

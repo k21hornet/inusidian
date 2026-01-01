@@ -34,7 +34,7 @@ export default function CardModal({
         cardId: card.id,
         deckId: card.deckId,
         values: card.cardValues.map((value) => ({
-          fieldId: value.field.id,
+          cardFieldId: value.field.id,
           content: value.content,
         })),
       });

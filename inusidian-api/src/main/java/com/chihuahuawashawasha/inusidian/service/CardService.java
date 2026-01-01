@@ -60,7 +60,21 @@ public class CardService {
         card.setDeck(deck);
 
         // カード情報を属性ごとに作成
-        List<CardValue> cardValues = getCardValue(card, request);
+        Card finalCard = card;
+        List<CardValue> cardValues = request.getValues().stream()
+                .map(cvr -> {
+                    // カード属性を取得
+                    CardField field = cardFieldRepository.findById(cvr.getCardFieldId())
+                            .orElseThrow(() -> new EntityNotFoundException("Field Not Found"));
+
+                    CardValue cardValue = new CardValue();
+                    CardValue.CardValueId id = new CardValue.CardValueId();
+                    id.setCard(finalCard);
+                    id.setField(field);
+                    cardValue.setId(id);
+                    cardValue.setContent(cvr.getContent());
+                    return cardValue;
+                }).toList();
         card.setCardValues(cardValues);
 
         // 単語カード学習記録を作成
@@ -78,43 +92,19 @@ public class CardService {
      * @return
      */
     public CardDTO update(CardRequest request) {
-        Card card = findCardById(request.getCardId());
+        Card card = cardRepository.findById(request.getCardId())
+                .orElseThrow(() -> new EntityNotFoundException("Card Not Found"));
 
-        // カード情報を属性ごとに作成
-        List<CardValue> cardValues = getCardValue(card, request);
-
-        // 既存リストをクリアしてから追加
-        for (CardValue cv : card.getCardValues()) {
-            cardValueRepository.delete(cv);
+        // リクエストから来た値で既存のCardValueを更新
+        for (CardValueRequest cvr : request.getValues()) {
+            card.getCardValues().stream()
+                    .filter(cv -> cv.getId().getField().getId().equals(cvr.getCardFieldId()))
+                    .findFirst()
+                    .ifPresent(cv -> cv.setContent(cvr.getContent()));
         }
-        card.getCardValues().clear();
-        card.getCardValues().addAll(cardValues);
 
-        card = cardRepository.save(card);
-        return cardMapper.toDTO(card);
-    }
-
-    /**
-     * カード情報を属性ごとに作成する関数
-     * @param request
-     * @return
-     */
-    private List<CardValue> getCardValue(Card card, CardRequest request) {
-        List<CardValue> cardValues = new ArrayList<>();
-        for (CardValueRequest cvi : request.getValues()) {
-            // カード属性を取得
-            CardField field = cardFieldRepository.findById(cvi.getCardFieldId())
-                    .orElseThrow(() -> new EntityNotFoundException("Field Not Found"));
-
-            CardValue cardValue = new CardValue();
-            CardValue.CardValueId id = new CardValue.CardValueId();
-            id.setCard(card);
-            id.setField(field);
-            cardValue.setId(id);
-            cardValue.setContent(cvi.getContent());
-            cardValues.add(cardValue);
-        }
-        return cardValues;
+        Card updatedCard = cardRepository.save(card);
+        return cardMapper.toDTO(updatedCard);
     }
 
     /**
@@ -133,14 +123,15 @@ public class CardService {
      * 問題に正解した時の処理
      * 次の出題日を決め、成功カウントを増やす
      * @param id 復習記録ID
-     * @param elapsedTime 回答時間
+     * @param answerTime 回答時間
      */
-    public void success(String id, Double elapsedTime) {
-        Card card = findCardById(id);
+    public void success(String id, Double answerTime) {
+        Card card = cardRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Card Not Found"));
         int count = card.getSuccessCount();
         card.setSuccessCount(++count);
         // 復習間隔を設定
-        int nextReviewInterval = calcNextReviewInterval(count, card.getReviewInterval(), elapsedTime);
+        int nextReviewInterval = calcNextReviewInterval(count, card.getReviewInterval(), answerTime);
         card.setReviewInterval(nextReviewInterval);
         // 次回復習日を設定
         card.setNextReviewDate(LocalDate.now().plusDays(nextReviewInterval));
@@ -149,7 +140,7 @@ public class CardService {
 
         CardLog log = new CardLog();
         log.setCard(card);
-//        log.setElapsedTime(elapsedTime);
+        log.setAnswerTime(answerTime);
         log.setNextReviewInterval(nextReviewInterval);
         cardLogRepository.save(log);
     }
@@ -158,8 +149,9 @@ public class CardService {
      * 不正解の場合、正解記録をリセット
      * @param id 復習記録ID
      */
-    public void failure(String id) {
-        Card card = findCardById(id);
+    public void failure(String id, Double answerTime) {
+        Card card = cardRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Card Not Found"));
         card.setSuccessCount(0);
         card.setReviewInterval(0);
         card.setNextReviewDate(LocalDate.now());
@@ -168,14 +160,9 @@ public class CardService {
 
         CardLog log = new CardLog();
         log.setCard(card);
-//        log.setElapsedTime(-999);
+        log.setAnswerTime(answerTime);
         log.setNextReviewInterval(0);
         cardLogRepository.save(log);
-    }
-
-    private Card findCardById(String id) {
-        return cardRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Card Not Found"));
     }
 
     /**
@@ -183,23 +170,23 @@ public class CardService {
      * 復習間隔 = (2 x 成功カウント - 1 + 現復習間隔) x 難易度
      * @param count 成功カウント
      * @param reviewInterval 現在の復習間隔
-     * @param elapsedTime 回答時間
+     * @param answerTime 回答時間
      * @return 復習間隔
      */
-    private int calcNextReviewInterval(int count, int reviewInterval, Double elapsedTime) {
-        double difficulty = calcDifficulty(elapsedTime);
+    private int calcNextReviewInterval(int count, int reviewInterval, Double answerTime) {
+        double difficulty = calcDifficulty(answerTime);
         return (int) Math.round((2 * count -1 + reviewInterval) * difficulty);
     }
 
     /**
      * 回答時間によって難易度を計算
-     * @param elapsedTime 回答時間
+     * @param answerTime 回答時間
      * @return 難易度
      */
-    private double calcDifficulty(Double elapsedTime) {
-        if (elapsedTime < 5) return 1.0;
-        if (elapsedTime < 10) return 0.9;
-        if (elapsedTime < 15) return 0.8;
+    private double calcDifficulty(Double answerTime) {
+        if (answerTime < 5) return 1.0;
+        if (answerTime < 10) return 0.9;
+        if (answerTime < 15) return 0.8;
         return 0.7;
     }
 
