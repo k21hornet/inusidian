@@ -31,6 +31,18 @@ public class CardService {
     private final CardMapper cardMapper;
 
     /**
+     * デッキに含まれるカード一覧を新しい順に取得
+     *
+     * @param deckId デッキID
+     * @return カード一覧
+     */
+    public List<CardDTO> findCardListByDeck(String deckId) {
+        return cardRepository.findCards(deckId).stream()
+                .map(cardMapper::toDTO)
+                .toList();
+    }
+
+    /**
      * カード詳細取得
      *
      * @param userId ユーザーID
@@ -194,17 +206,17 @@ public class CardService {
 
     public String findNextCardId(String deckId, String currentId) {
         List<String> idList = cardRepository.findIdByDeckId(deckId);
-        for (int i =0 ; i < idList.size() - 1; i++) {
-            if (idList.get(i).equals(currentId)) return idList.get(i+1);
+        for (int i =1 ; i < idList.size() ; i++) {
+            if (idList.get(i).equals(currentId)) return idList.get(i-1);
         }
-        return "-999";
+        return "";
     }
 
     public String findPrevCardId(String deckId, String currentId) {
         List<String> idList = cardRepository.findIdByDeckId(deckId);
-        for (int i =1 ; i < idList.size() ; i++) {
-            if (idList.get(i).equals(currentId)) return idList.get(i-1);
+        for (int i =0 ; i < idList.size() - 1; i++) {
+            if (idList.get(i).equals(currentId)) return idList.get(i+1);
         }
-        return "-999";
+        return "";
     }
 }

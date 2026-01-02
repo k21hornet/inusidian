@@ -33,31 +33,28 @@ export default function CardList({ deck }: { deck: Deck }) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {deck.cards
-            .slice() // 配列をコピー
-            .reverse() // 最新のカードを上に表示する
-            .map((card) => (
-              <TableRow
-                key={card.id}
-                className="cursor-pointer hover:bg-[#eee]"
-                onClick={() => handleOpen(card.id)}
-              >
-                <TableCell className="font-bold">
-                  {card.cardValues[0].content}
-                </TableCell>
-                <TableCell className="hidden sm:table-cell">
-                  {card.successCount}回
-                </TableCell>
-                <TableCell>{card.reviewInterval}日</TableCell>
-                <TableCell className="hidden sm:table-cell">
-                  {convertDate(card.nextReviewDate)}
-                </TableCell>
-                <TableCell className="hidden sm:table-cell">
-                  {convertDate(card.createdAt)}
-                </TableCell>
-                <TableCell className="text-primary">詳細</TableCell>
-              </TableRow>
-            ))}
+          {deck.cards.map((card) => (
+            <TableRow
+              key={card.id}
+              className="cursor-pointer hover:bg-[#eee]"
+              onClick={() => handleOpen(card.id)}
+            >
+              <TableCell className="font-bold">
+                {card.cardValues[0].content}
+              </TableCell>
+              <TableCell className="hidden sm:table-cell">
+                {card.successCount}回
+              </TableCell>
+              <TableCell>{card.reviewInterval}日</TableCell>
+              <TableCell className="hidden sm:table-cell">
+                {convertDate(card.nextReviewDate)}
+              </TableCell>
+              <TableCell className="hidden sm:table-cell">
+                {convertDate(card.createdAt)}
+              </TableCell>
+              <TableCell className="text-primary">詳細</TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </div>

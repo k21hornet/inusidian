@@ -45,6 +45,8 @@ public class DeckController {
         UserDTO userDTO = userService.findByEmail(jwt.getClaimAsString("http://claim/email"));
 
         DeckDTO dto = deckService.findById(userDTO.getId(), id);
+        List<CardDTO> cardDTOList = cardService.findCardListByDeck(id);
+        dto.setCards(cardDTOList);
         return ResponseEntity.ok(dto);
     }
 

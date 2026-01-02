@@ -33,7 +33,7 @@ public class DeckService {
      * @return デッキ一覧
      */
     public DeckListDTO findAll(String userId) {
-        List<DeckListDTO.Deck> decks = deckRepository.findAllByUserId(userId)
+        List<DeckListDTO.Deck> decks = deckRepository.findAllByUserIdOrderByCreatedAtDesc(userId)
                 .stream()
                 .map(deck -> DeckListDTO.Deck.builder()
                         .id(deck.getId())
@@ -54,7 +54,7 @@ public class DeckService {
      * @return デッキ詳細
      */
     public DeckDTO findById(String userId, String id) {
-        return deckMapper.toDTO(deckRepository.find(userId, id)
+        return deckMapper.toDTOWithoutCardList(deckRepository.find(userId, id)
                 .orElseThrow(() -> new EntityNotFoundException("Deck Not Found")));
     }
 
@@ -81,7 +81,7 @@ public class DeckService {
         deck.setCardFields(cardFields);
 
         deck = deckRepository.save(deck);
-        return deckMapper.toDTO(deck);
+        return deckMapper.toDTOWithoutCardList(deck);
     }
 
     public DeckDTO update(String userId, DeckRequest request) {
@@ -100,7 +100,7 @@ public class DeckService {
         }
 
         deck = deckRepository.save(deck);
-        return deckMapper.toDTO(deck);
+        return deckMapper.toDTOWithoutCardList(deck);
     }
 
     public void deleteById(String id) {
@@ -242,6 +242,6 @@ public class DeckService {
         // デッキを保存
         deck = deckRepository.save(deck);
 
-        return deckMapper.toDTO(deck);
+        return deckMapper.toDTOWithoutCardList(deck);
     }
 }

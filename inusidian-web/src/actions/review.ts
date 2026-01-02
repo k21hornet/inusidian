@@ -1,21 +1,13 @@
 "use server";
 
-import { postApi } from "@/util/fetcher";
+import { fetcher } from "@/util/fetcher";
 
-// レビュー成功
+// 正解
 export async function reviewSuccess(cardId: number, answerTime: number) {
-  try {
-    return await postApi(`/cards/review/${cardId}/success`, { answerTime });
-  } catch {
-    return undefined;
-  }
+  return await fetcher.post(`/cards/review/${cardId}/success`, { answerTime });
 }
 
-// レビュー失敗
+// 不正解
 export async function reviewFailure(cardId: number, answerTime: number) {
-  try {
-    return await postApi(`/cards/review/${cardId}/failure`, { answerTime });
-  } catch {
-    return undefined;
-  }
+  return await fetcher.post(`/cards/review/${cardId}/failure`, { answerTime });
 }

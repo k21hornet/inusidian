@@ -20,8 +20,8 @@ export const CardPage = ({
   prevCardId,
 }: {
   card: Card;
-  nextCardId: number;
-  prevCardId: number;
+  nextCardId: string;
+  prevCardId: string;
 }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
@@ -99,7 +99,7 @@ export const CardPage = ({
       <CardModal open={open} handleClose={handleClose} card={card} />
 
       <div className="flex justify-between items-center w-full max-w-2xl mt-4">
-        {prevCardId !== -999 ? (
+        {prevCardId !== "" ? (
           <Button
             component={Link}
             href={`/decks/${card.deckId}/cards/${prevCardId}`}
@@ -113,7 +113,7 @@ export const CardPage = ({
         ) : (
           <div />
         )}
-        {nextCardId !== -999 ? (
+        {nextCardId !== "" ? (
           <Button
             component={Link}
             href={`/decks/${card.deckId}/cards/${nextCardId}`}

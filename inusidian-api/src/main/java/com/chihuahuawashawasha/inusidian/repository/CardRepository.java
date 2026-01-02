@@ -26,6 +26,13 @@ public interface CardRepository extends JpaRepository<Card, String> {
     @Query("""
             SELECT c FROM Card c
             WHERE c.deck.id = :deckId
+            ORDER BY c.createdAt DESC
+            """)
+    List<Card> findCards(String deckId);
+
+    @Query("""
+            SELECT c FROM Card c
+            WHERE c.deck.id = :deckId
             AND c.nextReviewDate <= :now
             """)
     List<Card> findDueCards(String deckId, LocalDate now);
@@ -33,6 +40,7 @@ public interface CardRepository extends JpaRepository<Card, String> {
     @Query("""
             SELECT c.id FROM Card c
             WHERE c.deck.id = :deckId
+            ORDER BY c.createdAt DESC
             """)
     List<String> findIdByDeckId(String deckId);
 }

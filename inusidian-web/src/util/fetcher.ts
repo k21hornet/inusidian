@@ -62,14 +62,8 @@ const request = async (
 
 export const fetcher = {
   get: (url: string) => request(url, "GET", undefined),
-  post: (url: string, data?: unknown) => request(url, "POST", data),
+  post: (url: string, data?: unknown, accessToken?: string) =>
+    request(url, "POST", data, accessToken),
   put: (url: string, data?: unknown) => request(url, "PUT", data),
   delete: (url: string) => request(url, "DELETE", undefined),
 };
-
-export const getApi = (url: string) => request(url, "GET", undefined);
-export const postApi = (url: string, data?: unknown, accessToken?: string) =>
-  request(url, "POST", data, accessToken);
-export const putApi = (url: string, data?: unknown) =>
-  request(url, "PUT", data);
-export const deleteApi = (url: string) => request(url, "DELETE", undefined);

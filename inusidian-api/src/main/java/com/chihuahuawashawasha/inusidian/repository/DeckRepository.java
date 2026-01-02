@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 public interface DeckRepository extends JpaRepository<Deck, String> {
 
-    List<Deck> findAllByUserId(String userId);
+    List<Deck> findAllByUserIdOrderByCreatedAtDesc(String userId);
 
     @Query("""
             SELECT
