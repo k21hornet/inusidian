@@ -2,7 +2,10 @@ import { Deck } from "@/type";
 import { fetcher } from "@/util/fetcher";
 
 // ユーザーのデッキ一覧を取得
-export async function getAllDecks(): Promise<{ decks: Deck[] }> {
+export async function getAllDecks(): Promise<{
+  decks: Deck[];
+  localDateTime: string;
+}> {
   return await fetcher.get(`/decks`);
 }
 

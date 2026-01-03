@@ -11,6 +11,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -37,7 +38,11 @@ public class DeckController {
                     deck.setDueCardCount(dueCardCount);
                 })
                 .toList();
-        return ResponseEntity.ok(DeckListDTO.builder().decks(decks).build());
+        var tmp = DeckListDTO.builder()
+                .decks(decks)
+                .localDateTime(LocalDateTime.now())
+                .build();
+        return ResponseEntity.ok(tmp);
     }
 
     @GetMapping("/{id}")

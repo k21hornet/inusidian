@@ -9,7 +9,10 @@ const COMING_SOON_CARDS = [
 ] as const;
 
 export default async function Home() {
-  const { decks } = await getAllDecks();
+  const response = await getAllDecks();
+
+  const decks = response.decks;
+  const lastLogin = response.localDateTime;
 
   return (
     <div className="mb-5">
@@ -17,12 +20,12 @@ export default async function Home() {
 
       <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-6">
         {COMING_SOON_CARDS.map((card, index) => (
-          <ComingSoonCard
-            key={index}
-            imageSrc={card.src}
-            imageAlt={card.alt}
-          />
+          <ComingSoonCard key={index} imageSrc={card.src} imageAlt={card.alt} />
         ))}
+      </div>
+
+      <div className="text-center text-sm text-[#888]">
+        最終ログイン：{lastLogin}
       </div>
     </div>
   );

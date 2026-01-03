@@ -16,6 +16,8 @@ public class DeckListDTO {
 
     List<Deck> decks;
 
+    LocalDateTime localDateTime;
+
     @Data
     @Builder
     @NoArgsConstructor
