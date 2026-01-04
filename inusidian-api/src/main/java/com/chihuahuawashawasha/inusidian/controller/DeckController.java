@@ -12,6 +12,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @RestController
@@ -38,6 +40,9 @@ public class DeckController {
                     deck.setDueCardCount(dueCardCount);
                 })
                 .toList();
+        System.out.println(LocalDateTime.now());
+        System.out.println(ZonedDateTime.now());
+        System.out.println(ZoneId.systemDefault());
         var tmp = DeckListDTO.builder()
                 .decks(decks)
                 .localDateTime(LocalDateTime.now())
