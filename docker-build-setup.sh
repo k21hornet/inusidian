@@ -5,8 +5,8 @@ git pull origin main
 docker-compose down
 
 # イメージタグ
-FRONTEND_IMAGE_TAG="1.4.0"
-BACKEND_IMAGE_TAG="1.4.0"
+FRONTEND_IMAGE_TAG="1.4.1"
+BACKEND_IMAGE_TAG="1.4.1"
 DATABASE_IMAGE_TAG="1.4.0"
 
 # イメージ名

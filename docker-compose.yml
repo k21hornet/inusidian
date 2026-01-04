@@ -23,7 +23,7 @@ services:
 
   #  REST APIコンテナ
   spring-restapi:
-    image: inusidian-api:1.4.0
+    image: inusidian-api:1.4.1
     container_name: docker-restapi
     ports:
       - "8080:8080"
@@ -34,6 +34,7 @@ services:
       SPRING_DATASOURCE_DRIVER-CLASS-NAME: com.mysql.cj.jdbc.Driver
       AUTH0_ISSUER: ${AUTH0_ISSUER}
       AUTH0_AUDIENCE: ${AUTH0_AUDIENCE}
+      TZ: "Asia/Tokyo"
     command: java -jar /app/inusidian-api.jar
     healthcheck:
       test: "nc -zv localhost 8080"
@@ -47,7 +48,7 @@ services:
 
   #  フロントコンテナ
   next-frontapp:
-    image: inusidian-web:1.4.0
+    image: inusidian-web:1.4.1
     container_name: docker-frontapp
     ports:
       - "3000:3000"
