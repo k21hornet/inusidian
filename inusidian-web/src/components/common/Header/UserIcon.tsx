@@ -6,6 +6,8 @@ import { Bell } from "lucide-react";
 export const UserIcon = () => {
   const router = useRouter();
 
+  // TODO ちゃんとしたユーザーのアイコンを用意する
+
   return (
     <div className="flex-1 flex justify-end items-center gap-2">
       <Bell className="w-8 h-8" />
