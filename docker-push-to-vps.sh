@@ -9,8 +9,8 @@ if [ -f "${SCRIPT_DIR}/.env" ]; then
 fi
 
 # イメージタグ
-WEB_IMAGE_TAG="1.4.2"
-API_IMAGE_TAG="1.4.2"
+WEB_IMAGE_TAG="${WEB_VERSION}"
+API_IMAGE_TAG="${API_VERSION}"
 
 # イメージ名
 WEB_IMAGE_NAME="inusidian-web"
