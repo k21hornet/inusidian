@@ -2,9 +2,9 @@ version: "3.9"
 services:
   #  データベースコンテナ
   mysql-database:
-    image: database:1.4.0
+    image: mysql:8.0
     platform: linux/amd64
-    container_name: docker-db
+    container_name: docker-inusidian-db
     ports:
       - "3306:3306"
     environment:
@@ -12,7 +12,7 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       TZ: "Asia/Tokyo"
     volumes:
-      - ./database/data-for-local:/var/lib/mysql
+      - ./database:/var/lib/mysql
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     healthcheck:
       test: "mysql -h localhost -u root -p${MYSQL_ROOT_PASSWORD} -e 'SHOW DATABASES;'"
@@ -23,8 +23,8 @@ services:
 
   #  REST APIコンテナ
   spring-restapi:
-    image: inusidian-api:1.4.1
-    container_name: docker-restapi
+    image: ${DOCKER_REGISTRY}/inusidian:api-${API_VERSION}
+    container_name: docker-inusidian-restapi
     ports:
       - "8080:8080"
     environment:
@@ -34,7 +34,6 @@ services:
       SPRING_DATASOURCE_DRIVER-CLASS-NAME: com.mysql.cj.jdbc.Driver
       AUTH0_ISSUER: ${AUTH0_ISSUER}
       AUTH0_AUDIENCE: ${AUTH0_AUDIENCE}
-      TZ: "Asia/Tokyo"
     command: java -jar /app/inusidian-api.jar
     healthcheck:
       test: "nc -zv localhost 8080"
@@ -48,8 +47,8 @@ services:
 
   #  フロントコンテナ
   next-frontapp:
-    image: inusidian-web:1.4.1
-    container_name: docker-frontapp
+    image: ${DOCKER_REGISTRY}/inusidian:web-${WEB_VERSION}
+    container_name: docker-inusidian-frontapp
     ports:
       - "3000:3000"
     depends_on:
