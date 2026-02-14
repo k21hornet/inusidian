@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 
 import { auth0 } from "./lib/auth0";
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const response = await auth0.middleware(request);
 
   // 認証ルートはAuth0に処理を委譲
@@ -21,8 +21,8 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(
       new URL(
         `/auth/login?returnTo=${request.nextUrl.pathname}`,
-        request.nextUrl.origin
-      )
+        request.nextUrl.origin,
+      ),
     );
   }
 
