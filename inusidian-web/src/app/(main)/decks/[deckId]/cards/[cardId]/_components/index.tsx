@@ -1,8 +1,8 @@
 "use client";
 
-import CardModal from "@/components/parts/Card/CardModal";
+import CardModal from "@/features/card/components/CardModal";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/type";
+import { Card } from "@/features/card/types";
 import {
   Accordion,
   AccordionContent,

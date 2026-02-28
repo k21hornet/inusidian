@@ -1,8 +1,8 @@
 "use client";
 
-import { postCard } from "@/actions/card";
-import { Deck } from "@/type/index";
-import { PostCardFormData } from "@/type/request";
+import { postCard } from "@/features/card/actions";
+import { Deck } from "@/features/deck/types";
+import { PostCardFormData } from "@/features/card/types";
 import { FormEvent, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

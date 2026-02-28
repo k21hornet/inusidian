@@ -1,5 +1,5 @@
-import { Deck } from "@/type";
 import { fetcher } from "@/util/fetcher";
+import { Deck } from "./types";
 
 // ユーザーのデッキ一覧を取得
 export async function getAllDecks(): Promise<{ decks: Deck[] }> {

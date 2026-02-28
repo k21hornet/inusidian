@@ -1,10 +1,12 @@
-import { DeckTable } from "@/components/parts/DeckTable";
-import { getAllDecks } from "@/lib/api/deck";
+import { getAllDecks } from "@/features/deck/api";
+import { DeckTable } from "@/features/deck/components/DeckTable";
 
 export default async function Decks() {
   const { decks } = await getAllDecks();
 
-  <div className="mb-6">
-    <DeckTable decks={decks} />
-  </div>;
+  return (
+    <div className="mb-6">
+      <DeckTable decks={decks} />
+    </div>
+  );
 }
