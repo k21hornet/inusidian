@@ -1,4 +1,4 @@
-import { Card } from "@/type";
+import { Card } from "../card/types";
 import { fetcher } from "@/util/fetcher";
 
 // レビュー対象カード一覧を取得

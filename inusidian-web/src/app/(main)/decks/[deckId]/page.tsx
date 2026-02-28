@@ -1,8 +1,8 @@
 import { BookOpen, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import CardList from "@/components/parts/Card/CardList";
+import CardList from "@/features/card/components/CardList";
 import Link from "next/link";
-import { getDeck } from "@/lib/api/deck";
+import { getDeck } from "@/features/deck/api";
 
 type Params = {
   params: Promise<{ deckId: number }>;

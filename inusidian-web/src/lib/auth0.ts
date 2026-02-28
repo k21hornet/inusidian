@@ -1,6 +1,6 @@
 import { Auth0Client } from "@auth0/nextjs-auth0/server";
 import { NextResponse } from "next/server";
-import { signupUser } from "./api/user";
+import { signupUser } from "@/features/user/api";
 
 export const auth0 = new Auth0Client({
   domain: process.env.AUTH0_DOMAIN,
@@ -16,8 +16,8 @@ export const auth0 = new Auth0Client({
     if (error) {
       return Promise.resolve(
         NextResponse.redirect(
-          new URL("/error/access-denied", process.env.NEXT_PUBLIC_APP_BASE_URL)
-        )
+          new URL("/error/access-denied", process.env.NEXT_PUBLIC_APP_BASE_URL),
+        ),
       );
     }
 
@@ -29,8 +29,8 @@ export const auth0 = new Auth0Client({
 
     return Promise.resolve(
       NextResponse.redirect(
-        new URL("/home", process.env.NEXT_PUBLIC_APP_BASE_URL)
-      )
+        new URL("/home", process.env.NEXT_PUBLIC_APP_BASE_URL),
+      ),
     );
   },
 });

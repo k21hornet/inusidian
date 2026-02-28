@@ -1,5 +1,5 @@
 import ReviewPage from "@/app/(main)/decks/[deckId]/review/_components";
-import { getReviewCards } from "@/lib/api/review";
+import { getReviewCards } from "@/features/review/api";
 
 type Params = {
   params: Promise<{ deckId: number }>;

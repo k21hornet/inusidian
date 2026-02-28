@@ -1,13 +1,12 @@
 "use client";
 
-import React from "react";
 import { convertDate } from "@/util/convertDate";
 import { useRouter } from "next/navigation";
 import { BookOpen } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Deck } from "@/type";
+import { Deck } from "../../types";
 import {
   Table,
   TableBody,

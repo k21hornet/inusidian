@@ -1,7 +1,7 @@
-import { deleteCard, updateCard } from "@/actions/card";
-import { Card } from "@/type/index";
-import { PostCardFormData } from "@/type/request";
-import React, { FormEvent, useEffect, useState } from "react";
+import { deleteCard, updateCard } from "@/features/card/actions";
+import { Card } from "@/features/card/types";
+import { PostCardFormData } from "@/features/card/types";
+import { FormEvent, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,

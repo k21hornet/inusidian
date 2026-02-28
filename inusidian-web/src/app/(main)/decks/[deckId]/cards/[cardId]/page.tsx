@@ -1,5 +1,5 @@
 import { CardPage } from "@/app/(main)/decks/[deckId]/cards/[cardId]/_components";
-import { getCard, getNextCardId, getPrevCardId } from "@/lib/api/card";
+import { getCard, getNextCardId, getPrevCardId } from "@/features/card/api";
 
 type Params = {
   params: Promise<{ cardId: number }>;
