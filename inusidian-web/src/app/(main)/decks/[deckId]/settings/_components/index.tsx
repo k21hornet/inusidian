@@ -1,9 +1,9 @@
 "use client";
 
-import { deleteDeck, exportDeck } from "@/actions/deck";
-import { putDeck } from "@/actions/deck";
-import { Deck } from "@/type";
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import { deleteDeck, exportDeck } from "@/features/deck/actions";
+import { putDeck } from "@/features/deck/actions";
+import { Deck } from "@/features/deck/types";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
@@ -117,7 +117,9 @@ export default function DeckSettingsPage({ deck }: Props) {
           />
         </div>
 
-        <h3 className="text-xl font-semibold mt-4 mb-2">カードのフィールドを設定</h3>
+        <h3 className="text-xl font-semibold mt-4 mb-2">
+          カードのフィールドを設定
+        </h3>
 
         {formData.cardFields.map((field, index) => (
           <div key={index} className="flex flex-col gap-1 max-w-[300px]">

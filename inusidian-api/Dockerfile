@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21-jdk AS builder
+FROM eclipse-temurin:25-jdk AS builder
 
 WORKDIR /app
 
@@ -12,11 +12,11 @@ COPY . .
 
 RUN ./gradlew build -x test --no-daemon
 
-FROM eclipse-temurin:21-jre
+FROM eclipse-temurin:25-jre
 
 WORKDIR /app
 
-COPY --from=builder /app/build/libs/inusidian-api-1.4.2.jar /app/inusidian-api.jar
+COPY --from=builder /app/build/libs/inusidian-api-1.4.3.jar /app/inusidian-api.jar
 
 RUN apt-get update && \
     apt-get install -y netcat-openbsd && \

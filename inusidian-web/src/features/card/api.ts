@@ -1,4 +1,4 @@
-import { Card } from "@/type/index";
+import { Card } from "./types";
 import { fetcher } from "@/util/fetcher";
 
 // カードを取得

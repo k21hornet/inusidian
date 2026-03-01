@@ -1,7 +1,6 @@
 "use client";
 
-import { Deck } from "@/type/index";
-import React from "react";
+import { Deck } from "@/features/deck/types";
 import { convertDate } from "@/util/convertDate";
 import { useRouter } from "next/navigation";
 import {

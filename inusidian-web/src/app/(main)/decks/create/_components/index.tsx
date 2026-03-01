@@ -2,12 +2,12 @@
 
 import { useRouter } from "next/navigation";
 import { Heading } from "@/components/ui/heading";
-import { importDeck } from "@/actions/deck";
-import { postDeck } from "@/actions/deck";
+import { importDeck } from "@/features/deck/actions";
+import { postDeck } from "@/features/deck/actions";
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { FormInput } from "@/components/ui/form-input";
-import { useFieldArray } from "@/hooks/use-field-array";
+import { useFieldArray } from "@/features/card/hooks/use-field-array";
 import { FieldArraySection } from "./field-array-section";
 
 export default function CreateDeckPage() {
@@ -27,7 +27,7 @@ export default function CreateDeckPage() {
   };
 
   const handleFileImport = async (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const file = event.target.files?.[0];
     if (!file) return;

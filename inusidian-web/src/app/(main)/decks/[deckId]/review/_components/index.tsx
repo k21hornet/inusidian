@@ -7,8 +7,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Card } from "@/type/index";
-import { reviewFailure, reviewSuccess } from "@/actions/review";
+import { Card } from "@/features/card/types";
+import { reviewFailure, reviewSuccess } from "@/features/review/actions";
 import Congratulations from "./Congratulations";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";

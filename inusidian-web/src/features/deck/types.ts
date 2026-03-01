@@ -1,3 +1,16 @@
+import { Card, CardField } from "../card/types";
+
+export type Deck = {
+  id: number;
+  deckName: string;
+  deckDescription: string;
+  createdAt: string;
+  cards: Card[];
+  cardFields: CardField[];
+  cardCount?: number;
+  dueCardCount?: number;
+};
+
 export type PostDeckFormData = {
   deckId?: number;
   deckName: string;
@@ -5,15 +18,6 @@ export type PostDeckFormData = {
   cardFields: {
     fieldName: string;
     fieldType: string;
-  }[];
-};
-
-export type PostCardFormData = {
-  cardId?: number;
-  deckId?: number;
-  values: {
-    cardFieldId: number;
-    content: string;
   }[];
 };
 

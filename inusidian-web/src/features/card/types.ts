@@ -1,19 +1,4 @@
-export type User = {
-  id: string;
-  username: string;
-  email: string;
-};
-
-export type Deck = {
-  id: number;
-  deckName: string;
-  deckDescription: string;
-  createdAt: string;
-  cards: Card[];
-  cardFields: CardField[];
-  cardCount?: number;
-  dueCardCount?: number;
-};
+import { Deck } from "../deck/types";
 
 export type CardField = {
   id: number;
@@ -38,4 +23,13 @@ export type CardValue = {
   card: Card;
   field: CardField;
   content: string;
+};
+
+export type PostCardFormData = {
+  cardId?: number;
+  deckId?: number;
+  values: {
+    cardFieldId: number;
+    content: string;
+  }[];
 };

@@ -1,19 +1,18 @@
 "use server";
 
-import { Deck } from "@/type";
-import { IODeckData, PostDeckFormData } from "@/type/request";
+import { Deck, IODeckData, PostDeckFormData } from "./types";
 import { fetcher } from "@/util/fetcher";
 
 // デッキを作成
 export async function postDeck(
-  data: PostDeckFormData
+  data: PostDeckFormData,
 ): Promise<Deck | undefined> {
   return await fetcher.post(`/decks/create`, data);
 }
 
 // デッキを更新
 export async function putDeck(
-  data: PostDeckFormData
+  data: PostDeckFormData,
 ): Promise<Deck | undefined> {
   return await fetcher.put(`/decks/update`, data);
 }

@@ -1,5 +1,5 @@
 import DeckSettingsPage from "@/app/(main)/decks/[deckId]/settings/_components";
-import { getDeck } from "@/lib/api/deck";
+import { getDeck } from "@/features/deck/api";
 
 type Params = {
   params: Promise<{ deckId: number }>;
