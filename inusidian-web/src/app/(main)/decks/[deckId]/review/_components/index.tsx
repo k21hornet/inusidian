@@ -96,8 +96,9 @@ export default function ReviewPage({ data }: { data: Card[] }) {
             </p>
           ))}
 
-        {/* カード裏面 */}
+        {/* カード裏面（key でカードごとに再マウントし、次の問題ではアニメなしで閉じた状態から表示） */}
         <Accordion
+          key={dueCard.id}
           type="single"
           collapsible
           value={accordionValue}
