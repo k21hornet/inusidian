@@ -1,18 +1,17 @@
+# docker-compose -f docker-compose-local.yml up -d
+
 services:
   db:
     image: mysql:8.0
     platform: linux/amd64
-    container_name: docker_db
+    container_name: inusidian-db
     environment:
       MYSQL_ROOT_PASSWORD: pass
       MYSQL_DATABASE: inusidian
     ports:
-      - "3306:3306"
+      - "3366:3306"
     volumes:
-      - ./data-for-local:/var/lib/mysql
-      # - ./data-for-dev:/var/lib/mysql
+      - db_data:/var/lib/mysql
     restart: always
-    networks:
-      - default
-networks:
-  default:
+volumes:
+  db_data:
