@@ -1,0 +1,4 @@
+rootProject.name = 'inusidian-backend'
+
+include(':api')
+include(':sql')
