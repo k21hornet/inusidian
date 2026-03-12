@@ -1,26 +1,48 @@
-import { ComingSoonCard } from "@/components/ui/coming-soon-card";
+import { Calendar } from "@/features/charts/components/Calendar";
+import { PieChart } from "@/features/charts/components/PieCharts";
+import { Tooltips } from "@/features/charts/components/Tooltips";
+import {
+  CardSuccessDistributionEntry,
+  LearningHistoryEntry,
+} from "@/features/charts/types";
 import { DeckTable } from "@/features/deck/components/DeckTable";
 import { Deck } from "@/features/deck/types";
 
-const COMING_SOON_CARDS = [
-  { src: "/sample1.png", alt: "report 1" },
-  { src: "/sample2.png", alt: "report 2" },
-  { src: "/sample3.png", alt: "report 3" },
-] as const;
-
 type Props = {
   decks: Deck[];
+  learningHistory: LearningHistoryEntry[];
+  cardDistribution: CardSuccessDistributionEntry[];
+  studiedDays: number[];
+  currentYear: number;
+  currentMonth: number;
 };
 
-export default function HomePage({ decks }: Props) {
+export default function HomePage({
+  decks,
+  learningHistory,
+  cardDistribution,
+  studiedDays,
+  currentYear,
+  currentMonth,
+}: Props) {
   return (
     <div className="mb-5">
       <DeckTable decks={decks} />
 
-      <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-6">
-        {COMING_SOON_CARDS.map((card, index) => (
-          <ComingSoonCard key={index} imageSrc={card.src} imageAlt={card.alt} />
-        ))}
+      <div className="flex flex-col md:flex-row items-stretch w-full mb-6 gap-6">
+        <div className="flex-1 min-w-0">
+          <Tooltips data={learningHistory} />
+        </div>
+        <div className="flex-1 min-w-0">
+          <PieChart data={cardDistribution} />
+        </div>
+        <div className="flex-1 min-w-0">
+          <Calendar
+            initialStudiedDays={studiedDays}
+            initialYear={currentYear}
+            initialMonth={currentMonth}
+          />
+        </div>
       </div>
     </div>
   );
