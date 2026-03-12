@@ -16,7 +16,7 @@ FROM eclipse-temurin:25-jre
 
 WORKDIR /app
 
-COPY --from=builder /app/build/libs/inusidian-api-1.4.3.jar /app/inusidian-api.jar
+COPY --from=builder /app/build/libs/api-1.5.0.jar /app/api.jar
 
 RUN apt-get update && \
     apt-get install -y netcat-openbsd && \
@@ -25,4 +25,4 @@ RUN apt-get update && \
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "/app/inusidian-api.jar"]
+CMD ["java", "-jar", "/app/api.jar"]
