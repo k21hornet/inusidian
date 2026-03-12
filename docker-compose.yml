@@ -34,7 +34,7 @@ services:
       SPRING_DATASOURCE_DRIVER-CLASS-NAME: com.mysql.cj.jdbc.Driver
       AUTH0_ISSUER: ${AUTH0_ISSUER}
       AUTH0_AUDIENCE: ${AUTH0_AUDIENCE}
-    command: java -jar /app/inusidian-api.jar
+    command: java -jar /app/api.jar
     healthcheck:
       test: "nc -zv localhost 8080"
       interval: 5s

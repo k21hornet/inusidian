@@ -30,8 +30,8 @@ if docker image inspect "${API_IMAGE_NAME}":"${API_IMAGE_TAG}" > /dev/null 2>&1;
 fi
 
 # イメージの生成
-docker buildx build --platform linux/amd64 -t "${WEB_IMAGE_NAME}:${WEB_IMAGE_TAG}" -f ./inusidian-web/Dockerfile --load ./inusidian-web
-docker buildx build --platform linux/amd64 -t "${API_IMAGE_NAME}:${API_IMAGE_TAG}" -f ./inusidian-api/Dockerfile --load ./inusidian-api
+docker buildx build --platform linux/amd64 -t "${WEB_IMAGE_NAME}:${WEB_IMAGE_TAG}" -f ./frontend/web/Dockerfile --load ./frontend/web
+docker buildx build --platform linux/amd64 -t "${API_IMAGE_NAME}:${API_IMAGE_TAG}" -f ./backend/Dockerfile --load ./backend
 
 # イメージにタグ付け
 docker tag "${WEB_IMAGE_NAME}:${WEB_IMAGE_TAG}" "${DOCKER_REGISTRY_REPOSITORY_NAME}:${DOCKER_REGISTRY_WEB_IMAGE_TAG}"
