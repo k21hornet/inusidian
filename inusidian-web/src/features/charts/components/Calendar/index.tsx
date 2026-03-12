@@ -1,7 +1,8 @@
 "use client";
 
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { useEffect, useState } from "react";
+import { getStudiedDays } from "../../api";
 
 function generateCalendar(year: number, month: number) {
   const firstDay = new Date(year, month, 1);
@@ -21,13 +22,26 @@ function generateCalendar(year: number, month: number) {
   return days;
 }
 
-export const Calendar = () => {
-  const today = new Date();
+type Props = {
+  initialStudiedDays: number[];
+  initialYear: number;
+  initialMonth: number;
+};
 
-  const [year, setYear] = useState(today.getFullYear());
-  const [month, setMonth] = useState(today.getMonth());
+export const Calendar = ({
+  initialStudiedDays,
+  initialYear,
+  initialMonth,
+}: Props) => {
+  const [year, setYear] = useState(initialYear);
+  const [month, setMonth] = useState(initialMonth);
+  const [studiedDays, setStudiedDays] = useState<number[]>(initialStudiedDays);
 
-  const studiedDays = [2, 5, 8, 12, 20]; // APIから取得想定
+  useEffect(() => {
+    getStudiedDays(year, month + 1) // JSの月は0始まり、バックエンドは1始まり
+      .then((res) => setStudiedDays(res.studiedDays))
+      .catch(console.error);
+  }, [year, month]);
 
   const days = generateCalendar(year, month);
 

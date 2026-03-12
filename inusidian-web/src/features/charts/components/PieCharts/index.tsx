@@ -10,16 +10,23 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart";
+import { CardSuccessDistributionEntry } from "../../types";
 
 export const description = "A donut chart with text";
 
-const chartData = [
-  { successCount: 1, cardsCount: 13, fill: "var(--color-one" },
-  { successCount: 2, cardsCount: 25, fill: "var(--color-two" },
-  { successCount: 3, cardsCount: 32, fill: "var(--color-three" },
-  { successCount: 4, cardsCount: 36, fill: "var(--color-four" },
-  { successCount: 5, cardsCount: 62, fill: "var(--color-overFive" },
-];
+type PieChartEntry = CardSuccessDistributionEntry & { fill: string };
+
+type Props = {
+  data: CardSuccessDistributionEntry[];
+};
+
+const fillMap: Record<number, string> = {
+  1: "var(--color-one)",
+  2: "var(--color-two)",
+  3: "var(--color-three)",
+  4: "var(--color-four)",
+  5: "var(--color-overFive)",
+};
 
 const chartConfig = {
   cards: {
@@ -47,10 +54,15 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export const PieChart = () => {
+export const PieChart = ({ data }: Props) => {
+  const chartData: PieChartEntry[] = data.map((d) => ({
+    ...d,
+    fill: fillMap[d.successCount] ?? "#ccc",
+  }));
+
   const totalCards = React.useMemo(() => {
     return chartData.reduce((acc, curr) => acc + curr.cardsCount, 0);
-  }, []);
+  }, [chartData]);
 
   return (
     <Card className="h-full gap-0">
@@ -70,8 +82,8 @@ export const PieChart = () => {
             />
             <Pie
               data={chartData}
-              dataKey="successCount"
-              nameKey="cardsCount"
+              dataKey="cardsCount"
+              nameKey="successCount"
               innerRadius={60}
               strokeWidth={5}
             >
