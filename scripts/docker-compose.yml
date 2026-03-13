@@ -1,10 +1,10 @@
 version: "3.9"
 services:
   #  データベースコンテナ
-  mysql-database:
+  mysql:
     image: mysql:8.0
     platform: linux/amd64
-    container_name: docker-inusidian-db
+    container_name: inusidian-db
     ports:
       - "3306:3306"
     environment:
@@ -21,10 +21,24 @@ services:
       retries: 5
       start_period: 5s
 
+  # Flyway
+  flyway:
+    image: ${DOCKER_REGISTRY}/inusidian:flyway-${FLYWAY_VERSION}
+    command: migrate
+    environment:
+      FLYWAY_URL: jdbc:mysql://mysql:3306/${MYSQL_DATABASE}?allowPublicKeyRetrieval=true&useSSL=false
+      FLYWAY_USER: ${MYSQL_ROOT_USER:-root}
+      FLYWAY_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    depends_on:
+      mysql:
+        condition: service_healthy
+    profiles:
+      - tools
+
   #  REST APIコンテナ
-  spring-restapi:
+  inusidian-api:
     image: ${DOCKER_REGISTRY}/inusidian:api-${API_VERSION}
-    container_name: docker-inusidian-restapi
+    container_name: inusidian-api
     ports:
       - "8080:8080"
     environment:
@@ -34,7 +48,7 @@ services:
       SPRING_DATASOURCE_DRIVER-CLASS-NAME: com.mysql.cj.jdbc.Driver
       AUTH0_ISSUER: ${AUTH0_ISSUER}
       AUTH0_AUDIENCE: ${AUTH0_AUDIENCE}
-    command: java -jar /app/api.jar
+    command: java -jar /app/inusidian-api.jar
     healthcheck:
       test: "nc -zv localhost 8080"
       interval: 5s
@@ -42,15 +56,15 @@ services:
       retries: 5
       start_period: 0s
     depends_on:
-      mysql-database:
+      mysql:
         condition: service_healthy
 
   #  フロントコンテナ
-  next-frontapp:
+  inusidian-web:
     image: ${DOCKER_REGISTRY}/inusidian:web-${WEB_VERSION}
-    container_name: docker-inusidian-frontapp
+    container_name: inusidian-web
     ports:
       - "3000:3000"
     depends_on:
-      spring-restapi:
+      inusidian-api:
         condition: service_healthy
