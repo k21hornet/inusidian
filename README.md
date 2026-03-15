@@ -11,9 +11,9 @@ Create custom decks, add cards with multiple fields, and review them at optimal 
 /inusidian
 ├─ docs
 ├─ inusidian-backend
-│  ├─ inusidian-api             # API
-│  ├─ inusidian-core            # コアロジック（予定）
-│  ├─ inusidian-reminder        # リマインドバッチ（予定）
+│  ├─ inusidian-domain          # 業務ロジック
+│  ├─ inusidian-reminder-batc   # リマインドバッチ（予定）
+│  ├─ inusidian-user-api        # API
 │  └─ settings.gradle
 ├─ inusidian-frontend
 │  ├─ inusidian-mobile
