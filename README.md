@@ -11,15 +11,15 @@ Create custom decks, add cards with multiple fields, and review them at optimal 
 /inusidian
 ├─ docs
 ├─ inusidian-backend
-│  ├─ inusidian-api             # API
-│  ├─ inusidian-core            # コアロジック（予定）
-│  ├─ inusidian-reminder        # リマインドバッチ（予定）
+│  ├─ inusidian-domain          # 業務ロジック
+│  ├─ inusidian-reminder-batch  # リマインドバッチ（予定）
+│  ├─ inusidian-user-api        # API
 │  └─ settings.gradle
+├─ inusidian-database            # Flyway
 ├─ inusidian-frontend
 │  ├─ inusidian-mobile
 │  ├─ inusidian-web
 │  └─ shared                    # フロント共通ロジック
-├─ inusidian-sql                 # Flyway
 ├─ scripts
 └─ README.md
 ```
