@@ -5,11 +5,9 @@ import com.chihuahuawashawasha.inusidian.dto.UserDTO;
 import com.chihuahuawashawasha.inusidian.dto.CardRequest;
 import com.chihuahuawashawasha.inusidian.dto.CardSuccessRequest;
 import com.chihuahuawashawasha.inusidian.service.CardService;
-import com.chihuahuawashawasha.inusidian.service.UserService;
+import com.chihuahuawashawasha.inusidian.user.api.security.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,26 +18,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CardController {
 
-    private final UserService userService;
-
     private final CardService cardService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<CardDTO> card(@AuthenticationPrincipal Jwt jwt, @PathVariable String id) {
-        UserDTO userDTO = userService.findByEmail(jwt.getClaimAsString("http://claim/email"));
-
+    public ResponseEntity<CardDTO> card(@CurrentUser UserDTO userDTO, @PathVariable String id) {
         return ResponseEntity.ok(cardService.findById(userDTO.getId(), id));
     }
 
     @PostMapping("/create")
     public ResponseEntity<CardDTO> create(@RequestBody @Validated CardRequest request) {
-
         return ResponseEntity.ok(cardService.create(request));
     }
 
     @PutMapping("/update")
     public ResponseEntity<CardDTO> update(@RequestBody @Validated CardRequest request) {
-
         return ResponseEntity.ok(cardService.update(request));
     }
 

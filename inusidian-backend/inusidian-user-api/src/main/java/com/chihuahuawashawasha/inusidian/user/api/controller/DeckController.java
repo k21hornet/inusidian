@@ -3,11 +3,9 @@ package com.chihuahuawashawasha.inusidian.user.api.controller;
 import com.chihuahuawashawasha.inusidian.dto.*;
 import com.chihuahuawashawasha.inusidian.service.CardService;
 import com.chihuahuawashawasha.inusidian.service.DeckService;
-import com.chihuahuawashawasha.inusidian.service.UserService;
+import com.chihuahuawashawasha.inusidian.user.api.security.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,17 +16,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DeckController {
 
-    private final UserService userService;
-
     private final DeckService deckService;
 
     private final CardService cardService;
 
     @GetMapping
-    public ResponseEntity<DeckListDTO> decks(@AuthenticationPrincipal Jwt jwt) {
-        UserDTO userDTO = userService.findByEmail(jwt.getClaimAsString("http://claim/email"));
-
-        // デッキ一覧を取得し、復習カード枚数を追加
+    public ResponseEntity<DeckListDTO> decks(@CurrentUser UserDTO userDTO) {
         List<DeckListDTO.Deck> decks = deckService.findAll(userDTO.getId())
                 .getDecks()
                 .stream()
@@ -41,9 +34,7 @@ public class DeckController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DeckDTO> deck(@AuthenticationPrincipal Jwt jwt, @PathVariable String id) {
-        UserDTO userDTO = userService.findByEmail(jwt.getClaimAsString("http://claim/email"));
-
+    public ResponseEntity<DeckDTO> deck(@CurrentUser UserDTO userDTO, @PathVariable String id) {
         DeckDTO dto = deckService.findById(userDTO.getId(), id);
         List<CardDTO> cardDTOList = cardService.findCardListByDeck(id);
         dto.setCards(cardDTOList);
@@ -52,45 +43,37 @@ public class DeckController {
 
     @PostMapping("/create")
     public ResponseEntity<DeckDTO> create(
-            @AuthenticationPrincipal Jwt jwt,
+            @CurrentUser UserDTO userDTO,
             @RequestBody @Validated DeckRequest input
-    ){
-        UserDTO userDTO = userService.findByEmail(jwt.getClaimAsString("http://claim/email"));
-
-        return ResponseEntity.ok(deckService.create(userDTO.getId(),input));
+    ) {
+        return ResponseEntity.ok(deckService.create(userDTO.getId(), input));
     }
 
     @PutMapping("/update")
     public ResponseEntity<DeckDTO> update(
-            @AuthenticationPrincipal Jwt jwt,
+            @CurrentUser UserDTO userDTO,
             @RequestBody @Validated DeckRequest input
-    ){
-        UserDTO userDTO = userService.findByEmail(jwt.getClaimAsString("http://claim/email"));
-
+    ) {
         return ResponseEntity.ok(deckService.update(userDTO.getId(), input));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteDeck (@PathVariable String id) {
+    public ResponseEntity<Void> deleteDeck(@PathVariable String id) {
         deckService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}/export")
     public DeckIoDTO exportDeck(
-            @AuthenticationPrincipal Jwt jwt,
+            @CurrentUser UserDTO userDTO,
             @PathVariable String id) {
-        UserDTO userDTO = userService.findByEmail(jwt.getClaimAsString("http://claim/email"));
-
-        return  deckService.exportDeck(userDTO.getId(), id);
+        return deckService.exportDeck(userDTO.getId(), id);
     }
 
     @PostMapping("/import")
     public DeckDTO importDeck(
-            @AuthenticationPrincipal Jwt jwt,
+            @CurrentUser UserDTO userDTO,
             @RequestBody DeckIoDTO importData) {
-        UserDTO userDTO = userService.findByEmail(jwt.getClaimAsString("http://claim/email"));
-
         return deckService.importDeck(userDTO.getId(), importData);
     }
 }
