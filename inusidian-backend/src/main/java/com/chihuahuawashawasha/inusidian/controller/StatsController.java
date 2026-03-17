@@ -1,11 +1,11 @@
-package com.chihuahuawashawasha.inusidian.user.api.controller;
+package com.chihuahuawashawasha.inusidian.controller;
 
 import com.chihuahuawashawasha.inusidian.dto.CardSuccessDistributionDTO;
 import com.chihuahuawashawasha.inusidian.dto.LearningHistoryDTO;
 import com.chihuahuawashawasha.inusidian.dto.StudiedDaysDTO;
 import com.chihuahuawashawasha.inusidian.dto.UserDTO;
 import com.chihuahuawashawasha.inusidian.service.StatsService;
-import com.chihuahuawashawasha.inusidian.user.api.security.CurrentUser;
+import com.chihuahuawashawasha.inusidian.security.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

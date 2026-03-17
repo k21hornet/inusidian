@@ -1,4 +1,4 @@
-package com.chihuahuawashawasha.inusidian.user.api.config;
+package com.chihuahuawashawasha.inusidian.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -53,4 +53,3 @@ public class SecurityConfig {
         return jwtDecoder;
     }
 }
-

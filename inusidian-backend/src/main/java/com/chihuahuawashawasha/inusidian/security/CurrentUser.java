@@ -1,4 +1,4 @@
-package com.chihuahuawashawasha.inusidian.user.api.security;
+package com.chihuahuawashawasha.inusidian.security;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

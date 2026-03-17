@@ -1,6 +1,6 @@
-package com.chihuahuawashawasha.inusidian.user.api.config;
+package com.chihuahuawashawasha.inusidian.config;
 
-import com.chihuahuawashawasha.inusidian.user.api.security.CurrentUserArgumentResolver;
+import com.chihuahuawashawasha.inusidian.security.CurrentUserArgumentResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;

@@ -1,4 +1,4 @@
-package com.chihuahuawashawasha.inusidian.user.api.controller;
+package com.chihuahuawashawasha.inusidian.controller;
 
 import com.chihuahuawashawasha.inusidian.service.UserService;
 import jakarta.validation.constraints.Email;

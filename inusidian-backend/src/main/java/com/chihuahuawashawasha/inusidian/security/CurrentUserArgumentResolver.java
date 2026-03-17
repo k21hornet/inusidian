@@ -1,4 +1,4 @@
-package com.chihuahuawashawasha.inusidian.user.api.security;
+package com.chihuahuawashawasha.inusidian.security;
 
 import com.chihuahuawashawasha.inusidian.dto.UserDTO;
 import com.chihuahuawashawasha.inusidian.service.UserService;

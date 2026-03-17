@@ -68,21 +68,3 @@ services:
     depends_on:
       inusidian-api:
         condition: service_healthy
-
-  # リマインドバッチ（VPS cron から手動起動: docker compose run --rm inusidian-reminder-batch）
-  inusidian-reminder-batch:
-    image: ${DOCKER_REGISTRY}/inusidian:batch-${BATCH_VERSION}
-    container_name: inusidian-reminder-batch
-    environment:
-      DB_HOST: mysql
-      DB_PORT: 3306
-      DB_NAME: ${MYSQL_DATABASE}
-      DB_USERNAME: ${MYSQL_ROOT_USER:-root}
-      DB_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      SENDGRID_API_KEY: ${SENDGRID_API_KEY}
-      SENDGRID_FROM_EMAIL: ${SENDGRID_FROM_EMAIL}
-    depends_on:
-      mysql:
-        condition: service_healthy
-    profiles:
-      - batch

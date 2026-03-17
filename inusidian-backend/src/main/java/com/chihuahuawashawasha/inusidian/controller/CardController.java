@@ -1,11 +1,11 @@
-package com.chihuahuawashawasha.inusidian.user.api.controller;
+package com.chihuahuawashawasha.inusidian.controller;
 
 import com.chihuahuawashawasha.inusidian.dto.CardDTO;
 import com.chihuahuawashawasha.inusidian.dto.UserDTO;
 import com.chihuahuawashawasha.inusidian.dto.CardRequest;
 import com.chihuahuawashawasha.inusidian.dto.CardSuccessRequest;
 import com.chihuahuawashawasha.inusidian.service.CardService;
-import com.chihuahuawashawasha.inusidian.user.api.security.CurrentUser;
+import com.chihuahuawashawasha.inusidian.security.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
