@@ -42,7 +42,7 @@ if docker image inspect "${BATCH_IMAGE_NAME}:${BATCH_IMAGE_TAG}" > /dev/null 2>&
 fi
 
 # イメージの生成
-docker buildx build --platform linux/amd64 -t "${WEB_IMAGE_NAME}:${WEB_IMAGE_TAG}" -f ./inusidian-frontend/inusidian-web/Dockerfile --load ./inusidian-frontend/inusidian-web
+docker buildx build --platform linux/amd64 -t "${WEB_IMAGE_NAME}:${WEB_IMAGE_TAG}" -f ./inusidian-frontend/Dockerfile --load ./inusidian-frontend
 docker buildx build --platform linux/amd64 -t "${API_IMAGE_NAME}:${API_IMAGE_TAG}" -f ./inusidian-backend/Dockerfile --load ./inusidian-backend
 docker buildx build --platform linux/amd64 -t "${FLYWAY_IMAGE_NAME}:${FLYWAY_IMAGE_TAG}" -f ./inusidian-sql/Dockerfile --load ./inusidian-sql
 docker buildx build --platform linux/amd64 -t "${BATCH_IMAGE_NAME}:${BATCH_IMAGE_TAG}" -f ./inusidian-backend/Dockerfile.reminder-batch --load ./inusidian-backend
