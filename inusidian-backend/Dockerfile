@@ -5,19 +5,18 @@ WORKDIR /app
 COPY gradlew .
 COPY gradle gradle
 COPY build.gradle settings.gradle ./
-COPY inusidian-api/build.gradle inusidian-api/build.gradle
 
 RUN chmod +x gradlew && ./gradlew dependencies --no-daemon || true
 
-COPY . .
+COPY src src
 
-RUN ./gradlew :inusidian-api:build -x test --no-daemon
+RUN ./gradlew bootJar -x test --no-daemon
 
 FROM eclipse-temurin:25-jre
 
 WORKDIR /app
 
-COPY --from=builder /app/inusidian-api/build/libs/inusidian-api.jar /app/inusidian-api.jar
+COPY --from=builder /app/build/libs/inusidian-backend-*.jar /app/inusidian-api.jar
 
 RUN apt-get update && \
     apt-get install -y netcat-openbsd && \

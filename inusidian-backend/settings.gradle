@@ -1,5 +1,1 @@
 rootProject.name = 'inusidian-backend'
-
-include(':inusidian-domain')
-include(':inusidian-user-api')
-include(':inusidian-reminder-batch')
