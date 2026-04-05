@@ -2,34 +2,29 @@
 
 **Unleash your learning potential with INUSIDIAN**
 
-INUSIDIAN is a spaced repetition system (SRS) flashcard application designed to help you learn vocabulary efficiently using the principles of the forgetting curve.
-Create custom decks, add cards with multiple fields, and review them at optimal intervals for maximum retention.
-
-## 開発コマンド
-
-### ローカル起動
+## ディレクトリ構成
 
 ```
-cd inusidian-sql
-
-docker-compose up -d
-
-# Migration実行
-./gradlew flywayMigrate
+inusidian
+├─ .github/workflows
+├─ core     # バックエンド
+├─ kennel   # DB
+├─ leash    # スクリプト用
+├─ muzzle   # フロントエンド
+├─ paw      # docs
+└─ README.md
 ```
 
-### docker起動
+## コマンド
 
 ```
-# DB起動
-docker-compose up -d mysql
+docker exec -it inusidian-db mysql -u root -ppass
 
-# Migration実行
-docker-compose --profile tools run --rm flyway
+docker exec -it inusidian-db mysql -u user -ppass
 
-# Migration状態確認
-docker-compose --profile tools run --rm flyway info
+docker logs -f inusidian-api
 
-# App起動
-docker-compose up -d
+curl http://localhost:5000/v2/inusidian/tags/list
+
+docker pull localhost:5000/inusidian:api-1.6.0
 ```

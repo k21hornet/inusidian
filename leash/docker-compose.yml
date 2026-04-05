@@ -1,8 +1,7 @@
-version: "3.9"
 services:
-  #  データベースコンテナ
+  #  DBコンテナ
   mysql:
-    image: mysql:8.0
+    image: mysql:8.4
     platform: linux/amd64
     container_name: inusidian-db
     ports:
@@ -10,6 +9,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       TZ: "Asia/Tokyo"
     volumes:
       - ./database:/var/lib/mysql
@@ -24,18 +25,18 @@ services:
   # Flyway
   flyway:
     image: ${DOCKER_REGISTRY}/inusidian:flyway-${FLYWAY_VERSION}
-    command: migrate
+    command: ["migrate"]
     environment:
-      FLYWAY_URL: jdbc:mysql://mysql:3306/${MYSQL_DATABASE}?allowPublicKeyRetrieval=true&useSSL=false
-      FLYWAY_USER: ${MYSQL_ROOT_USER:-root}
-      FLYWAY_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      FLYWAY_URL: jdbc:mysql://mysql:3306/${MYSQL_DATABASE}?allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=UTF-8
+      FLYWAY_USER: ${MYSQL_USER}
+      FLYWAY_PASSWORD: ${MYSQL_PASSWORD}
     depends_on:
       mysql:
         condition: service_healthy
     profiles:
-      - tools
+      - migration
 
-  #  REST APIコンテナ
+  #  APIコンテナ
   inusidian-api:
     image: ${DOCKER_REGISTRY}/inusidian:api-${API_VERSION}
     container_name: inusidian-api
