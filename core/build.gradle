@@ -2,10 +2,11 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '4.0.1'
     id 'io.spring.dependency-management' version '1.1.7'
+    id 'com.google.cloud.tools.jib' version '3.4.4'
 }
 
 group = 'com.chihuahuawashawasha'
-version = '1.5.0'
+version = '1.6.0'
 
 java {
     toolchain {
@@ -45,4 +46,18 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+jib {
+	from {
+		image = 'eclipse-temurin:25-jre-alpine'
+	}
+	to {
+		image = project.findProperty('jibToImage') ?: "inusidian-backend:${version}"
+	}
+	container {
+		mainClass = 'com.chihuahuawashawasha.inusidian.InusidianApplication'
+		jvmFlags = ['-XX:+UseG1GC']
+	}
+	allowInsecureRegistries = true
 }

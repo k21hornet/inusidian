@@ -1,0 +1,49 @@
+# ローカル用
+
+services:
+  db:
+    image: mysql:8.4
+    platform: linux/amd64
+    container_name: inusidian-db
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_DATABASE: inusidian
+      MYSQL_USER: user
+      MYSQL_PASSWORD: pass
+    ports:
+      - "127.0.0.1:3366:3306"
+    volumes:
+      - inusidian_db_data:/var/lib/mysql
+    networks:
+      - inusidian-net
+    healthcheck:
+      test:
+        ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-ppass"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  flyway:
+    profiles:
+      - migration
+    image: flyway/flyway:11
+    platform: linux/amd64
+    container_name: inusidian-flyway
+    command: ["migrate"]
+    environment:
+      FLYWAY_URL: jdbc:mysql://db:3306/inusidian?allowPublicKeyRetrieval=true&useSSL=false
+      FLYWAY_USER: user
+      FLYWAY_PASSWORD: pass
+      FLYWAY_LOCATIONS: filesystem:/flyway/sql
+    volumes:
+      - ./src/main/resources/db/migration:/flyway/sql
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - inusidian-net
+
+volumes:
+  inusidian_db_data:
+networks:
+  inusidian-net:
