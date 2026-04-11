@@ -11,9 +11,12 @@ export default async function Home() {
   const currentYear = today.getFullYear();
   const currentMonth = today.getMonth(); // 0始まり
 
-  const [{ decks }, learningHistory, cardDistribution, studiedDaysResponse] =
+  const decksResponse = await getAllDecks();
+  if (decksResponse.error) return;
+  const decks = decksResponse.body;
+
+  const [learningHistoryResponse, cardDistributionResponse, studiedDaysResponse] =
     await Promise.all([
-      getAllDecks(),
       getLearningHistory(),
       getCardDistribution(),
       getStudiedDays(currentYear, currentMonth + 1), // バックエンドは1始まり
@@ -22,9 +25,9 @@ export default async function Home() {
   return (
     <HomePage
       decks={decks}
-      learningHistory={learningHistory}
-      cardDistribution={cardDistribution}
-      studiedDays={studiedDaysResponse.studiedDays}
+      learningHistory={learningHistoryResponse.body}
+      cardDistribution={cardDistributionResponse.body}
+      studiedDays={studiedDaysResponse.body?.studiedDays}
       currentYear={currentYear}
       currentMonth={currentMonth}
     />

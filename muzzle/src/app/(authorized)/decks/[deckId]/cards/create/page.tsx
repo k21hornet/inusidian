@@ -7,9 +7,9 @@ type Params = {
 
 export default async function CreateCard({ params }: Params) {
   const { deckId } = await params;
-  const deck = await getDeck(deckId);
+  const deckResponse = await getDeck(deckId);
 
-  if (!deck) return;
+  if (deckResponse.error) return;
 
-  return <CreateCardPage deck={deck} />;
+  return <CreateCardPage deck={deckResponse.body} />;
 }

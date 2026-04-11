@@ -10,30 +10,32 @@ type Params = {
 
 export default async function Deck({ params }: Params) {
   const { deckId } = await params;
-  const deck = await getDeck(deckId);
+  const deckResponse = await getDeck(deckId);
 
-  if (!deck) return;
+  if (deckResponse.error) return;
+
+  const deck = deckResponse.body;
 
   return (
     <>
       <div className="mb-6">
-        <h2 className="text-2xl font-bold mb-4">{deck.deckName}</h2>
+        <h2 className="mb-4 text-2xl font-bold">{deck.deckName}</h2>
 
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2">
-            <div className="flex justify-center items-center w-9 h-9 bg-linear-to-br from-[#00e5ff] to-[#2962ff] rounded-lg">
-              <BookOpen className="w-6 h-6 text-white" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-linear-to-br from-[#00e5ff] to-[#2962ff]">
+              <BookOpen className="h-6 w-6 text-white" />
             </div>
             <p>{deck.deckDescription}</p>
           </div>
           <div className="flex items-center gap-2">
-            <Info className="w-6 h-6 text-[#9E9E9E]" />
+            <Info className="h-6 w-6 text-[#9E9E9E]" />
             <p>{deck.cards.length}枚のカードを作成済み</p>
           </div>
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+      <div className="mb-6 flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
         <div className="w-full md:w-auto">
           <Button
             component={Link}
@@ -46,7 +48,7 @@ export default async function Deck({ params }: Params) {
           </Button>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto">
+        <div className="flex w-full flex-col gap-2 md:w-auto md:flex-row">
           <Button
             component={Link}
             href={`/decks/${deck.id}/cards/create`}
@@ -68,7 +70,7 @@ export default async function Deck({ params }: Params) {
         </div>
       </div>
 
-      <CardList deck={deck} />
+      <CardList deck={deckResponse.body} />
     </>
   );
 }

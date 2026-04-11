@@ -6,7 +6,7 @@ const request = async (
   url: string,
   method: string,
   data?: unknown,
-  customAccessToken?: string
+  customAccessToken?: string,
 ) => {
   const fullUrl = `${BASE_URL}${url}`;
 
@@ -60,7 +60,7 @@ const request = async (
   }
 };
 
-export const fetcher = {
+export const fetcherOld = {
   get: (url: string) => request(url, "GET", undefined),
   post: (url: string, data?: unknown, accessToken?: string) =>
     request(url, "POST", data, accessToken),

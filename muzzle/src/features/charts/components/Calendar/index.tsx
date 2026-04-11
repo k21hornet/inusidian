@@ -39,7 +39,7 @@ export const Calendar = ({
 
   useEffect(() => {
     getStudiedDays(year, month + 1) // JSの月は0始まり、バックエンドは1始まり
-      .then((res) => setStudiedDays(res.studiedDays))
+      .then((res) => setStudiedDays(res.body?.studiedDays ?? []))
       .catch(console.error);
   }, [year, month]);
 

@@ -7,7 +7,9 @@ type Params = {
 
 export default async function Review({ params }: Params) {
   const { deckId } = await params;
-  const data = await getReviewCards(deckId);
+  const response = await getReviewCards(deckId);
 
-  return <ReviewPage data={data} />;
+  if (response.error) return;
+
+  return <ReviewPage data={response.body} />;
 }

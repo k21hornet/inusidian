@@ -1,6 +1,8 @@
 package com.chihuahuawashawasha.inusidian.service;
 
 import com.chihuahuawashawasha.inusidian.dto.*;
+import com.chihuahuawashawasha.inusidian.dto.request.CardFieldRequest;
+import com.chihuahuawashawasha.inusidian.dto.request.DeckRequest;
 import com.chihuahuawashawasha.inusidian.entity.*;
 import com.chihuahuawashawasha.inusidian.mapper.DeckMapper;
 import com.chihuahuawashawasha.inusidian.repository.*;
@@ -32,18 +34,8 @@ public class DeckService {
      * @param userId ユーザーID
      * @return デッキ一覧
      */
-    public DeckListDTO findAll(String userId) {
-        List<DeckListDTO.Deck> decks = deckRepository.findAllByUserIdOrderByCreatedAtDesc(userId)
-                .stream()
-                .map(deck -> DeckListDTO.Deck.builder()
-                        .id(deck.getId())
-                        .deckName(deck.getDeckName())
-                        .deckDescription(deck.getDeckDescription())
-                        .cardCount(deck.getCards().size())
-                        .createdAt(deck.getCreatedAt())
-                        .build())
-                .toList();
-        return DeckListDTO.builder().decks(decks).build();
+    public List<Deck> findAll(String userId) {
+        return deckRepository.findAllByUserIdOrderByCreatedAtDesc(userId);
     }
 
     /**

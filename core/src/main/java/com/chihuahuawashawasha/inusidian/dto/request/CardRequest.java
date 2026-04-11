@@ -1,4 +1,4 @@
-package com.chihuahuawashawasha.inusidian.dto;
+package com.chihuahuawashawasha.inusidian.dto.request;
 
 import lombok.Data;
 

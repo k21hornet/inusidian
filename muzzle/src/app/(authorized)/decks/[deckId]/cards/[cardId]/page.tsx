@@ -7,13 +7,17 @@ type Params = {
 
 export default async function Card({ params }: Params) {
   const { cardId } = await params;
-  const card = await getCard(cardId);
-  if (!card) return;
 
-  const nextCardId = await getNextCardId(card.deckId, cardId);
-  const prevCardId = await getPrevCardId(card.deckId, cardId);
+  const cardResponse = await getCard(cardId);
+  if (cardResponse.error) return;
+  const card = cardResponse.body;
 
-  console.log(nextCardId, prevCardId);
+  const [nextCardResponse, prevCardResponse] = await Promise.all([
+    getNextCardId(card.deckId, cardId),
+    getPrevCardId(card.deckId, cardId),
+  ]);
+  const nextCardId = nextCardResponse.body;
+  const prevCardId = prevCardResponse.body;
 
   return (
     <CardPage card={card} nextCardId={nextCardId} prevCardId={prevCardId} />

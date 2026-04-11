@@ -1,8 +1,7 @@
-import { Card } from "./types";
 import { fetcher } from "@/util/fetcher";
 
 // カードを取得
-export async function getCard(id: number): Promise<Card | undefined> {
+export async function getCard(id: number) {
   return await fetcher.get(`/cards/${id}`);
 }
 

@@ -21,10 +21,9 @@ export const auth0 = new Auth0Client({
       );
     }
 
-    if (session && session.tokenSet.accessToken && session.user.email) {
+    if (session && session.tokenSet.accessToken) {
       const accessToken = session.tokenSet.accessToken;
-      const email = session.user.email;
-      await signupUser(email, accessToken);
+      await signupUser(accessToken);
     }
 
     return Promise.resolve(

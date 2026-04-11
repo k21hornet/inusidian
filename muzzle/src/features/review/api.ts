@@ -1,7 +1,6 @@
-import { Card } from "../card/types";
 import { fetcher } from "@/util/fetcher";
 
 // レビュー対象カード一覧を取得
-export async function getReviewCards(deckId: number): Promise<Card[]> {
+export async function getReviewCards(deckId: number) {
   return await fetcher.get(`/cards/review/${deckId}`);
 }

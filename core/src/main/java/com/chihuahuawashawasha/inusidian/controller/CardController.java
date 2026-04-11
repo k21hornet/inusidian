@@ -2,8 +2,8 @@ package com.chihuahuawashawasha.inusidian.controller;
 
 import com.chihuahuawashawasha.inusidian.dto.CardDTO;
 import com.chihuahuawashawasha.inusidian.dto.UserDTO;
-import com.chihuahuawashawasha.inusidian.dto.CardRequest;
-import com.chihuahuawashawasha.inusidian.dto.CardSuccessRequest;
+import com.chihuahuawashawasha.inusidian.dto.request.CardRequest;
+import com.chihuahuawashawasha.inusidian.dto.request.CardSuccessRequest;
 import com.chihuahuawashawasha.inusidian.service.CardService;
 import com.chihuahuawashawasha.inusidian.security.CurrentUser;
 import lombok.RequiredArgsConstructor;
