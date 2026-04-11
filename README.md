@@ -1,6 +1,4 @@
-# Inusidian
-
-**Unleash your learning potential with INUSIDIAN**
+# Inusidian ![#dog-core](https://img.shields.io/badge/%23dog--core-000?style=flat) ![#chihuahuawashawasha](https://img.shields.io/badge/%23chihuahuawashawasha-000?style=flat)
 
 ## ディレクトリ構成
 
