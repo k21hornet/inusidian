@@ -1,4 +1,4 @@
-import ReviewPage from "@/app/(main)/decks/[deckId]/review/_components";
+import ReviewPage from "@/app/(authorized)/decks/[deckId]/review/_components";
 import { getReviewCards } from "@/features/review/api";
 
 type Params = {

@@ -1,4 +1,4 @@
-import { CardPage } from "@/app/(main)/decks/[deckId]/cards/[cardId]/_components";
+import { CardPage } from "@/app/(authorized)/decks/[deckId]/cards/[cardId]/_components";
 import { getCard, getNextCardId, getPrevCardId } from "@/features/card/api";
 
 type Params = {
