@@ -15,6 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Card, CardContent } from "@/components/ui/card";
 
 export type DeckTableProps = {
   decks: Deck[];
@@ -24,8 +25,8 @@ export const DeckTable = ({ decks }: DeckTableProps) => {
   const router = useRouter();
 
   return (
-    <div className="mb-6 shadow-[0_20px_40px_rgba(0,0,0,0.1)] rounded-2xl bg-white">
-      <div className="flex justify-between items-center p-4">
+    <Card className="mb-6 gap-0 py-0">
+      <div className="flex items-center justify-between p-4">
         <h2 className="font-bold">デッキ一覧</h2>
         <Button component={Link} href="/decks/create" buttonDesign="secondary">
           デッキ作成
@@ -52,8 +53,8 @@ export const DeckTable = ({ decks }: DeckTableProps) => {
               >
                 <TableCell>
                   <div className="flex items-center gap-4">
-                    <div className="flex justify-center items-center w-9 h-9 bg-linear-to-br from-[#00e5ff] to-[#2962ff] rounded-lg">
-                      <BookOpen className="w-6 h-6 text-white" />
+                    <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-linear-to-br from-[#00e5ff] to-[#2962ff]">
+                      <BookOpen className="h-6 w-6 text-white" />
                     </div>
                     <div>
                       <div className="font-bold">{deck.deckName}</div>
@@ -82,7 +83,7 @@ export const DeckTable = ({ decks }: DeckTableProps) => {
           </TableBody>
         </Table>
       ) : (
-        <div className="w-full flex flex-col justify-center gap-2 py-4 items-center text-center text-[#888]">
+        <div className="flex w-full flex-col items-center justify-center gap-2 py-4 text-center text-[#888]">
           <img
             src="/empty-deck.png"
             alt="デッキがありません"
@@ -93,6 +94,6 @@ export const DeckTable = ({ decks }: DeckTableProps) => {
           </p>
         </div>
       )}
-    </div>
+    </Card>
   );
 };

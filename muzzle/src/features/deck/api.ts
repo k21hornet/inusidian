@@ -1,12 +1,11 @@
 import { fetcher } from "@/util/fetcher";
-import { Deck } from "./types";
 
 // ユーザーのデッキ一覧を取得
-export async function getAllDecks(): Promise<{ decks: Deck[] }> {
+export async function getAllDecks() {
   return await fetcher.get(`/decks`);
 }
 
 // デッキを取得
-export async function getDeck(id: number): Promise<Deck | undefined> {
+export async function getDeck(id: number) {
   return await fetcher.get(`/decks/${id}`);
 }

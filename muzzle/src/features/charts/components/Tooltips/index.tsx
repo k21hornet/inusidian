@@ -17,11 +17,11 @@ type Props = {
 const chartConfig = {
   newCards: {
     label: "新規",
-    color: "#999",
+    color: "#40c4ff",
   },
   reviewedCards: {
     label: "復習済み",
-    color: "#bbb",
+    color: "#2962ff",
   },
 } satisfies ChartConfig;
 

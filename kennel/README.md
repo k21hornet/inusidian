@@ -2,7 +2,7 @@
 
 ## 開発コマンド
 
-```
+```sh
 # マイグレーションを実行
 docker-compose --profile migration up -d flyway
 

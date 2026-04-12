@@ -34,23 +34,23 @@ const chartConfig = {
   },
   one: {
     label: "1回",
-    color: "#ccc",
+    color: "#b3e5fc",
   },
   two: {
     label: "2回",
-    color: "#aaa",
+    color: "#40c4ff",
   },
   three: {
     label: "3回",
-    color: "#888",
+    color: "#1e9de0",
   },
   four: {
     label: "4回",
-    color: "#666",
+    color: "#2979ff",
   },
   overFive: {
     label: "5回以上",
-    color: "#444",
+    color: "#2962ff",
   },
 } satisfies ChartConfig;
 

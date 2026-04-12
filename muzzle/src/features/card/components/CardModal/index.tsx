@@ -54,8 +54,8 @@ export default function CardModal({
   const handleSubmit = async (e: FormEvent<Element>) => {
     e.preventDefault();
 
-    const data = await updateCard(formData);
-    if (data) {
+    const { error } = await updateCard(formData);
+    if (!error) {
       handleClose();
     }
   };

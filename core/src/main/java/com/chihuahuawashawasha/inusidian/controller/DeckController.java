@@ -1,6 +1,10 @@
 package com.chihuahuawashawasha.inusidian.controller;
 
 import com.chihuahuawashawasha.inusidian.dto.*;
+import com.chihuahuawashawasha.inusidian.dto.request.DeckRequest;
+import com.chihuahuawashawasha.inusidian.dto.response.DeckSummaryResponse;
+import com.chihuahuawashawasha.inusidian.mapper.DeckMapper;
+import com.chihuahuawashawasha.inusidian.mapper.DeckSummaryResponseMapper;
 import com.chihuahuawashawasha.inusidian.service.CardService;
 import com.chihuahuawashawasha.inusidian.service.DeckService;
 import com.chihuahuawashawasha.inusidian.security.CurrentUser;
@@ -20,17 +24,19 @@ public class DeckController {
 
     private final CardService cardService;
 
+    private final DeckSummaryResponseMapper deckSummaryResponseMapper;
+
     @GetMapping
-    public ResponseEntity<DeckListDTO> decks(@CurrentUser UserDTO userDTO) {
-        List<DeckListDTO.Deck> decks = deckService.findAll(userDTO.getId())
-                .getDecks()
+    public ResponseEntity<List<DeckSummaryResponse>> decks(@CurrentUser UserDTO userDTO) {
+        var decks = deckService.findAll(userDTO.getId())
                 .stream()
+                .map(deckSummaryResponseMapper::toResponse)
                 .peek(deck -> {
                     int dueCardCount = cardService.findDueCards(deck.getId()).size();
                     deck.setDueCardCount(dueCardCount);
                 })
                 .toList();
-        return ResponseEntity.ok(DeckListDTO.builder().decks(decks).build());
+        return ResponseEntity.ok(decks);
     }
 
     @GetMapping("/{id}")
