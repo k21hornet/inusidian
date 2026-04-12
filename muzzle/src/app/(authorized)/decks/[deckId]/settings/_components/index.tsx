@@ -48,18 +48,18 @@ export default function DeckSettingsPage({ deck }: Props) {
   const handleSubmit = async (e: FormEvent<Element>) => {
     e.preventDefault();
 
-    const data = await putDeck(formData);
-    if (data) {
+    const { error } = await putDeck(formData);
+    if (!error) {
       toast.success("デッキを更新しました");
     }
   };
 
   // デッキをエクスポート
   const handleExport = async () => {
-    const data = await exportDeck(deck.id);
+    const { body } = await exportDeck(deck.id);
 
     // JSONファイルとしてダウンロード
-    const blob = new Blob([JSON.stringify(data, null, 2)], {
+    const blob = new Blob([JSON.stringify(body, null, 2)], {
       type: "application/json",
     });
     const url = window.URL.createObjectURL(blob);

@@ -35,8 +35,8 @@ export default function CreateCardPage({ deck }: Props) {
   const handleSubmit = async (e: FormEvent<Element>) => {
     e.preventDefault();
 
-    const data = await postCard(formData);
-    if (data) {
+    const { error } = await postCard(formData);
+    if (!error) {
       // フォームをリセット
       setFormData({
         deckId: deck.id,

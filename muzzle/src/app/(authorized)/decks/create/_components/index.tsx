@@ -40,9 +40,9 @@ export default function CreateDeckPage() {
         throw new Error("無効なファイル形式です");
       }
 
-      const data = await importDeck(importData);
-      if (data) {
-        router.push(`/decks/${data.id}`);
+      const { body } = await importDeck(importData);
+      if (body) {
+        router.push(`/decks/${body.id}`);
       }
     } catch (error) {
       console.error("インポートエラー:", error);
@@ -68,9 +68,9 @@ export default function CreateDeckPage() {
       cardFields: cardFields,
     };
 
-    const data = await postDeck(submitData);
-    if (data) {
-      router.push(`/decks/${data.id}`);
+    const { body } = await postDeck(submitData);
+    if (body) {
+      router.push(`/decks/${body.id}`);
     }
   };
 
