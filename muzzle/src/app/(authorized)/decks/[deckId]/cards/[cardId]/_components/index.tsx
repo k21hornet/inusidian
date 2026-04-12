@@ -13,6 +13,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Info, Edit, ChevronLeft, ChevronRight } from "lucide-react";
+import { Card as CardUi } from "@/components/ui/card";
 
 export const CardPage = ({
   card,
@@ -38,18 +39,18 @@ export const CardPage = ({
   return (
     <div className="flex flex-col items-center justify-center">
       <div
-        className="flex items-center gap-2 cursor-pointer w-full mb-4 text-[#9E9E9E]"
+        className="mb-4 flex w-full cursor-pointer items-center gap-2 text-[#9E9E9E]"
         onClick={() => router.push(`/decks/${card.deckId}`)}
       >
-        <ArrowLeft className="w-5 h-5" />
+        <ArrowLeft className="h-5 w-5" />
         <span>デッキに戻る</span>
       </div>
 
-      <div className="flex flex-col items-center justify-center gap-4 w-full max-w-2xl p-6 bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.1)]">
+      <CardUi className="flex w-full max-w-2xl flex-col items-center justify-center gap-4 p-6">
         <div className="flex items-center gap-2 self-end">
-          <Info className="w-5 h-5 text-[#9E9E9E]" />
+          <Info className="h-5 w-5 text-[#9E9E9E]" />
           <Edit
-            className="w-5 h-5 text-[#9E9E9E] cursor-pointer"
+            className="h-5 w-5 cursor-pointer text-[#9E9E9E]"
             onClick={() => handleOpen()}
           />
         </div>
@@ -58,7 +59,7 @@ export const CardPage = ({
         {card.cardValues
           .filter((value) => value.field.fieldType === "primary") // primaryフィールドのみ取得
           .map((value, idx) => (
-            <p key={idx} className="text-lg font-bold text-center">
+            <p key={idx} className="text-center text-lg font-bold">
               {value.content}
             </p>
           ))}
@@ -80,7 +81,7 @@ export const CardPage = ({
           className="w-full"
         >
           <AccordionItem value="back" className="border-none">
-            <AccordionTrigger className="text-[#9E9E9E] text-sm hover:no-underline">
+            <AccordionTrigger className="text-sm text-[#9E9E9E] hover:no-underline">
               カード裏面を表示
             </AccordionTrigger>
             <AccordionContent className="pt-0">
@@ -94,11 +95,11 @@ export const CardPage = ({
             </AccordionContent>
           </AccordionItem>
         </Accordion>
-      </div>
+      </CardUi>
 
       <CardModal open={open} handleClose={handleClose} card={card} />
 
-      <div className="flex justify-between items-center w-full max-w-2xl mt-4">
+      <div className="mt-4 flex w-full max-w-2xl items-center justify-between">
         {prevCardId !== "" ? (
           <Button
             component={Link}
@@ -107,7 +108,7 @@ export const CardPage = ({
             variant="outlined"
             className="flex items-center gap-2"
           >
-            <ChevronLeft className="w-5 h-5" />
+            <ChevronLeft className="h-5 w-5" />
             前のカード
           </Button>
         ) : (
@@ -122,7 +123,7 @@ export const CardPage = ({
             className="flex items-center gap-2"
           >
             次のカード
-            <ChevronRight className="w-5 h-5" />
+            <ChevronRight className="h-5 w-5" />
           </Button>
         ) : (
           <div />

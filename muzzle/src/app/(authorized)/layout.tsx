@@ -1,5 +1,5 @@
-import { Header } from "@/components/common/Header";
-import { Footer } from "@/components/common/Footer/idnex";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer/idnex";
 
 export default async function ServiceLayout({
   children,
@@ -7,9 +7,9 @@ export default async function ServiceLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="max-w-7xl mx-auto h-screen">
+    <div className="mx-auto min-h-screen w-full max-w-6xl">
       <Header />
-      <main className="px-4 md:px-16 pt-16">{children}</main>
+      <main className="px-4 pt-16 md:px-16">{children}</main>
       <Footer />
     </div>
   );

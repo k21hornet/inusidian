@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { Card as CardUi } from "@/components/ui/card";
 
 export default function ReviewPage({ data }: { data: Card[] }) {
   const [dueCards, setDueCards] = useState<Card[]>([]);
@@ -71,19 +72,19 @@ export default function ReviewPage({ data }: { data: Card[] }) {
   return (
     <div className="flex flex-col items-center justify-center">
       <div
-        className="flex items-center gap-2 cursor-pointer w-full mb-4 text-[#9E9E9E]"
+        className="mb-4 flex w-full cursor-pointer items-center gap-2 text-[#9E9E9E]"
         onClick={() => router.push(`/decks/${dueCard.deckId}`)}
       >
-        <ArrowLeft className="w-5 h-5" />
+        <ArrowLeft className="h-5 w-5" />
         <span>デッキに戻る</span>
       </div>
 
-      <div className="flex flex-col items-center justify-center gap-4 w-full max-w-2xl p-6 bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.1)]">
+      <CardUi className="flex w-full max-w-2xl flex-col items-center justify-center gap-4 p-6">
         {/* カード表面 */}
         {dueCard.cardValues
           .filter((value) => value.field.fieldType === "primary") // primaryフィールドのみ取得
           .map((value, idx) => (
-            <p key={idx} className="text-lg font-bold text-center">
+            <p key={idx} className="text-center text-lg font-bold">
               {value.content}
             </p>
           ))}
@@ -106,21 +107,21 @@ export default function ReviewPage({ data }: { data: Card[] }) {
           className="w-full"
         >
           <AccordionItem value="back" className="border-none">
-            <AccordionTrigger className="text-[#9E9E9E] text-sm hover:no-underline">
+            <AccordionTrigger className="text-sm text-[#9E9E9E] hover:no-underline">
               カード裏面を表示
             </AccordionTrigger>
             <AccordionContent className="pt-0">
               {dueCard.cardValues
                 .filter((value) => value.field.fieldType === "back") // 裏のカードのみ取得
                 .map((value, idx) => (
-                  <p key={idx} className="text-center mb-4">
+                  <p key={idx} className="mb-4 text-center">
                     {value.content}
                   </p>
                 ))}
               {/* ボタン */}
-              <div className="flex justify-center gap-4 mt-4">
+              <div className="mt-4 flex justify-center gap-4">
                 <div className="flex flex-col items-center gap-1">
-                  <span className="text-sm text-muted-foreground">0 day</span>
+                  <span className="text-muted-foreground text-sm">0 day</span>
                   <Button
                     buttonDesign="secondary"
                     onClick={failure}
@@ -131,7 +132,7 @@ export default function ReviewPage({ data }: { data: Card[] }) {
                 </div>
 
                 <div className="flex flex-col items-center gap-1">
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-muted-foreground text-sm">
                     {dueCard.successCount * 2 + 1} day
                   </span>
                   <Button
@@ -147,7 +148,7 @@ export default function ReviewPage({ data }: { data: Card[] }) {
             </AccordionContent>
           </AccordionItem>
         </Accordion>
-      </div>
+      </CardUi>
     </div>
   );
 }

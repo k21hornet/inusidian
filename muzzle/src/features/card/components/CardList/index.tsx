@@ -20,15 +20,17 @@ export default function CardList({ deck }: { deck: Deck }) {
 
   return (
     <div className="overflow-y-auto">
-      <Table>
-        <TableHeader className="bg-white sticky top-0 z-1 shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
+      <Table className="w-full table-fixed">
+        <TableHeader className="sticky top-0 z-1 border-b">
           <TableRow>
-            <TableHead>{deck.cardFields[0].fieldName}</TableHead>
+            <TableHead className="w-[80%] sm:w-auto">
+              {deck.cardFields[0].fieldName}
+            </TableHead>
             <TableHead className="hidden sm:table-cell">連続正解数</TableHead>
-            <TableHead>復習間隔</TableHead>
+            <TableHead className="w-[20%] sm:w-auto">復習間隔</TableHead>
             <TableHead className="hidden sm:table-cell">次回</TableHead>
             <TableHead className="hidden sm:table-cell">作成日</TableHead>
-            <TableHead></TableHead>
+            <TableHead className="hidden sm:table-cell"></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -38,20 +40,24 @@ export default function CardList({ deck }: { deck: Deck }) {
               className="cursor-pointer hover:bg-[#eee]"
               onClick={() => handleOpen(card.id)}
             >
-              <TableCell className="font-bold">
+              <TableCell className="max-w-0 truncate font-bold">
                 {card.cardValues[0].content}
               </TableCell>
               <TableCell className="hidden sm:table-cell">
                 {card.successCount}回
               </TableCell>
-              <TableCell>{card.reviewInterval}日</TableCell>
+              <TableCell className="text-right sm:text-left">
+                {card.reviewInterval}日
+              </TableCell>
               <TableCell className="hidden sm:table-cell">
                 {convertDate(card.nextReviewDate)}
               </TableCell>
               <TableCell className="hidden sm:table-cell">
                 {convertDate(card.createdAt)}
               </TableCell>
-              <TableCell className="text-primary">詳細</TableCell>
+              <TableCell className="text-primary hidden sm:table-cell">
+                詳細
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
